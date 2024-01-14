@@ -34,10 +34,10 @@ public class Application {
 
     public static void main(String[] args) {
         context = createApplicationContext(args);
-        SanPhamService prd = new SanPhamService();
-        for (SanPham sp : prd.getList()) {
-            System.out.println(sp.getId());
-        }
+//        SanPhamService prd = new SanPhamService();
+//        for (SanPham sp : prd.getList()) {
+//            System.out.println(sp.getId());
+//        }
         new Main().setVisible(true);
 //        new Login().setVisible(true);
     }

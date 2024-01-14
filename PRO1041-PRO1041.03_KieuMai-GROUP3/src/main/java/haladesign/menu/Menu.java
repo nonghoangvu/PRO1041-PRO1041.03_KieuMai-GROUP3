@@ -37,12 +37,15 @@ public class Menu extends JPanel {
         scroll.setViewportBorder(null);
         add(scroll);
         addTitle("Trang chủ");
-        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.DASHBOARD, "Thống kê"));
+        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.HOME, "Tổng quan"));
         addTitle("Sản Phẩm");
         addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.ADD_SHOPPING_CART, "Bán hàng", "Bán tại quầy", "Hóa đơn"));
-        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.SHOPPING_BASKET, "Quản lý sản phẩm", "Danh sách sản phẩm", "Danh mục sản phẩm"));
+        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.SHOPPING_BASKET, "Quản lý sản phẩm", "Danh sách sản phẩm", "Thuộc tính sản phẩm"));
         addTitle("Tài khoản");
-        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.LOCK_OUTLINE, "Quản lý tài khoản", "Nhân viên", "Khách hàng"));
+        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.SUPERVISOR_ACCOUNT, "Quản lý tài khoản", "Nhân viên", "Khách hàng"));
+        addTitle("Khác");
+        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.SETTINGS, "Cài đặt"));
+        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.EXIT_TO_APP, "Đăng xuất"));
     }
 
     private JScrollPane createScroll() {

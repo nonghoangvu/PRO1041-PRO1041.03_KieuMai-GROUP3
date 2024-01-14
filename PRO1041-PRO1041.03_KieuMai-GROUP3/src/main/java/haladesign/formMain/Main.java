@@ -1,8 +1,10 @@
 package haladesign.formMain;
 
+import haladesign.form.ThongKe;
 import java.awt.Component;
-import haladesign.form.Form_Dashboard;
 import haladesign.form.Form_Empty;
+import haladesign.menu.EventMenuSelected;
+
 /**
  *
  * @author NONG HOANG VU
@@ -19,11 +21,29 @@ public class Main extends javax.swing.JFrame {
     private void init() {
         main = this;
         titleBar.initJFram(this);
-        menu.addEvent((int index, int indexSubMenu) -> {
-            if (index == 0 && indexSubMenu == 0) {
-                showForm(new Form_Empty("Nong Hoang Vu Test Form"));
-            } else {
-                showForm(new Form_Empty(index + " " + indexSubMenu));
+        menu.addEvent(new EventMenuSelected() {
+            @Override
+            public void menuSelected(int index, int indexSubMenu) {
+                switch (index) {
+                    case 0 -> {
+                        switch (indexSubMenu) {
+                            case 0 ->
+                                showForm(new ThongKe());
+                            default ->
+                                showForm(new Form_Empty(index + " " + indexSubMenu));
+                        }
+                    }
+                    case 2 -> {
+                        switch (indexSubMenu) {
+                            case 1 ->
+                                showForm(new ThongKe());
+                            default ->
+                                showForm(new Form_Empty(index + " " + indexSubMenu));
+                        }
+                    }
+                    default ->
+                        showForm(new Form_Empty(index + " " + indexSubMenu));
+                }
             }
         });
         menu.setSelectedIndex(0, 0);
@@ -72,9 +92,8 @@ public class Main extends javax.swing.JFrame {
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMenuLayout.createSequentialGroup()
                 .addComponent(titleBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE))
         );
 
         body.setOpaque(false);
@@ -114,42 +133,42 @@ public class Main extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-//        // (optional) ">
-//        /*
-//         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-//         * look and feel.
-//         * For details see
-//         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        // </editor-fold>
-//        // </editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Main().setVisible(true);
-//            }
-//        });
-//    }
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // (optional) ">
+        /*
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+         * look and feel.
+         * For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        // </editor-fold>
+        // </editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Main().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
