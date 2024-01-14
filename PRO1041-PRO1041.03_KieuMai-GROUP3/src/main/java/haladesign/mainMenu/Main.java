@@ -3,6 +3,7 @@ package haladesign.mainMenu;
 import haladesign.form.ThongKe;
 import java.awt.Component;
 import haladesign.form.Form_Empty;
+import haladesign.form.TestControl;
 import haladesign.menu.EventMenuSelected;
 
 /**
@@ -42,7 +43,8 @@ public class Main extends javax.swing.JFrame {
                         }
                     }
                     default ->
-                        showForm(new Form_Empty(index + " " + indexSubMenu));
+//                        showForm(new Form_Empty(index + " " + indexSubMenu));
+                        showForm(new TestControl());
                 }
             }
         });
