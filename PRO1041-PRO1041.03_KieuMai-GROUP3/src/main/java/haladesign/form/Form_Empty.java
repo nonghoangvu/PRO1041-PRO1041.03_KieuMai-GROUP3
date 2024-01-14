@@ -7,7 +7,7 @@ public class Form_Empty extends javax.swing.JPanel {
 
     public Form_Empty(String name) {
         initComponents();
-        lb.setText("Form " + name);
+        lb.setText(name);
     }
 
     @SuppressWarnings("unchecked")
