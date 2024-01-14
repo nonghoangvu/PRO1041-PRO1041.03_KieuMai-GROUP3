@@ -37,8 +37,8 @@ public class Application {
         SanPhamService prd = new SanPhamService();
         for (SanPham sp : prd.getList()) {
             System.out.println(sp.getId());
-            new Main().setVisible(true);
         }
+        new Main().setVisible(true);
 //        new Login().setVisible(true);
     }
 }
