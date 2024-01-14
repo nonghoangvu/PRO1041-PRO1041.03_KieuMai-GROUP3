@@ -1,6 +1,6 @@
 package haladesign;
 
-import haladesign.formMain.Main;
+import haladesign.mainMenu.Main;
 import haladesign.model.SanPham;
 import haladesign.service.SanPhamService;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
