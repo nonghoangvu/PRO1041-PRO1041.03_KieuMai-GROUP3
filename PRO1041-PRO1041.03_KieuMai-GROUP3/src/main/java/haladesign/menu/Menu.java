@@ -68,13 +68,10 @@ public class Menu extends JPanel {
 
     private JPanel createMenuItem(ModelMenuItem item) {
         MenuItem menuItem = new MenuItem(item, ++index, menuLayout);
-        menuItem.addEvent(new EventMenuSelected() {
-            @Override
-            public void menuSelected(int index, int indexSubMenu) {
-                if (!menuItem.isHasSubMenu() || indexSubMenu != 0) {
-                    clearSelected();
-                    setSelectedIndex(index, indexSubMenu);
-                }
+        menuItem.addEvent((int index1, int indexSubMenu) -> {
+            if (!menuItem.isHasSubMenu() || indexSubMenu != 0) {
+                clearSelected();
+                setSelectedIndex(index1, indexSubMenu);
             }
         });
         return menuItem;

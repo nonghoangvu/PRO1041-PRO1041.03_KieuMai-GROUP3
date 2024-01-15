@@ -3,6 +3,7 @@ package haladesign.mainMenu;
 import haladesign.form.ThongKe;
 import java.awt.Component;
 import haladesign.form.Form_Empty;
+import haladesign.form.ListProductForm;
 import haladesign.form.TestControl;
 import haladesign.menu.EventMenuSelected;
 
@@ -37,7 +38,7 @@ public class Main extends javax.swing.JFrame {
                     case 2 -> {
                         switch (indexSubMenu) {
                             case 1 ->
-                                showForm(new ThongKe());
+                                showForm(new ListProductForm());
                             default ->
                                 showForm(new Form_Empty(index + " " + indexSubMenu));
                         }
@@ -76,7 +77,7 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        background.setBackground(new java.awt.Color(245, 245, 245));
+        background.setBackground(new java.awt.Color(255, 255, 255));
 
         panelMenu.setBackground(new java.awt.Color(255, 255, 255));
 

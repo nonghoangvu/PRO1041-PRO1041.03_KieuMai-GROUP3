@@ -34,9 +34,6 @@ public class SanPham {
     @Column(name = "mo_ta")
     private String mo_ta;
 
-    @Column(name = "hinh_anh")
-    private String hinh_anh;
-
     @Column(name = "trang_thai")
     private Boolean trang_thai;
 

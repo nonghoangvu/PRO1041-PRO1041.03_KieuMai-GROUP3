@@ -41,7 +41,7 @@ public class TitleBar extends JComponent {
         this.fram = fram;
         resizer = new ComponentResizer();
         resizer.setSnapSize(new Dimension(10, 10));
-        resizer.setMinimumSize(new Dimension(900, 600));
+        resizer.setMinimumSize(new Dimension(900, 650));
         resizer.registerComponent(fram);
         fram.addWindowStateListener(new WindowStateListener() {
             @Override

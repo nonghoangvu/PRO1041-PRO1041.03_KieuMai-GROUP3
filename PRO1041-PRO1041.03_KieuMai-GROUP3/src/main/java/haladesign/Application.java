@@ -1,13 +1,10 @@
 package haladesign;
 
 import haladesign.mainMenu.Main;
-import haladesign.model.SanPham;
-import haladesign.service.SanPhamService;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
-//import udpm.fpt.form.Login;
 
 /**
  *
@@ -34,10 +31,6 @@ public class Application {
 
     public static void main(String[] args) {
         context = createApplicationContext(args);
-//        SanPhamService prd = new SanPhamService();
-//        for (SanPham sp : prd.getList()) {
-//            System.out.println(sp.getId());
-//        }
         new Main().setVisible(true);
 //        new Login().setVisible(true);
     }
