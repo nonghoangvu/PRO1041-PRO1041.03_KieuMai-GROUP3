@@ -1,5 +1,6 @@
 package haladesign.menu;
 
+import haladesign.Utitlity.BcryptHash;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -22,6 +23,7 @@ public class Menu extends JPanel {
 
     private int index = -1;
     private final List<EventMenuSelected> events = new ArrayList<>();
+    private final BcryptHash bcryptHash = new BcryptHash();
 
     public Menu() {
         init();
@@ -36,16 +38,16 @@ public class Menu extends JPanel {
         scroll.getViewport().setOpaque(false);
         scroll.setViewportBorder(null);
         add(scroll);
-        addTitle("Trang chủ");
-        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.HOME, "Tổng quan"));
-        addTitle("Sản Phẩm");
-        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.ADD_SHOPPING_CART, "Bán hàng", "Bán tại quầy", "Hóa đơn"));
-        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.SHOPPING_BASKET, "Quản lý sản phẩm", "Danh sách sản phẩm", "Thuộc tính sản phẩm"));
-        addTitle("Tài khoản");
-        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.SUPERVISOR_ACCOUNT, "Quản lý tài khoản", "Nhân viên", "Khách hàng"));
-        addTitle("Khác");
-        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.SETTINGS, "Cài đặt"));
-        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.EXIT_TO_APP, "Đăng xuất"));
+        addTitle(bcryptHash.decodeBase64("VHJhbmcgY2jhu6c="));
+        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.HOME, bcryptHash.decodeBase64("VOG7lW5nIHF1YW4=")));
+        addTitle(bcryptHash.decodeBase64("U+G6o24gUGjhuqlt"));
+        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.ADD_SHOPPING_CART, bcryptHash.decodeBase64("QsOhbiBow6BuZw=="), bcryptHash.decodeBase64("QsOhbiB04bqhaSBxdeG6p3k="), bcryptHash.decodeBase64("SMOzYSDEkcahbg==")));
+        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.SHOPPING_BASKET, bcryptHash.decodeBase64("UXXhuqNuIGzDvSBz4bqjbiBwaOG6qW0="), bcryptHash.decodeBase64("RGFuaCBzw6FjaCBz4bqjbiBwaOG6qW0="), bcryptHash.decodeBase64("VGh14buZYyB0w61uaCBz4bqjbiBwaOG6qW0=")));
+        addTitle(bcryptHash.decodeBase64("VMOgaSBraG/huqNu"));
+        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.SUPERVISOR_ACCOUNT, bcryptHash.decodeBase64("UXXhuqNuIGzDvSB0w6BpIGtob+G6o24="), bcryptHash.decodeBase64("TmjDom4gdmnDqm4="), bcryptHash.decodeBase64("S2jDoWNoIGjDoG5n")));
+        addTitle(bcryptHash.decodeBase64("S2jDoWM="));
+        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.SETTINGS, bcryptHash.decodeBase64("Q8OgaSDEkeG6t3Q=")));
+        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.EXIT_TO_APP, bcryptHash.decodeBase64("xJDEg25nIHh14bqldA==")));
     }
 
     private JScrollPane createScroll() {
@@ -102,8 +104,7 @@ public class Menu extends JPanel {
 
     public void setSelectedIndex(int index, int indexSubMenu) {
         for (Component com : panelMenu.getComponents()) {
-            if (com instanceof MenuItem) {
-                MenuItem item = (MenuItem) com;
+            if (com instanceof MenuItem item) {
                 if (item.getIndex() == index) {
                     item.setSelectedIndex(indexSubMenu);
                     runEvent(index, indexSubMenu);
@@ -115,8 +116,7 @@ public class Menu extends JPanel {
 
     public void clearSelected() {
         for (Component com : panelMenu.getComponents()) {
-            if (com instanceof MenuItem) {
-                MenuItem item = (MenuItem) com;
+            if (com instanceof MenuItem item) {
                 item.clearSelected();
             }
         }
@@ -129,21 +129,3 @@ public class Menu extends JPanel {
     private MigLayout menuLayout;
     private JPanel panelMenu;
 }
-        
-//        addTitle("COMPONENT");
-//        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.WHATSHOT, "UI Kit", "Accordion", "Alerts", "Badges",
-//                "Breadcrumbs", "Buttons", "Button group"));
-//        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.DIRECTIONS_BIKE, "Advanced UI", "Cropper",
-//                "Owl Carousel", "Sweet Alert"));
-//        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.DVR, "Forms", "Basic Elements", "Advanced Elements",
-//                "SEditors", "Wizard"));
-//        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.PIE_CHART_OUTLINED, "Charts", "Apex", "Flot", "Peity",
-//                "Sparkline"));
-//        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.VIEW_LIST, "Table", "Basic Tables", "Data Table"));
-//        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.INSERT_EMOTICON, "Icons", "Feather Icons", "Flag Icons",
-//                "Mdi Icons"));
-//        addTitle("PAGES");
-//        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.INBOX, "Special Pages", "Blank page", "Faq", "Invoice",
-//                "Profile", "Pricing", "Timeline"));
-//        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.LOCK_OUTLINE, "Authentication", "Login", "Register"));
-//        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.ERROR_OUTLINE, "Error", "404", "500"));

@@ -1,5 +1,6 @@
 package haladesign.form;
 
+import haladesign.Utitlity.BcryptHash;
 import haladesign.model.SanPham;
 import haladesign.service.SanPhamService;
 import haladesign.swing.table.TableActionCellEditor;
@@ -12,16 +13,17 @@ import javax.swing.table.DefaultTableModel;
  * @author NONG HOANG VU
  */
 public class ListProductForm extends javax.swing.JPanel {
-
+    
     private final SanPhamService list;
     private DefaultTableModel tblModel;
-
+    private final BcryptHash bcryptHash = new BcryptHash();
+    
     public ListProductForm() {
         initComponents();
         this.list = new SanPhamService();
         fillTable();
     }
-
+    
     private void fillTable() {
         this.tblModel = (DefaultTableModel) tblProduct.getModel();
         this.tblModel.setRowCount(0);
@@ -32,19 +34,19 @@ public class ListProductForm extends javax.swing.JPanel {
                 sv.getId(),
                 sv.getTen_san_pham(),
                 0,
-                sv.getTrang_thai() ? "Đang bán" : "Ngừng bán",};
+                sv.getTrang_thai() ? bcryptHash.decodeBase64("xJBhbmcgYsOhbg==") : bcryptHash.decodeBase64("Tmfhu6tuZyBiw6Fu")};
             this.tblModel.addRow(row);
             TableActionEvent event = (int row1) -> {
                 if (tblProduct.getSelectedRow() < 0) {
                     tblProduct.getCellEditor().stopCellEditing();
                 }
-                System.out.println("Hi");
+                System.out.println(bcryptHash.decodeBase64("SGFja2VyIE5vbmcgSG9hbmcgVnU="));
             };
             tblProduct.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
             tblProduct.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
         }
     }
-
+    
     @SuppressWarnings("unchecked")
 // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

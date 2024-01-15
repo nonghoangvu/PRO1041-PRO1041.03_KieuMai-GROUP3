@@ -4,8 +4,7 @@ import haladesign.form.ThongKe;
 import java.awt.Component;
 import haladesign.form.Form_Empty;
 import haladesign.form.ListProductForm;
-import haladesign.form.TestControl;
-import haladesign.menu.EventMenuSelected;
+import haladesign.system.Setting;
 
 /**
  *
@@ -23,30 +22,28 @@ public class Main extends javax.swing.JFrame {
     private void init() {
         main = this;
         titleBar.initJFram(this);
-        menu.addEvent(new EventMenuSelected() {
-            @Override
-            public void menuSelected(int index, int indexSubMenu) {
-                switch (index) {
-                    case 0 -> {
-                        switch (indexSubMenu) {
-                            case 0 ->
-                                showForm(new ThongKe());
-                            default ->
-                                showForm(new Form_Empty(index + " " + indexSubMenu));
-                        }
+        menu.addEvent((int index, int indexSubMenu) -> {
+            switch (index) {
+                case 0 -> {
+                    switch (indexSubMenu) {
+                        case 0 ->
+                            showForm(new ThongKe());
+                        default ->
+                            showForm(new Form_Empty(index + " " + indexSubMenu));
                     }
-                    case 2 -> {
-                        switch (indexSubMenu) {
-                            case 1 ->
-                                showForm(new ListProductForm());
-                            default ->
-                                showForm(new Form_Empty(index + " " + indexSubMenu));
-                        }
-                    }
-                    default ->
-//                        showForm(new Form_Empty(index + " " + indexSubMenu));
-                        showForm(new TestControl());
                 }
+                case 2 -> {
+                    switch (indexSubMenu) {
+                        case 1 ->
+                            showForm(new ListProductForm());
+                        default ->
+                            showForm(new Form_Empty(index + " " + indexSubMenu));
+                    }
+                }
+                case 4 ->
+                    showForm(new Setting());
+                default ->
+                    showForm(new Form_Empty(index + " " + indexSubMenu));
             }
         });
         menu.setSelectedIndex(0, 0);
