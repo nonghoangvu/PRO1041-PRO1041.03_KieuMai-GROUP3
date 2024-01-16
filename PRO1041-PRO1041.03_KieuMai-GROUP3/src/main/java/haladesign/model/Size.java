@@ -9,6 +9,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Size {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,4 +42,9 @@ public class Size {
 
     @OneToMany(mappedBy = "size")
     private List<SanPhamBienThe> sanPhamBienTheList;
+
+    @Override
+    public String toString() {
+        return loaiSize;
+    }
 }

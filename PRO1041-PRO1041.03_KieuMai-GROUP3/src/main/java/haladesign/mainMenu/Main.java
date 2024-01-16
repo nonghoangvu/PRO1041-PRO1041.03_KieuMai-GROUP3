@@ -4,7 +4,11 @@ import haladesign.form.ThongKe;
 import java.awt.Component;
 import haladesign.form.Form_Empty;
 import haladesign.form.ListProductForm;
+import haladesign.system.GlassPanePopup;
+import haladesign.system.Message;
 import haladesign.system.Setting;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -17,6 +21,15 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         init();
+        GlassPanePopup.install(this);
+    }
+
+    public void showMessage() {
+        Message message = new Message();
+        message.eventOK((ActionEvent ae) -> {
+            GlassPanePopup.closePopupLast();
+        });
+        GlassPanePopup.showPopup(message);
     }
 
     private void init() {

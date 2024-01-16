@@ -8,10 +8,12 @@ import java.awt.event.ActionListener;
  * @author NONG HOANG VU
  */
 public class PanelAction extends javax.swing.JPanel {
+
     public PanelAction() {
         initComponents();
     }
-public void initEvent(TableActionEvent event, int row) {
+
+    public void initEvent(TableActionEvent event, int row) {
         cmdEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -19,6 +21,7 @@ public void initEvent(TableActionEvent event, int row) {
             }
         });
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

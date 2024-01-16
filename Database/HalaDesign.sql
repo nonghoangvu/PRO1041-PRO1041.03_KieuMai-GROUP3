@@ -26,25 +26,15 @@ CREATE TABLE [Color] (
   [ngay_tao] DATETIME DEFAULT (GETDATE())
 )
 GO
-CREATE TABLE [HinhAnh] (
-  [id] INT IDENTITY(1,1) PRIMARY KEY,
-  [url] NVARCHAR(MAX) NULL
-)
-GO
-CREATE TABLE [SanPhamHinhAnh] (
-  [id] INT IDENTITY(1,1) PRIMARY KEY,
-  [id_san_pham_bien_the] INT NULL,
-  [id_hinh_anh] INT NULL
-)
-GO
 CREATE TABLE [SanPhamBienThe] (
   [id] INT IDENTITY(1,1) PRIMARY KEY,
-  [id_san_pham] NCHAR(20) NOT NULL,
+  [id_san_pham] NCHAR(8) NOT NULL,
   [ten_bien_the] NVARCHAR(MAX) NOT NULL,
   [id_size] INT,
   [id_color] INT,
   [so_luong] INT DEFAULT 0,
-  [gia] INT CHECK ([gia] >= 0) NOT NULL
+  [gia] INT CHECK ([gia] >= 0) NOT NULL,
+  [hinhAnh] NVARCHAR(MAX)
 )
 GO
 CREATE TABLE [NhanVien] (
@@ -68,10 +58,6 @@ GO
 ALTER TABLE [SanPhamBienThe] ADD FOREIGN KEY ([id_size]) REFERENCES [Size] ([id])
 GO
 ALTER TABLE [SanPhamBienThe] ADD FOREIGN KEY ([id_color]) REFERENCES [Color] ([id])
-GO
-ALTER TABLE [SanPhamHinhAnh] ADD FOREIGN KEY ([id_san_pham_bien_the]) REFERENCES [SanPhamBienThe] ([id])
-GO
-ALTER TABLE [SanPhamHinhAnh] ADD FOREIGN KEY ([id_hinh_anh]) REFERENCES [HinhAnh] ([id])
 GO
 -- INSERT DATA --
 -- Nhan Vien --
@@ -135,33 +121,16 @@ VALUES
 ('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [XXL-Do]', 5, 3, 100, 758000),
 ('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [M-Do]', 2, 3, 100, 758000),
 ('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [L-Do]', 3, 3, 100, 758000);
-
--- Hinh Anh --
-INSERT INTO [HinhAnh] (url) VALUES('test.png'), ('test2.png'), ('test3.png'), ('test4.png');
--- San Pham Hinh Anh --
-INSERT INTO [SanPhamHinhAnh] (id_san_pham_bien_the, id_hinh_anh) VALUES
-(1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1), (11, 1), (12, 1), (13, 1),
-(14, 1), (15, 1), (16, 1), (17, 1), (18, 1), (19, 1), (20, 1), (21, 1), (22, 1), (23, 1), (24, 1), (25, 1),
-(26, 1), (27, 1), (28, 1), (29, 1), (30, 1), (31, 1), (32, 1), (33, 1), (34, 1), (35, 1)
-
-INSERT INTO [SanPhamHinhAnh] (id_san_pham_bien_the, id_hinh_anh) VALUES
-(5, 3),
-(5, 3),
-(5, 3)
 -- Query --
 SELECT * FROM NhanVien
 SELECT * FROM Size
 SELECT * FROM COLOR
 SELECT * FROM SanPham
 SELECT * FROM SanPhamBienThe
-SELECT * FROM HinhAnh
-SELECT * FROM SanPhamHinhAnh
 
-SELECT SP.id,BT.id, SP.ten_san_pham, BT.ten_bien_the, SZ.loai_size, COL.loai_mau , HA.url
+SELECT SP.id,BT.id, SP.ten_san_pham, BT.ten_bien_the, SZ.loai_size, COL.loai_mau, BT.hinhAnh
 FROM SanPham SP
-LEFT JOIN SanPhamBienThe BT ON BT.id_san_pham = SP.id
-LEFT JOIN Size SZ ON SZ.id = BT.id_size
-LEFT JOIN Color COL ON COL.id = BT.id_color
-LEFT JOIN SanPhamHinhAnh SPHA ON SPHA.id_san_pham_bien_the = BT.id
-LEFT JOIN HinhAnh HA ON HA.id = SPHA.id_hinh_anh
+INNER JOIN SanPhamBienThe BT ON BT.id_san_pham = SP.id
+INNER JOIN Size SZ ON SZ.id = BT.id_size
+INNER JOIN Color COL ON COL.id = BT.id_color
 WHERE SP.id = 'HLD-01'

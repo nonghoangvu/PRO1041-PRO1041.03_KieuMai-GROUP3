@@ -1,12 +1,16 @@
 package haladesign.form;
 
 import haladesign.Utitlity.BcryptHash;
+import haladesign.component.ThemSanPham;
+import haladesign.component.UpdateSanPham;
 import haladesign.model.SanPham;
 import haladesign.model.SanPhamBienThe;
 import haladesign.service.SanPhamService;
 import haladesign.swing.table.TableActionCellEditor;
 import haladesign.swing.table.TableActionCellRender;
 import haladesign.swing.table.TableActionEvent;
+import haladesign.system.GlassPanePopup;
+import java.util.Random;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -40,11 +44,16 @@ public class ListProductForm extends javax.swing.JPanel {
                 if (tblProduct.getSelectedRow() < 0) {
                     tblProduct.getCellEditor().stopCellEditing();
                 }
-                System.out.println(bcryptHash.decodeBase64("SGFja2VyIE5vbmcgSG9hbmcgVnU="));
+                GlassPanePopup.showPopup(new UpdateSanPham(String.valueOf(tblProduct.getValueAt(tblProduct.getSelectedRow(), 1))));
             };
             tblProduct.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
             tblProduct.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
         }
+    }
+
+    public static int generateRandomNumber(int minValue, int maxValue) {
+        Random random = new Random();
+        return random.nextInt(maxValue - minValue + 1) + minValue;
     }
 
     @SuppressWarnings("unchecked")
@@ -59,7 +68,6 @@ public class ListProductForm extends javax.swing.JPanel {
         rdoAll = new javax.swing.JRadioButton();
         rdoSelling = new javax.swing.JRadioButton();
         rdoStopped = new javax.swing.JRadioButton();
-        btnImport = new haladesign.swingStyle.Button();
         btnAdd = new haladesign.swingStyle.Button();
         jScrollPane1 = new haladesign.swing.scroll.ScrollPaneWin11();
         tblProduct = new haladesign.swing.table.Table();
@@ -86,17 +94,16 @@ public class ListProductForm extends javax.swing.JPanel {
         buttonGroup1.add(rdoStopped);
         rdoStopped.setText("Ngừng bán");
 
-        btnImport.setBackground(new java.awt.Color(0, 204, 51));
-        btnImport.setForeground(new java.awt.Color(255, 255, 255));
-        btnImport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/haladesign/icon/excel.png"))); // NOI18N
-        btnImport.setText("Import");
-        btnImport.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-
         btnAdd.setBackground(new java.awt.Color(255, 204, 51));
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/haladesign/icon/plus.png"))); // NOI18N
         btnAdd.setText("Thêm sản phẩm");
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         tblProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -143,8 +150,7 @@ public class ListProductForm extends javax.swing.JPanel {
                                 .addComponent(rdoSelling)
                                 .addGap(20, 20, 20)
                                 .addComponent(rdoStopped, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
@@ -170,21 +176,24 @@ public class ListProductForm extends javax.swing.JPanel {
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
-                .addGap(7, 7, 7)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rdoAll)
                     .addComponent(rdoSelling)
-                    .addComponent(rdoStopped)
-                    .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                    .addComponent(rdoStopped))
+                .addGap(25, 25, 25)
                 .addComponent(jScrollPane1)
                 .addGap(18, 18, 18))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        ThemSanPham themSanPham = new ThemSanPham("HLD-" + generateRandomNumber(10000, 10000000));
+        GlassPanePopup.showPopup(themSanPham);
+    }//GEN-LAST:event_btnAddActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private haladesign.swingStyle.Button btnAdd;
-    private haladesign.swingStyle.Button btnImport;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -1,6 +1,6 @@
 package haladesign.repository;
 
-import haladesign.model.SanPham;
+import haladesign.model.SanPhamBienThe;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,12 +10,11 @@ import org.springframework.data.repository.query.Param;
  *
  * @author NONG HOANG VU
  */
-public interface ISanPham extends JpaRepository<SanPham, String> {
-
+public interface ISanPhamBienThe extends JpaRepository<SanPhamBienThe, Long>{
     @Query("SELECT sp FROM SanPham sp "
             + "LEFT JOIN FETCH sp.bienTheList bienThe "
             + "LEFT JOIN FETCH bienThe.size size "
             + "LEFT JOIN FETCH bienThe.color color "
             + "WHERE sp.id = :productId")
-    List<SanPham> findByIdSanPham(@Param("productId") String productId);
+    List<SanPhamBienThe> findByIdSanPham(@Param("productId") String productId);
 }

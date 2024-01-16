@@ -1,17 +1,13 @@
 package haladesign.model;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -54,7 +50,7 @@ public class SanPhamBienThe {
 
     @Column(name = "gia", nullable = false, columnDefinition = "INT CHECK (gia >= 0)")
     private Integer gia;
-
-    @OneToMany(mappedBy = "sanPhamBienThe", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<SanPhamHinhAnh> sanPhamHinhAnhList;
+    
+    @Column(name = "hinhAnh")
+    private String hinhAnh;
 }
