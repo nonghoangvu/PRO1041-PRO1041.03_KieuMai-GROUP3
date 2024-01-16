@@ -1,7 +1,6 @@
 package haladesign;
 
 import haladesign.mainMenu.Main;
-import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
@@ -21,7 +20,7 @@ public class Application {
     }
 
     public static <T extends Object> T getBean(Class<T> requiredType) {
-            return context.getBean(requiredType);
+        return context.getBean(requiredType);
     }
 
     private static ConfigurableApplicationContext createApplicationContext(String[] args) {
@@ -33,6 +32,5 @@ public class Application {
     public static void main(String[] args) {
         new Main().setVisible(true);
         context = createApplicationContext(args);
-//        new Login().setVisible(true);
     }
 }

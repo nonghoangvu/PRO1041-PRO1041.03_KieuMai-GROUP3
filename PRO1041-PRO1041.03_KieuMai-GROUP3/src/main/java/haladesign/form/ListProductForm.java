@@ -2,6 +2,7 @@ package haladesign.form;
 
 import haladesign.Utitlity.BcryptHash;
 import haladesign.model.SanPham;
+import haladesign.model.SanPhamBienThe;
 import haladesign.service.SanPhamService;
 import haladesign.swing.table.TableActionCellEditor;
 import haladesign.swing.table.TableActionCellRender;
@@ -13,30 +14,29 @@ import javax.swing.table.DefaultTableModel;
  * @author NONG HOANG VU
  */
 public class ListProductForm extends javax.swing.JPanel {
-    
+
     private final SanPhamService list;
     private DefaultTableModel tblModel;
     private final BcryptHash bcryptHash = new BcryptHash();
-    
+
     public ListProductForm() {
         initComponents();
         this.list = new SanPhamService();
         fillTable();
     }
-    
+
     private void fillTable() {
         this.tblModel = (DefaultTableModel) tblProduct.getModel();
         this.tblModel.setRowCount(0);
         Integer count = 0;
-        for (SanPham sv : this.list.getList()) {
-            Object[] row = {
-                ++count,
-                sv.getId(),
-                sv.getTen_san_pham(),
-                0,
-                sv.getTrang_thai() ? bcryptHash.decodeBase64("xJBhbmcgYsOhbg==") : bcryptHash.decodeBase64("Tmfhu6tuZyBiw6Fu")};
+        for (SanPham sp : this.list.getList()) {
+            Integer totalQuantity = sp.getBienTheList().stream()
+                    .filter(spbt -> sp.getId().startsWith(spbt.getId_san_pham().getId()))
+                    .mapToInt(SanPhamBienThe::getSoLuong)
+                    .sum();
+            Object[] row = {++count, sp.getId(), sp.getTen_san_pham(), totalQuantity, sp.getTrang_thai() ? bcryptHash.decodeBase64("xJBhbmcgYsOhbg==") : bcryptHash.decodeBase64("Tmfhu6tuZyBiw6Fu")};
             this.tblModel.addRow(row);
-            TableActionEvent event = (int row1) -> {
+            TableActionEvent event = (int data) -> {
                 if (tblProduct.getSelectedRow() < 0) {
                     tblProduct.getCellEditor().stopCellEditing();
                 }
@@ -46,7 +46,7 @@ public class ListProductForm extends javax.swing.JPanel {
             tblProduct.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
         }
     }
-    
+
     @SuppressWarnings("unchecked")
 // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

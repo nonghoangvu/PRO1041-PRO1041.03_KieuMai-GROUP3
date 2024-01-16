@@ -3,7 +3,7 @@ GO
 USE HalaDesign
 Go
 CREATE TABLE [SanPham] (
-  [id] NCHAR(20) PRIMARY KEY,
+  [id] NCHAR(8) PRIMARY KEY,
   [ten_san_pham] NVARCHAR(MAX) NOT NULL,
   [thuong_hieu] NVARCHAR(100) DEFAULT 'Hala Design',
   [mo_ta] NVARCHAR(MAX) NULL,
