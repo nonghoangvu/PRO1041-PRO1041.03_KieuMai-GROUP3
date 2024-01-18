@@ -3,6 +3,7 @@ package haladesign.form;
 import haladesign.Utitlity.BcryptHash;
 import haladesign.component.ThemSanPham;
 import haladesign.component.UpdateSanPham;
+import haladesign.mainMenu.Main;
 import haladesign.model.SanPham;
 import haladesign.model.SanPhamBienThe;
 import haladesign.service.SanPhamService;
@@ -22,10 +23,12 @@ public class ListProductForm extends javax.swing.JPanel {
     private final SanPhamService list;
     private DefaultTableModel tblModel;
     private final BcryptHash bcryptHash = new BcryptHash();
+    private final Main main;
 
-    public ListProductForm() {
+    public ListProductForm(Main main) {
         initComponents();
         this.list = new SanPhamService();
+        this.main = main;
         fillTable();
     }
 
@@ -44,7 +47,7 @@ public class ListProductForm extends javax.swing.JPanel {
                 if (tblProduct.getSelectedRow() < 0) {
                     tblProduct.getCellEditor().stopCellEditing();
                 }
-                GlassPanePopup.showPopup(new UpdateSanPham(String.valueOf(tblProduct.getValueAt(tblProduct.getSelectedRow(), 1))));
+                this.main.showForm(new UpdateSanPham(String.valueOf(tblProduct.getValueAt(tblProduct.getSelectedRow(), 1))));
             };
             tblProduct.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
             tblProduct.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
@@ -188,8 +191,9 @@ public class ListProductForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        ThemSanPham themSanPham = new ThemSanPham("HLD-" + generateRandomNumber(10000, 10000000));
-        GlassPanePopup.showPopup(themSanPham);
+        ThemSanPham themSanPham = new ThemSanPham(this.main, "HLD-" + generateRandomNumber(10000, 10000000));
+        this.main.showForm(themSanPham);
+//        GlassPanePopup.showPopup(themSanPham);
     }//GEN-LAST:event_btnAddActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

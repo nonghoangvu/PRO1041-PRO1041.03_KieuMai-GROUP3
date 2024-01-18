@@ -9,6 +9,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,4 +41,43 @@ public class Color {
     
     @OneToMany(mappedBy = "color")
     private List<SanPhamBienThe> sanPhamBienTheList;
+
+    @Override
+    public String toString() {
+        return this.loaiMau;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Color other = (Color) obj;
+        if (!Objects.equals(this.loaiMau, other.loaiMau)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.trangThai, other.trangThai)) {
+            return false;
+        }
+        if (!Objects.equals(this.ngayTao, other.ngayTao)) {
+            return false;
+        }
+        return Objects.equals(this.sanPhamBienTheList, other.sanPhamBienTheList);
+    }
+    
 }

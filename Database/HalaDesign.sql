@@ -3,7 +3,7 @@ GO
 USE HalaDesign
 Go
 CREATE TABLE [SanPham] (
-  [id] NCHAR(8) PRIMARY KEY,
+  [id] NCHAR(15) PRIMARY KEY,
   [ten_san_pham] NVARCHAR(MAX) NOT NULL,
   [thuong_hieu] NVARCHAR(100) DEFAULT 'Hala Design',
   [mo_ta] NVARCHAR(MAX) NULL,
@@ -28,7 +28,7 @@ CREATE TABLE [Color] (
 GO
 CREATE TABLE [SanPhamBienThe] (
   [id] INT IDENTITY(1,1) PRIMARY KEY,
-  [id_san_pham] NCHAR(8) NOT NULL,
+  [id_san_pham] NCHAR(15) NOT NULL,
   [ten_bien_the] NVARCHAR(MAX) NOT NULL,
   [id_size] INT,
   [id_color] INT,
@@ -128,9 +128,10 @@ SELECT * FROM COLOR
 SELECT * FROM SanPham
 SELECT * FROM SanPhamBienThe
 
-SELECT SP.id,BT.id, SP.ten_san_pham, BT.ten_bien_the, SZ.loai_size, COL.loai_mau, BT.hinhAnh
+SELECT SP.id,BT.id, SP.ten_san_pham, BT.ten_bien_the, SZ.loai_size, COL.loai_mau, BT.hinhAnh, BT.gia,BT.so_luong
 FROM SanPham SP
 INNER JOIN SanPhamBienThe BT ON BT.id_san_pham = SP.id
 INNER JOIN Size SZ ON SZ.id = BT.id_size
 INNER JOIN Color COL ON COL.id = BT.id_color
-WHERE SP.id = 'HLD-01'
+WHERE SP.id = 'HLD-9011146'
+

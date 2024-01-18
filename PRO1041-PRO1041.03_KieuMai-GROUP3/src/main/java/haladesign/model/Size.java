@@ -47,4 +47,38 @@ public class Size {
     public String toString() {
         return loaiSize;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Size other = (Size) obj;
+        if (!Objects.equals(this.loaiSize, other.loaiSize)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.trangThai, other.trangThai)) {
+            return false;
+        }
+        if (!Objects.equals(this.ngayTao, other.ngayTao)) {
+            return false;
+        }
+        return Objects.equals(this.sanPhamBienTheList, other.sanPhamBienTheList);
+    }
+
 }

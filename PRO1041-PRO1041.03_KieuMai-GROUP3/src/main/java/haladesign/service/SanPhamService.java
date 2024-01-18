@@ -3,12 +3,14 @@ package haladesign.service;
 import haladesign.model.SanPham;
 import static haladesign.Application.getBean;
 import haladesign.model.Color;
+import haladesign.model.SanPhamBienThe;
 import haladesign.model.Size;
 import haladesign.repository.IColor;
 import haladesign.repository.ISanPham;
 import haladesign.repository.ISize;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -38,5 +40,12 @@ public class SanPhamService {
 
     public List<Color> getCOlor() {
         return this.iColor.findAll();
+    }
+
+    @Transactional
+    public Boolean insert(SanPham sanPham, SanPhamBienThe bienThe) {
+        sanPham.getBienTheList().add(bienThe);
+        bienThe.setId_san_pham(sanPham);
+        return this.iSP.saveAndFlush(sanPham) != null;
     }
 }

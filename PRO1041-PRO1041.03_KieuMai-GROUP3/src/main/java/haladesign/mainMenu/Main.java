@@ -8,7 +8,6 @@ import haladesign.system.GlassPanePopup;
 import haladesign.system.Message;
 import haladesign.system.Setting;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  *
@@ -48,7 +47,7 @@ public class Main extends javax.swing.JFrame {
                 case 2 -> {
                     switch (indexSubMenu) {
                         case 1 ->
-                            showForm(new ListProductForm());
+                            showForm(new ListProductForm(this));
                         default ->
                             showForm(new Form_Empty(index + " " + indexSubMenu));
                     }

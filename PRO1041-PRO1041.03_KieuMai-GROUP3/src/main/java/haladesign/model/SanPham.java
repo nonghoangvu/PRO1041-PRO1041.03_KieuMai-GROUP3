@@ -7,6 +7,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -48,6 +49,6 @@ public class SanPham {
     private Integer id_nhan_vien;
 
     @OneToMany(mappedBy = "id_san_pham", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<SanPhamBienThe> bienTheList;
+    private List<SanPhamBienThe> bienTheList = new ArrayList<>();
 
 }
