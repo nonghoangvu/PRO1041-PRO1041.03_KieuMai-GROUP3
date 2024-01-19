@@ -5,7 +5,6 @@ Go
 CREATE TABLE [SanPham] (
   [id] NCHAR(15) PRIMARY KEY,
   [ten_san_pham] NVARCHAR(MAX) NOT NULL,
-  [thuong_hieu] NVARCHAR(100) DEFAULT 'Hala Design',
   [mo_ta] NVARCHAR(MAX) NULL,
   [trang_thai] BIT DEFAULT 1,
   [ngay_tao] DATETIME DEFAULT (GETDATE()),

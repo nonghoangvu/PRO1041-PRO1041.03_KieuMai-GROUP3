@@ -33,9 +33,6 @@ public class SanPham {
     @Column(name = "ten_san_pham")
     private String ten_san_pham;
 
-    @Column(name = "thuong_hieu")
-    private String thuong_hieu;
-
     @Column(name = "mo_ta")
     private String mo_ta;
 

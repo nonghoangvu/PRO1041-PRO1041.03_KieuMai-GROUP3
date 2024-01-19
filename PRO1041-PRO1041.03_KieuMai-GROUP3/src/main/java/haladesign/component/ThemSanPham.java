@@ -7,15 +7,20 @@ import haladesign.model.SanPham;
 import haladesign.model.SanPhamBienThe;
 import haladesign.model.Size;
 import haladesign.service.SanPhamService;
+import haladesign.swing.table.TableActionCellEditor2;
 import haladesign.swing.table.TableActionCellRender2;
+import haladesign.swing.table.TableActionEvent;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,6 +30,8 @@ public class ThemSanPham extends javax.swing.JPanel {
 
     private final SanPhamService list;
     private final Main main;
+    private List<SanPhamBienThe> bienTheList = new ArrayList<>();
+    private DefaultTableModel tblModel;
 
     public ThemSanPham(Main main, String id) {
         initComponents();
@@ -44,7 +51,28 @@ public class ThemSanPham extends javax.swing.JPanel {
 
     /*__________________________Fill Data__________________________*/
     private void fillTable() {
+        tblModel = (DefaultTableModel) tblSanPham.getModel();
+        tblModel.setRowCount(0);
+        Integer[] count = {0};
+        this.bienTheList.forEach((SanPhamBienThe sp) -> {
+            Object[] row = {
+                ++count[0],
+                sp.getTenBienThe(),
+                sp.getSoLuong(),
+                sp.getColor().getLoaiMau(),
+                sp.getSize().getLoaiSize(),
+                sp.getGia()
+            };
+            tblModel.addRow(row);
+        });
+        TableActionEvent event = (int data) -> {
+            if (tblSanPham.getSelectedRow() < 0) {
+                tblSanPham.getCellEditor().stopCellEditing();
+            }
+            deleteSelectRow(data);
+        };
         tblSanPham.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRender2());
+        tblSanPham.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditor2(event));
     }
 
     private void fillSize() {
@@ -115,7 +143,13 @@ public class ThemSanPham extends javax.swing.JPanel {
     private void save() {
         txtSanPham.setEditable(false);
         txtMoTa.setEditable(false);
-        System.out.println(this.list.insert(getSanPham(), getSanPhamBienThe()));
+        System.out.println(this.list.insert(getSanPham(), this.bienTheList));
+    }
+
+    private void add() {
+        txtSanPham.setEditable(false);
+        txtMoTa.setEditable(false);
+        this.bienTheList.add(getSanPhamBienThe());
         fillTable();
     }
 
@@ -153,6 +187,16 @@ public class ThemSanPham extends javax.swing.JPanel {
     public Integer generateRandomNumber(int minValue, int maxValue) {
         Random random = new Random();
         return random.nextInt(maxValue - minValue + 1) + minValue;
+    }
+
+    private void deleteSelectRow(int index) {
+        if (index >= 0 && index < this.bienTheList.size()) {
+            this.bienTheList.remove(index);
+            tblModel = (DefaultTableModel) tblSanPham.getModel();
+            tblModel.fireTableDataChanged();
+            System.out.println(this.bienTheList.size());
+            fillTable();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -209,6 +253,11 @@ public class ThemSanPham extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tblSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSanPhamMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblSanPham);
@@ -385,12 +434,20 @@ public class ThemSanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        save();
+        add();
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnHoanThanhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoanThanhActionPerformed
+        save();
         this.main.showForm(new ListProductForm(this.main));
+//        this.bienTheList.forEach(s -> {
+//            System.out.println(s.getSize());
+//        });
     }//GEN-LAST:event_btnHoanThanhActionPerformed
+
+    private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
+        System.out.println("Index: " + tblSanPham.getSelectedRow());
+    }//GEN-LAST:event_tblSanPhamMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -43,9 +43,9 @@ public class SanPhamService {
     }
 
     @Transactional
-    public Boolean insert(SanPham sanPham, SanPhamBienThe bienThe) {
-        sanPham.getBienTheList().add(bienThe);
-        bienThe.setId_san_pham(sanPham);
+    public Boolean insert(SanPham sanPham, List<SanPhamBienThe> bienTheList) {
+        sanPham.setBienTheList(bienTheList);
+        bienTheList.forEach(s -> s.setId_san_pham(sanPham));
         return this.iSP.saveAndFlush(sanPham) != null;
     }
 }
