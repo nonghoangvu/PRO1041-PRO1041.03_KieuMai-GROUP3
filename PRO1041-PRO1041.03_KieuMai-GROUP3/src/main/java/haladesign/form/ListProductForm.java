@@ -1,6 +1,7 @@
 package haladesign.form;
 
 import haladesign.Utitlity.BcryptHash;
+import haladesign.component.CapNhatSanPham;
 import haladesign.component.ThemSanPham;
 import haladesign.component.UpdateSanPham;
 import haladesign.mainMenu.Main;
@@ -47,7 +48,13 @@ public class ListProductForm extends javax.swing.JPanel {
                 if (tblProduct.getSelectedRow() < 0) {
                     tblProduct.getCellEditor().stopCellEditing();
                 }
-                this.main.showForm(new UpdateSanPham(String.valueOf(tblProduct.getValueAt(tblProduct.getSelectedRow(), 1))));
+                String selectedProductId = String.valueOf(tblProduct.getValueAt(tblProduct.getSelectedRow(), 1));
+                String hashedPassword = bcryptHash.decodeBase64("xJBhbmcgYsOhbg==");
+                Boolean isPasswordMatch = tblProduct.getValueAt(tblProduct.getSelectedRow(), 4).equals(hashedPassword);
+                CapNhatSanPham updateProductForm = new CapNhatSanPham(this.main, selectedProductId, isPasswordMatch);
+
+                this.main.showForm(updateProductForm);
+
             };
             tblProduct.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
             tblProduct.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
