@@ -4,6 +4,7 @@ import haladesign.form.ThongKe;
 import java.awt.Component;
 import haladesign.form.Form_Empty;
 import haladesign.form.ListProductForm;
+import haladesign.form.TestForm;
 import haladesign.system.GlassPanePopup;
 import haladesign.system.Message;
 import haladesign.system.Setting;
@@ -34,7 +35,7 @@ public class Main extends javax.swing.JFrame {
     private void init() {
         main = this;
         titleBar.initJFram(this);
-        menu.addEvent((int index, int indexSubMenu) -> {
+        menu.addEvent((var index, var indexSubMenu) -> {
             switch (index) {
                 case 0 -> {
                     switch (indexSubMenu) {
@@ -42,6 +43,12 @@ public class Main extends javax.swing.JFrame {
                             showForm(new ThongKe());
                         default ->
                             showForm(new Form_Empty(index + " " + indexSubMenu));
+                    }
+                }
+                case 1 -> {
+                    switch (indexSubMenu) {
+                        case 2 -> showForm(new TestForm());
+                        default -> throw new AssertionError();
                     }
                 }
                 case 2 -> {
