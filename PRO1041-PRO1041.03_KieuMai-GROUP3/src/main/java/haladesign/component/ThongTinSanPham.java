@@ -118,7 +118,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
     }
 
     private void setForm(String id) {
-        SanPham sp = this.list.getByIdSanPham(id).getFirst();
+        SanPham sp = this.list.getByIdSanPham(id).get(0);
         txtSanPham.setText(sp.getTen_san_pham());
         txtMoTa.setText(sp.getMo_ta() != null ? sp.getMo_ta() : "");
     }
