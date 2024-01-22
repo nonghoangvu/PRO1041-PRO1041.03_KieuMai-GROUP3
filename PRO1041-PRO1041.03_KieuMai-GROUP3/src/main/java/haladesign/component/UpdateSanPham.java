@@ -73,7 +73,7 @@ public class UpdateSanPham extends javax.swing.JPanel {
     }
 
     private void setData(String id) {
-        SanPham sp = this.listSanPham.getFirst();
+        SanPham sp = this.listSanPham.get(0);
         txtSanPham.setText(sp.getTen_san_pham());
 //        txtThuongHieu.setText(sp.getThuong_hieu());
         txtMota.setText(sp.getMo_ta() != null ? sp.getMo_ta() : "");
