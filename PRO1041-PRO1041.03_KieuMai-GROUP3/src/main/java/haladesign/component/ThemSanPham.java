@@ -1,5 +1,6 @@
 package haladesign.component;
 
+import haladesign.Utitlity.ValidateNumber;
 import haladesign.form.ListProductForm;
 import haladesign.mainMenu.Main;
 import haladesign.model.Color;
@@ -10,14 +11,26 @@ import haladesign.service.SanPhamService;
 import haladesign.swing.table.TableActionCellEditor2;
 import haladesign.swing.table.TableActionCellRender2;
 import haladesign.swing.table.TableActionEvent;
+import haladesign.system.GlassPanePopup;
+import haladesign.system.Message;
+import haladesign.system.Notification;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
 import java.awt.geom.RoundRectangle2D;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import java.util.Objects;
 import java.util.Random;
+import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -30,8 +43,9 @@ public class ThemSanPham extends javax.swing.JPanel {
 
     private final SanPhamService list;
     private final Main main;
-    private List<SanPhamBienThe> bienTheList = new ArrayList<>();
+    private final ArrayList<SanPhamBienThe> bienTheList = new ArrayList<>();
     private DefaultTableModel tblModel;
+    private String url = null;
 
     public ThemSanPham(Main main, String id) {
         initComponents();
@@ -43,8 +57,10 @@ public class ThemSanPham extends javax.swing.JPanel {
 
     private void init(String id) {
         lbID.setText(id);
+        txtTenBienThe.setText("");
         fillSize();
         fillColor();
+        tableFormat();
         updateNameProduct();
 
     }
@@ -65,20 +81,15 @@ public class ThemSanPham extends javax.swing.JPanel {
             };
             tblModel.addRow(row);
         });
-        TableActionEvent event = (int data) -> {
-            if (tblSanPham.getSelectedRow() < 0) {
-                tblSanPham.getCellEditor().stopCellEditing();
-            }
-            deleteSelectRow(data);
-        };
-        tblSanPham.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRender2());
-        tblSanPham.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditor2(event));
     }
 
     private void fillSize() {
         DefaultComboBoxModel<Size> cbbModel = new DefaultComboBoxModel<>();
+        Size sizeNull = new Size();
+        sizeNull.setLoaiSize("Chọn");
         cbbSize.removeAll();
         cbbSize.setModel(cbbModel);
+        cbbModel.addElement(sizeNull);
         this.list.getSize().forEach(size -> {
             cbbModel.addElement(size);
         });
@@ -86,8 +97,11 @@ public class ThemSanPham extends javax.swing.JPanel {
 
     private void fillColor() {
         DefaultComboBoxModel<Color> cbbModel = new DefaultComboBoxModel<>();
+        Color colorNull = new Color();
+        colorNull.setLoaiMau("Chọn");
         cbbColor.removeAll();
         cbbColor.setModel(cbbModel);
+        cbbModel.addElement(colorNull);
         this.list.getCOlor().forEach(color -> {
             cbbModel.addElement(color);
         });
@@ -106,6 +120,40 @@ public class ThemSanPham extends javax.swing.JPanel {
         txtTenBienThe.setText("");
         txtGia.setText("");
         btnTrangThai.setSelected(false);
+        this.bienTheList.clear();
+        setImange(null);
+        fillTable();
+    }
+
+    private void setImange(String url) {
+        lbImage.setText(null);
+        try {
+            int labelWidth = lbImage.getWidth();
+            int labelHeight = lbImage.getHeight();
+            ImageIcon originalIcon = new javax.swing.ImageIcon(
+                    Objects.requireNonNull(getClass().getResource("/haladesign/photo/" + url)));
+            Image originalImage = originalIcon.getImage();
+            Image scaledImage = originalImage.getScaledInstance(labelWidth, labelHeight,
+                    Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            lbImage.setIcon(scaledIcon);
+        } catch (Exception e) {
+            lbImage.setIcon(null);
+            lbImage.setText("Image not found");
+        }
+    }
+
+    private void tableClickRow() {
+        if (tblSanPham.getSelectedRow() < 0) {
+            return;
+        }
+        SanPhamBienThe s = this.bienTheList.get(tblSanPham.getSelectedRow());
+        txtTenBienThe.setText(s.getTenBienThe());
+        txtSoLuong.setText(String.valueOf(s.getSoLuong()));
+        txtGia.setText(String.valueOf(s.getGia()));
+        cbbSize.setSelectedItem(s.getSize());
+        cbbColor.setSelectedItem(s.getColor());
+        setImange(s.getHinhAnh());
     }
 
     /*__________________________Get Data__________________________*/
@@ -115,6 +163,7 @@ public class ThemSanPham extends javax.swing.JPanel {
         sp.setTen_san_pham(txtSanPham.getText());
         sp.setMo_ta(txtMoTa.getText());
         sp.setTrang_thai(btnTrangThai.isSelected());
+        sp.setNgay_tao(new Date());
         return sp;
     }
 
@@ -126,6 +175,7 @@ public class ThemSanPham extends javax.swing.JPanel {
         sp.setColor(getColorForm());
         sp.setSoLuong(Integer.valueOf(txtSoLuong.getText()));
         sp.setGia(Integer.valueOf(txtGia.getText()));
+        sp.setHinhAnh(this.url);
         return sp;
     }
 
@@ -141,16 +191,73 @@ public class ThemSanPham extends javax.swing.JPanel {
 
     /*__________________________Controller__________________________*/
     private void save() {
-        txtSanPham.setEditable(false);
-        txtMoTa.setEditable(false);
-        System.out.println(this.list.insert(getSanPham(), this.bienTheList));
+        if (this.bienTheList.size() < 1) {
+            new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng thêm ít nhất một thuộc tính cho sản phẩm!").showNotification();
+        } else if (!btnTrangThai.isSelected()) {
+            Message message = new Message();
+            message.setTitle("Thêm sản phẩm");
+            message.setMessage("Sản phẩm này chưa kích hoạt trạng thái hoạt động bạn có muốn tiếp tục không?");
+            message.eventOK(new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    txtSanPham.setEditable(false);
+                    txtMoTa.setEditable(false);
+                    if (ThemSanPham.this.list.insert(getSanPham(), ThemSanPham.this.bienTheList)) {
+                        new Notification(ThemSanPham.this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Đã thêm thành công").showNotification();
+                    }
+                    GlassPanePopup.closePopupLast();
+                    ThemSanPham.this.main.showForm(new ListProductForm(ThemSanPham.this.main));
+                }
+            });
+            GlassPanePopup.showPopup(message);
+        } else {
+            Message message = new Message();
+            message.setTitle("Thêm sản phẩm");
+            message.setMessage("Bạn có muốn tiếp tục không?");
+            message.eventOK(new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    txtSanPham.setEditable(false);
+                    txtMoTa.setEditable(false);
+                    if (ThemSanPham.this.list.insert(getSanPham(), ThemSanPham.this.bienTheList)) {
+                        new Notification(ThemSanPham.this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Đã thêm thành công").showNotification();
+                    }
+                    GlassPanePopup.closePopupLast();
+                    ThemSanPham.this.main.showForm(new ListProductForm(ThemSanPham.this.main));
+                }
+            });
+            GlassPanePopup.showPopup(message);
+        }
     }
 
     private void add() {
-        txtSanPham.setEditable(false);
-        txtMoTa.setEditable(false);
         this.bienTheList.add(getSanPhamBienThe());
+        txtSoLuong.setText("");
+        cbbSize.setSelectedIndex(0);
+        cbbColor.setSelectedIndex(0);
+        txtGia.setText("");
+        setImange(null);
         fillTable();
+        new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Thêm thành công!").showNotification();
+    }
+
+    private void DeleteRow(int row) {
+        try {
+            Message message = new Message();
+            message.setTitle("Xóa sản phẩm");
+            message.setMessage("Bạn có chắc chắn xóa sản phẩm này không?");
+            message.eventOK(new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ThemSanPham.this.bienTheList.remove(row);
+                    fillTable();
+                    GlassPanePopup.closePopupLast();
+                }
+            });
+            GlassPanePopup.showPopup(message);
+        } catch (Exception e) {
+            new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Không thể xóa sản phẩm này vui lòng thử lại sau!").showNotification();
+        }
     }
 
     /*__________________________System__________________________*/
@@ -158,17 +265,23 @@ public class ThemSanPham extends javax.swing.JPanel {
         txtSanPham.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                txtTenBienThe.setText(txtSanPham.getText());
+                String size = cbbSize.getSelectedItem().toString();
+                String color = cbbColor.getSelectedItem().toString();
+                txtTenBienThe.setText(String.format("%s [%s - %s]", txtSanPham.getText(), size != null ? size : "", color != null ? color : ""));
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                txtTenBienThe.setText(txtSanPham.getText());
+                String size = cbbSize.getSelectedItem().toString();
+                String color = cbbColor.getSelectedItem().toString();
+                txtTenBienThe.setText(String.format("%s [%s - %s]", txtSanPham.getText(), size != null ? size : "", color != null ? color : ""));
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                txtTenBienThe.setText(txtSanPham.getText());
+                String size = cbbSize.getSelectedItem().toString();
+                String color = cbbColor.getSelectedItem().toString();
+                txtTenBienThe.setText(String.format("%s [%s - %s]", txtSanPham.getText(), size != null ? size : "", color != null ? color : ""));
             }
 
         });
@@ -189,14 +302,99 @@ public class ThemSanPham extends javax.swing.JPanel {
         return random.nextInt(maxValue - minValue + 1) + minValue;
     }
 
-    private void deleteSelectRow(int index) {
-        if (index >= 0 && index < this.bienTheList.size()) {
-            this.bienTheList.remove(index);
-            tblModel = (DefaultTableModel) tblSanPham.getModel();
-            tblModel.fireTableDataChanged();
-            System.out.println(this.bienTheList.size());
-            fillTable();
+    private Boolean isValidate() {
+        Notification notification;
+        if (txtSanPham.getText().trim().isBlank()) {
+            notification = new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng thêm đủ thông tin!");
+            notification.showNotification();
+            txtSanPham.requestFocus();
+            return false;
+        } else if (txtSoLuong.getText().trim().isBlank()) {
+            notification = new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng thêm đủ thông tin!");
+            notification.showNotification();
+            txtSoLuong.requestFocus();
+            return false;
+        } else if (cbbSize.getSelectedIndex() == 0) {
+            notification = new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng chọn Size!");
+            notification.showNotification();
+            cbbSize.requestFocus();
+            return false;
+        } else if (cbbColor.getSelectedIndex() == 0) {
+            notification = new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng chọn màu sắc!");
+            notification.showNotification();
+            cbbColor.requestFocus();
+            return false;
+        } else if (txtGia.getText().trim().isBlank()) {
+            notification = new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng thêm đủ thông tin!");
+            notification.showNotification();
+            txtGia.requestFocus();
+            return false;
+        } else {
+            if (!(new ValidateNumber().isNumber(txtSoLuong.getText().trim()))) {
+                notification = new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Dữ liệu không hợp lệ!");
+                notification.showNotification();
+                txtSoLuong.requestFocus();
+                return false;
+            } else if (!(new ValidateNumber().isNumber(txtGia.getText().trim()))) {
+                notification = new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Dữ liệu không hợp lệ!");
+                notification.showNotification();
+                txtGia.requestFocus();
+                return false;
+            } else {
+                Integer soLuong = Integer.valueOf(txtSoLuong.getText().trim());
+                Integer gia = Integer.valueOf(txtGia.getText().trim());
+                if (soLuong < 0) {
+                    notification = new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Số lượng không hợp lệ!");
+                    notification.showNotification();
+                    txtSoLuong.requestFocus();
+                    return false;
+                } else if (gia < 1000) {
+                    notification = new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Giá không hợp lệ!");
+                    notification.showNotification();
+                    txtGia.requestFocus();
+                    return false;
+                } else {
+                    return true;
+                }
+            }
         }
+    }
+
+    public String urlImage(Boolean get_set) {
+        try {
+            String currentDirectory = System.getProperty("user.dir")
+                    + "/src/main/java/haladesign/photo/";
+            JFileChooser fileChooser = new JFileChooser(currentDirectory);
+            fileChooser.showOpenDialog(null);
+            File selectedFile = fileChooser.getSelectedFile();
+
+            if (selectedFile != null) {
+                if (get_set) {
+                    return selectedFile.getName();
+                }
+                Image img = ImageIO.read(selectedFile);
+                lbImage.setText(null);
+                lbImage.setIcon(new ImageIcon(
+                        img.getScaledInstance(lbImage.getWidth(),
+                                lbImage.getHeight(),
+                                lbImage.getWidth())));
+                return selectedFile.getName();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    private void tableFormat() {
+        TableActionEvent event = (int data) -> {
+            if (tblSanPham.isEditing()) {
+                tblSanPham.getCellEditor().stopCellEditing();
+            }
+            DeleteRow(data);
+        };
+        tblSanPham.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRender2());
+        tblSanPham.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditor2(event));
     }
 
     @SuppressWarnings("unchecked")
@@ -277,8 +475,18 @@ public class ThemSanPham extends javax.swing.JPanel {
         }
 
         cbbSize.setLabeText("Size");
+        cbbSize.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbSizeItemStateChanged(evt);
+            }
+        });
 
         cbbColor.setLabeText("Color");
+        cbbColor.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbColorItemStateChanged(evt);
+            }
+        });
 
         txtGia.setLabelText("Giá");
 
@@ -301,17 +509,24 @@ public class ThemSanPham extends javax.swing.JPanel {
         txtMoTa.setRows(5);
         textAreaScroll1.setViewportView(txtMoTa);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lbImage.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbImage.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbImage.setText("IMG");
+        lbImage.setText("Image not found");
         lbImage.setToolTipText("");
-        jPanel1.add(lbImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 230));
+        lbImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbImageMouseClicked(evt);
+            }
+        });
+        jPanel1.add(lbImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 190, 210));
 
-        btnLuu.setBackground(java.awt.SystemColor.activeCaption);
-        btnLuu.setForeground(java.awt.SystemColor.control);
-        btnLuu.setText("Lưu");
+        btnLuu.setBackground(new java.awt.Color(102, 204, 255));
+        btnLuu.setForeground(new java.awt.Color(255, 255, 255));
+        btnLuu.setText("Thêm");
         btnLuu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -319,8 +534,8 @@ public class ThemSanPham extends javax.swing.JPanel {
             }
         });
 
-        btnLamMoi.setBackground(java.awt.SystemColor.activeCaption);
-        btnLamMoi.setForeground(java.awt.SystemColor.control);
+        btnLamMoi.setBackground(new java.awt.Color(102, 204, 255));
+        btnLamMoi.setForeground(new java.awt.Color(255, 255, 255));
         btnLamMoi.setText("Làm mới");
         btnLamMoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
@@ -329,8 +544,8 @@ public class ThemSanPham extends javax.swing.JPanel {
             }
         });
 
-        btnHoanThanh.setBackground(java.awt.SystemColor.activeCaption);
-        btnHoanThanh.setForeground(java.awt.SystemColor.control);
+        btnHoanThanh.setBackground(new java.awt.Color(102, 204, 255));
+        btnHoanThanh.setForeground(new java.awt.Color(255, 255, 255));
         btnHoanThanh.setText("Hoàn thành");
         btnHoanThanh.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnHoanThanh.addActionListener(new java.awt.event.ActionListener() {
@@ -430,24 +645,47 @@ public class ThemSanPham extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
-        clear();
+        Message message = new Message();
+        message.setTitle("Làm mới sản phẩm");
+        message.setMessage("Tất cả dữ liệu của sản phẩm sẽ bị xóa bạn có muốn tiếp tục không?");
+        message.eventOK(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clear();
+                GlassPanePopup.closePopupLast();
+            }
+        });
+        GlassPanePopup.showPopup(message);
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        add();
+        if (isValidate()) {
+            add();
+        }
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnHoanThanhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoanThanhActionPerformed
         save();
-        this.main.showForm(new ListProductForm(this.main));
-//        this.bienTheList.forEach(s -> {
-//            System.out.println(s.getSize());
-//        });
     }//GEN-LAST:event_btnHoanThanhActionPerformed
-
     private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
-        System.out.println("Index: " + tblSanPham.getSelectedRow());
+        tableClickRow();
     }//GEN-LAST:event_tblSanPhamMouseClicked
+
+    private void cbbSizeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbSizeItemStateChanged
+        String size = (cbbSize.getSelectedIndex() > 0) ? cbbSize.getSelectedItem().toString() : "";
+        String color = (cbbColor.getSelectedIndex() > 0) ? cbbColor.getSelectedItem().toString() : "";
+        txtTenBienThe.setText(String.format("%s [%s - %s]", txtSanPham.getText(), size != null ? size : "", color != null ? color : ""));
+    }//GEN-LAST:event_cbbSizeItemStateChanged
+
+    private void cbbColorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbColorItemStateChanged
+        String size = (cbbSize.getSelectedIndex() > 0) ? cbbSize.getSelectedItem().toString() : "";
+        String color = (cbbColor.getSelectedIndex() > 0) ? cbbColor.getSelectedItem().toString() : "";
+        txtTenBienThe.setText(String.format("%s [%s - %s]", txtSanPham.getText(), size != null ? size : "", color != null ? color : ""));
+    }//GEN-LAST:event_cbbColorItemStateChanged
+
+    private void lbImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbImageMouseClicked
+        this.url = urlImage(false);
+    }//GEN-LAST:event_lbImageMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
