@@ -30,7 +30,7 @@ public class Application {
     }
 
     public static void main(String[] args) {
-        new Main().setVisible(true);
         context = createApplicationContext(args);
+        new Main().setVisible(true);
     }
 }

@@ -4,7 +4,6 @@ import haladesign.form.ThongKe;
 import java.awt.Component;
 import haladesign.form.Form_Empty;
 import haladesign.form.ListProductForm;
-import haladesign.form.TestForm;
 import haladesign.system.GlassPanePopup;
 import haladesign.system.Message;
 import haladesign.system.Setting;
@@ -17,7 +16,6 @@ import java.awt.event.ActionEvent;
 public class Main extends javax.swing.JFrame {
 
     private static Main main;
-
     public Main() {
         initComponents();
         init();
@@ -43,12 +41,6 @@ public class Main extends javax.swing.JFrame {
                             showForm(new ThongKe());
                         default ->
                             showForm(new Form_Empty(index + " " + indexSubMenu));
-                    }
-                }
-                case 1 -> {
-                    switch (indexSubMenu) {
-                        case 2 -> showForm(new TestForm());
-                        default -> throw new AssertionError();
                     }
                 }
                 case 2 -> {
@@ -80,7 +72,6 @@ public class Main extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -151,43 +142,6 @@ public class Main extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-//
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-//        // (optional) ">
-//        /*
-//         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-//         * look and feel.
-//         * For details see
-//         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        // </editor-fold>
-//        // </editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Main().setVisible(true);
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
