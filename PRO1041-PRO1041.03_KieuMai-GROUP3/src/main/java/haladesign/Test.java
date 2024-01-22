@@ -1,5 +1,6 @@
 package haladesign;
 
+import haladesign.Utitlity.BcryptHash;
 import haladesign.model.SanPham;
 import haladesign.repository.ISanPham;
 import haladesign.repository.ISize;
@@ -33,10 +34,12 @@ public class Test {
     }
 
     public static void main(String[] args) {
-        context = createApplicationContext(args);
-        ISize s = getBean(ISize.class);
-        s.findAll().forEach(sp -> {
-            System.out.println(sp);
-        });
+//        context = createApplicationContext(args);
+//        ISize s = getBean(ISize.class);
+//        s.findAll().forEach(sp -> {
+//            System.out.println(sp);
+//        });
+        BcryptHash b = new BcryptHash();
+        System.out.println(b.encodeBase64("Tài khoản của tôi"));
     }
 }
