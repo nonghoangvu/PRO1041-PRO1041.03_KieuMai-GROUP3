@@ -159,8 +159,8 @@ public class ThongTinSanPham extends javax.swing.JPanel {
         txtTenBienThe.setText(s.getTenBienThe());
         txtSoLuong.setText(String.valueOf(s.getSoLuong()));
         txtGia.setText(String.valueOf(s.getGia()));
-        cbbSize.setSelectedItem(s.getSize());
-        cbbColor.setSelectedItem(s.getColor());
+        cbbSize.setSelectedIndex(s.getSize().getId());
+        cbbColor.setSelectedIndex(s.getColor().getId());
         setImange(s.getHinhAnh());
     }
 
@@ -223,7 +223,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
             new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Hoàn thành chỉnh sửa!").showNotification();
             this.bienTheList = this.list.getByIdSanPhamBienThe(this.idProduct);
             fillTable();
-        }else{
+        } else {
             new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng thử lại!").showNotification();
         }
 

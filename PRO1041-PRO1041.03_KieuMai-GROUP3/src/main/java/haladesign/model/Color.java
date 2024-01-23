@@ -29,7 +29,7 @@ public class Color {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "loai_mau", nullable = false)
     private String loaiMau;

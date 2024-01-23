@@ -29,7 +29,7 @@ public class Size {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "loai_size", nullable = false)
     private String loaiSize;
