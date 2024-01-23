@@ -44,9 +44,10 @@ public class Menu extends JPanel {
         addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.ADD_SHOPPING_CART, bcryptHash.decodeBase64("QsOhbiBow6BuZw=="), bcryptHash.decodeBase64("QsOhbiB04bqhaSBxdeG6p3k="), bcryptHash.decodeBase64("SMOzYSDEkcahbg==")));
         addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.SHOPPING_BASKET, bcryptHash.decodeBase64("UXXhuqNuIGzDvSBz4bqjbiBwaOG6qW0="), bcryptHash.decodeBase64("RGFuaCBzw6FjaCBz4bqjbiBwaOG6qW0="), bcryptHash.decodeBase64("VGh14buZYyB0w61uaCBz4bqjbiBwaOG6qW0=")));
         addTitle(bcryptHash.decodeBase64("VMOgaSBraG/huqNu"));
-        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.SUPERVISOR_ACCOUNT, bcryptHash.decodeBase64("UXXhuqNuIGzDvSB0w6BpIGtob+G6o24="), bcryptHash.decodeBase64("TmjDom4gdmnDqm4="), bcryptHash.decodeBase64("S2jDoWNoIGjDoG5n")));
+        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.SUPERVISOR_ACCOUNT, bcryptHash.decodeBase64("UXXhuqNuIGzDvSB0w6BpIGtob+G6o24="), bcryptHash.decodeBase64("TmjDom4gdmnDqm4="), bcryptHash.decodeBase64("S2jDoWNoIGjDoG5n"), bcryptHash.decodeBase64("UXXhuqNuIGzDvSB2YWkgdHLDsg==")));
         addTitle(bcryptHash.decodeBase64("S2jDoWM="));
         addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.SETTINGS, bcryptHash.decodeBase64("Q8OgaSDEkeG6t3Q=")));
+        addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.ACCOUNT_CIRCLE, bcryptHash.decodeBase64("VMOgaSBraG/huqNuIGPhu6dhIHTDtGk=")));
         addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.EXIT_TO_APP, bcryptHash.decodeBase64("xJDEg25nIHh14bqldA==")));
     }
 

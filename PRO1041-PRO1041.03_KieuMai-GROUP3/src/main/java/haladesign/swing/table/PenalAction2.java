@@ -1,11 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package haladesign.swing.table;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  *
@@ -20,11 +15,8 @@ public class PenalAction2 extends javax.swing.JPanel {
         initComponents();
     }
     public void initEvent(TableActionEvent event, int row) {
-        cmdDelete.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                event.edit(row);
-            }
+        cmdDelete.addActionListener((ActionEvent e) -> {
+            event.edit(row);
         });
     }
 

@@ -11,10 +11,10 @@ import org.springframework.data.repository.query.Param;
  * @author NONG HOANG VU
  */
 public interface ISanPhamBienThe extends JpaRepository<SanPhamBienThe, Long>{
-    @Query("SELECT sp FROM SanPham sp "
-            + "LEFT JOIN FETCH sp.bienTheList bienThe "
+     @Query("SELECT bienThe FROM SanPhamBienThe bienThe "
             + "LEFT JOIN FETCH bienThe.size size "
             + "LEFT JOIN FETCH bienThe.color color "
-            + "WHERE sp.id = :productId")
-    List<SanPhamBienThe> findByIdSanPham(@Param("productId") String productId);
+            + "LEFT JOIN FETCH bienThe.id_san_pham sanPham "
+            + "WHERE sanPham.id = :productId")
+    List<SanPhamBienThe> findByIdSanPhamBienThe(@Param("productId") String productId);
 }

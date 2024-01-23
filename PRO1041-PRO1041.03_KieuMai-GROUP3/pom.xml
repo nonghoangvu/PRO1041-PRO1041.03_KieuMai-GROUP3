@@ -54,9 +54,9 @@
             <version>0.4</version>
         </dependency>
         <dependency>
-            <groupId>udpm</groupId>
-            <artifactId>UDPM-Java</artifactId>
-            <version>V1.1</version>
+            <groupId>AbsoluteLayout</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>1.1</version>
         </dependency>
     </dependencies>
 </project>

@@ -7,6 +7,7 @@ import haladesign.model.SanPhamBienThe;
 import haladesign.model.Size;
 import haladesign.repository.IColor;
 import haladesign.repository.ISanPham;
+import haladesign.repository.ISanPhamBienThe;
 import haladesign.repository.ISize;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SanPhamService {
 
     private final ISanPham iSP = getBean(ISanPham.class);
+    private final ISanPhamBienThe iSPBT = getBean(ISanPhamBienThe.class);
     private final ISize iSize = getBean(ISize.class);
     private final IColor iColor = getBean(IColor.class);
 
@@ -34,6 +36,10 @@ public class SanPhamService {
         return this.iSP.findByIdSanPham(id);
     }
 
+    public List<SanPhamBienThe> getByIdSanPhamBienThe(String id) {
+        return this.iSPBT.findByIdSanPhamBienThe(id);
+    }
+
     public List<Size> getSize() {
         return this.iSize.findAll();
     }
@@ -47,5 +53,15 @@ public class SanPhamService {
         sanPham.setBienTheList(bienTheList);
         bienTheList.forEach(s -> s.setId_san_pham(sanPham));
         return this.iSP.saveAndFlush(sanPham) != null;
+    }
+
+    @Transactional
+    public Boolean insertSanPham(SanPham sp) {
+        return this.iSP.saveAndFlush(sp) != null;
+    }
+
+    @Transactional
+    public Boolean insertBienThe(SanPhamBienThe sp) {
+        return this.iSPBT.saveAndFlush(sp) != null;
     }
 }

@@ -8,26 +8,19 @@ import haladesign.model.SanPham;
 import haladesign.model.SanPhamBienThe;
 import haladesign.model.Size;
 import haladesign.service.SanPhamService;
-import haladesign.swing.table.TableActionCellEditor2;
-import haladesign.swing.table.TableActionCellRender2;
-import haladesign.swing.table.TableActionEvent;
-import haladesign.system.GlassPanePopup;
-import haladesign.system.Message;
 import haladesign.system.Notification;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import javax.imageio.ImageIO;
-import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -39,28 +32,33 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author NONG HOANG VU
  */
-public class ThemSanPham extends javax.swing.JPanel {
+public class ThongTinSanPham extends javax.swing.JPanel {
 
     private final SanPhamService list;
     private final Main main;
-    private final ArrayList<SanPhamBienThe> bienTheList = new ArrayList<>();
     private DefaultTableModel tblModel;
+    private List<SanPhamBienThe> bienTheList;
     private String url = null;
+    private final String idProduct;
 
-    public ThemSanPham(Main main, String id) {
+    public ThongTinSanPham(Main main, String id, Boolean activity) {
         initComponents();
         setOpaque(false);
         this.list = new SanPhamService();
         this.main = main;
-        init(id);
+        this.idProduct = id;
+        this.bienTheList = this.list.getByIdSanPhamBienThe(id);
+        init(id, activity);
     }
 
-    private void init(String id) {
+    private void init(String id, Boolean activity) {
         lbID.setText(id);
         txtTenBienThe.setText("");
         fillSize();
         fillColor();
-        tableFormat();
+        setForm(id);
+        setTrangThai(activity);
+        fillTable();
         updateNameProduct();
 
     }
@@ -70,14 +68,14 @@ public class ThemSanPham extends javax.swing.JPanel {
         tblModel = (DefaultTableModel) tblSanPham.getModel();
         tblModel.setRowCount(0);
         Integer[] count = {0};
-        this.bienTheList.forEach((SanPhamBienThe sp) -> {
+        this.bienTheList.forEach((SanPhamBienThe s) -> {
             Object[] row = {
                 ++count[0],
-                sp.getTenBienThe(),
-                sp.getSoLuong(),
-                sp.getColor().getLoaiMau(),
-                sp.getSize().getLoaiSize(),
-                sp.getGia()
+                s.getTenBienThe(),
+                s.getSoLuong(),
+                s.getColor().getLoaiMau(),
+                s.getSize().getLoaiSize(),
+                s.getGia()
             };
             tblModel.addRow(row);
         });
@@ -108,21 +106,23 @@ public class ThemSanPham extends javax.swing.JPanel {
     }
 
     /*__________________________Set Data__________________________*/
+    private void setTrangThai(Boolean activity) {
+        btnTrangThai.setSelected(activity);
+    }
+
+    private void setForm(String id) {
+        SanPham sp = this.list.getByIdSanPham(id).get(0);
+        txtSanPham.setText(sp.getTen_san_pham());
+        txtMoTa.setText(sp.getMo_ta() != null ? sp.getMo_ta() : "");
+    }
+
     private void clear() {
-        lbID.setText("HLD-" + generateRandomNumber(10000, 10000000));
-        txtSanPham.setEditable(true);
-        txtMoTa.setEditable(true);
-        txtSanPham.setText("");
-        txtMoTa.setText("");
         txtSoLuong.setText("");
         cbbSize.setSelectedIndex(0);
         cbbColor.setSelectedIndex(0);
         txtTenBienThe.setText("");
         txtGia.setText("");
-        btnTrangThai.setSelected(false);
-        this.bienTheList.clear();
         setImange(null);
-        fillTable();
     }
 
     private void setImange(String url) {
@@ -151,8 +151,8 @@ public class ThemSanPham extends javax.swing.JPanel {
         txtTenBienThe.setText(s.getTenBienThe());
         txtSoLuong.setText(String.valueOf(s.getSoLuong()));
         txtGia.setText(String.valueOf(s.getGia()));
-        cbbSize.setSelectedItem(s.getSize());
-        cbbColor.setSelectedItem(s.getColor());
+        cbbSize.setSelectedIndex(s.getSize().getId());
+        cbbColor.setSelectedIndex(s.getColor().getId());
         setImange(s.getHinhAnh());
     }
 
@@ -190,73 +190,44 @@ public class ThemSanPham extends javax.swing.JPanel {
     }
 
     /*__________________________Controller__________________________*/
-    private void save() {
-        if (this.bienTheList.size() < 1) {
-            new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng thêm ít nhất một thuộc tính cho sản phẩm!").showNotification();
-        } else if (!btnTrangThai.isSelected()) {
-            Message message = new Message();
-            message.setTitle("Thêm sản phẩm");
-            message.setMessage("Sản phẩm này chưa kích hoạt trạng thái hoạt động bạn có muốn tiếp tục không?");
-            message.eventOK(new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    txtSanPham.setEditable(false);
-                    txtMoTa.setEditable(false);
-                    if (ThemSanPham.this.list.insert(getSanPham(), ThemSanPham.this.bienTheList)) {
-                        new Notification(ThemSanPham.this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Đã thêm thành công").showNotification();
-                    }
-                    GlassPanePopup.closePopupLast();
-                    ThemSanPham.this.main.showForm(new ListProductForm(ThemSanPham.this.main));
-                }
-            });
-            GlassPanePopup.showPopup(message);
+    private void complete() {
+        SanPham sp = this.bienTheList.get(0).getId_san_pham();
+        sp.setTrang_thai(btnTrangThai.isSelected());
+        if (this.list.insertSanPham(sp)) {
+            new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Hoàn thành chỉnh sửa!").showNotification();
+            this.main.showForm(new ListProductForm(this.main));
         } else {
-            Message message = new Message();
-            message.setTitle("Thêm sản phẩm");
-            message.setMessage("Bạn có muốn tiếp tục không?");
-            message.eventOK(new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    txtSanPham.setEditable(false);
-                    txtMoTa.setEditable(false);
-                    if (ThemSanPham.this.list.insert(getSanPham(), ThemSanPham.this.bienTheList)) {
-                        new Notification(ThemSanPham.this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Đã thêm thành công").showNotification();
-                    }
-                    GlassPanePopup.closePopupLast();
-                    ThemSanPham.this.main.showForm(new ListProductForm(ThemSanPham.this.main));
-                }
-            });
-            GlassPanePopup.showPopup(message);
+            new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng thử lại!").showNotification();
         }
     }
 
-    private void add() {
-        this.bienTheList.add(getSanPhamBienThe());
-        txtSoLuong.setText("");
-        cbbSize.setSelectedIndex(0);
-        cbbColor.setSelectedIndex(0);
-        txtGia.setText("");
-        setImange(null);
-        fillTable();
-        new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Thêm thành công!").showNotification();
+    private void update() {
+        SanPhamBienThe sp = this.bienTheList.get(tblSanPham.getSelectedRow());
+        sp.setId(sp.getId());
+        sp.setId_san_pham(getSanPham());
+        sp.setTenBienThe(txtTenBienThe.getText());
+        sp.setSize(getSizeForm());
+        sp.setColor(getColorForm());
+        sp.setSoLuong(Integer.valueOf(txtSoLuong.getText()));
+        sp.setGia(Integer.valueOf(txtGia.getText()));
+        sp.setHinhAnh(this.url);
+        if (this.list.insertBienThe(sp)) {
+            new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Hoàn thành chỉnh sửa!").showNotification();
+            this.bienTheList = this.list.getByIdSanPhamBienThe(this.idProduct);
+            fillTable();
+        } else {
+            new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng thử lại!").showNotification();
+        }
+
     }
 
-    private void DeleteRow(int row) {
-        try {
-            Message message = new Message();
-            message.setTitle("Xóa sản phẩm");
-            message.setMessage("Bạn có chắc chắn xóa sản phẩm này không?");
-            message.eventOK(new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ThemSanPham.this.bienTheList.remove(row);
-                    fillTable();
-                    GlassPanePopup.closePopupLast();
-                }
-            });
-            GlassPanePopup.showPopup(message);
-        } catch (Exception e) {
-            new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Không thể xóa sản phẩm này vui lòng thử lại sau!").showNotification();
+    private void add() {
+        if (this.list.insertBienThe(getSanPhamBienThe())) {
+            this.bienTheList = this.list.getByIdSanPhamBienThe(this.idProduct);
+            new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Thêm thành công!").showNotification();
+            fillTable();
+        } else {
+            new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng thử lại!").showNotification();
         }
     }
 
@@ -386,17 +357,6 @@ public class ThemSanPham extends javax.swing.JPanel {
         return null;
     }
 
-    private void tableFormat() {
-        TableActionEvent event = (int data) -> {
-            if (tblSanPham.isEditing()) {
-                tblSanPham.getCellEditor().stopCellEditing();
-            }
-            DeleteRow(data);
-        };
-        tblSanPham.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRender2());
-        tblSanPham.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditor2(event));
-    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -420,7 +380,7 @@ public class ThemSanPham extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         lbImage = new javax.swing.JLabel();
         btnLuu = new haladesign.swingStyle.Button();
-        btnLamMoi = new haladesign.swingStyle.Button();
+        btnUpdate = new haladesign.swingStyle.Button();
         btnHoanThanh = new haladesign.swingStyle.Button();
 
         jLabel4.setText("jLabel4");
@@ -442,11 +402,11 @@ public class ThemSanPham extends javax.swing.JPanel {
 
             },
             new String [] {
-                "#", "Sản Phẩm", "Số Lượng", "Màu Sắc", "Size", "Giá", "Thao Tác"
+                "#", "Sản Phẩm", "Số Lượng", "Màu Sắc", "Size", "Giá"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -470,8 +430,6 @@ public class ThemSanPham extends javax.swing.JPanel {
             tblSanPham.getColumnModel().getColumn(4).setMaxWidth(120);
             tblSanPham.getColumnModel().getColumn(5).setMinWidth(120);
             tblSanPham.getColumnModel().getColumn(5).setMaxWidth(120);
-            tblSanPham.getColumnModel().getColumn(6).setMinWidth(120);
-            tblSanPham.getColumnModel().getColumn(6).setMaxWidth(120);
         }
 
         cbbSize.setLabeText("Size");
@@ -534,13 +492,13 @@ public class ThemSanPham extends javax.swing.JPanel {
             }
         });
 
-        btnLamMoi.setBackground(new java.awt.Color(102, 204, 255));
-        btnLamMoi.setForeground(new java.awt.Color(255, 255, 255));
-        btnLamMoi.setText("Làm mới");
-        btnLamMoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdate.setBackground(new java.awt.Color(102, 204, 255));
+        btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdate.setText("Cập nhật");
+        btnUpdate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLamMoiActionPerformed(evt);
+                btnUpdateActionPerformed(evt);
             }
         });
 
@@ -597,7 +555,7 @@ public class ThemSanPham extends javax.swing.JPanel {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(btnLuu, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(btnLamMoi, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                                .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(btnHoanThanh, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                                                 .addGap(43, 43, 43)))))
@@ -633,7 +591,7 @@ public class ThemSanPham extends javax.swing.JPanel {
                                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(btnHoanThanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(textAreaScroll1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(20, 20, 20)
@@ -644,19 +602,11 @@ public class ThemSanPham extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
-        Message message = new Message();
-        message.setTitle("Làm mới sản phẩm");
-        message.setMessage("Tất cả dữ liệu của sản phẩm sẽ bị xóa bạn có muốn tiếp tục không?");
-        message.eventOK(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clear();
-                GlassPanePopup.closePopupLast();
-            }
-        });
-        GlassPanePopup.showPopup(message);
-    }//GEN-LAST:event_btnLamMoiActionPerformed
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        if (isValidate()) {
+            update();
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         if (isValidate()) {
@@ -665,7 +615,7 @@ public class ThemSanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnHoanThanhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoanThanhActionPerformed
-        save();
+        complete();
     }//GEN-LAST:event_btnHoanThanhActionPerformed
     private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
         tableClickRow();
@@ -690,9 +640,9 @@ public class ThemSanPham extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private haladesign.swingStyle.Button btnHoanThanh;
-    private haladesign.swingStyle.Button btnLamMoi;
     private haladesign.swingStyle.Button btnLuu;
     private haladesign.swingStyle.SwitchButton btnTrangThai;
+    private haladesign.swingStyle.Button btnUpdate;
     private haladesign.swingStyle.Combobox cbbColor;
     private haladesign.swingStyle.Combobox cbbSize;
     private javax.swing.JLabel jLabel1;
