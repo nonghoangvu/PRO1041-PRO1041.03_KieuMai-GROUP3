@@ -142,7 +142,7 @@ SELECT * FROM NhanVien
 SELECT * FROM Size
 SELECT * FROM COLOR
 SELECT * FROM SanPham
-SELECT * FROM SanPhamBienThe
+SELECT * FROM SanPhamBienThe WHERE id_san_pham = 'HLD-4421060    '
 
 SELECT SP.id,BT.id, SP.ten_san_pham, BT.ten_bien_the, SZ.loai_size, COL.loai_mau, BT.hinhAnh, BT.gia,BT.so_luong
 FROM SanPham SP

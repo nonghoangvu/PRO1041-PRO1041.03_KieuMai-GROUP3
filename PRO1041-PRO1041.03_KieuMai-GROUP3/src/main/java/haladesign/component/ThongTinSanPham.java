@@ -199,12 +199,34 @@ public class ThongTinSanPham extends javax.swing.JPanel {
 
     /*__________________________Controller__________________________*/
     private void complete() {
-        new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Hoàn thành chỉnh sửa!").showNotification();
-        this.main.showForm(new ListProductForm(this.main));
+        SanPham sp = this.bienTheList.get(0).getId_san_pham();
+        sp.setTrang_thai(btnTrangThai.isSelected());
+        if (this.list.insertSanPham(sp)) {
+            new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Hoàn thành chỉnh sửa!").showNotification();
+            this.main.showForm(new ListProductForm(this.main));
+        } else {
+            new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng thử lại!").showNotification();
+        }
     }
 
     private void update() {
-        new Notification(this.main, Notification.Type.INFO, Notification.Location.TOP_RIGHT, "Đang cập nhật!").showNotification();
+        SanPhamBienThe sp = this.bienTheList.get(tblSanPham.getSelectedRow());
+        sp.setId(sp.getId());
+        sp.setId_san_pham(getSanPham());
+        sp.setTenBienThe(txtTenBienThe.getText());
+        sp.setSize(getSizeForm());
+        sp.setColor(getColorForm());
+        sp.setSoLuong(Integer.valueOf(txtSoLuong.getText()));
+        sp.setGia(Integer.valueOf(txtGia.getText()));
+        sp.setHinhAnh(this.url);
+        if (this.list.insertBienThe(sp)) {
+            new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Hoàn thành chỉnh sửa!").showNotification();
+            this.bienTheList = this.list.getByIdSanPhamBienThe(this.idProduct);
+            fillTable();
+        }else{
+            new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng thử lại!").showNotification();
+        }
+
     }
 
     private void add() {
@@ -589,7 +611,9 @@ public class ThongTinSanPham extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        update();
+        if (isValidate()) {
+            update();
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed

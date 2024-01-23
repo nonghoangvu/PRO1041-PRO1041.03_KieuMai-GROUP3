@@ -56,6 +56,11 @@ public class SanPhamService {
     }
 
     @Transactional
+    public Boolean insertSanPham(SanPham sp) {
+        return this.iSP.saveAndFlush(sp) != null;
+    }
+
+    @Transactional
     public Boolean insertBienThe(SanPhamBienThe sp) {
         return this.iSPBT.saveAndFlush(sp) != null;
     }

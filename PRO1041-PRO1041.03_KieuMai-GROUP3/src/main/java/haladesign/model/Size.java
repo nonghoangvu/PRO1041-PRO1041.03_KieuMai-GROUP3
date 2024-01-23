@@ -51,6 +51,11 @@ public class Size {
     @Override
     public int hashCode() {
         int hash = 3;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        hash = 17 * hash + Objects.hashCode(this.loaiSize);
+        hash = 17 * hash + Objects.hashCode(this.trangThai);
+        hash = 17 * hash + Objects.hashCode(this.ngayTao);
+        hash = 17 * hash + Objects.hashCode(this.sanPhamBienTheList);
         return hash;
     }
 
