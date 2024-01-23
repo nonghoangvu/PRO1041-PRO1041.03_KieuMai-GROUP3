@@ -126,23 +126,23 @@ VALUES
 ('HLD-02', N'Bộ nhung Hàn Quốc cổ sen 02 [M-Hong]', 2, 2, 43, 758000),
 ('HLD-02', N'Bộ nhung Hàn Quốc cổ sen 02 [L-Hong]', 3, 2, 43, 758000),
 
-('HLD-02', N'Bộ nhung Hàn Quốc cổ sen 02 [S-Do]', 1, 3, 100, 758000),
-('HLD-02', N'Bộ nhung Hàn Quốc cổ sen 02 [XL-Do]', 4, 3, 100, 758000),
-('HLD-02', N'Bộ nhung Hàn Quốc cổ sen 02 [XXL-Do]', 5, 3, 100, 758000),
-('HLD-02', N'Bộ nhung Hàn Quốc cổ sen 02 [M-Do]', 2, 3, 100, 758000),
-('HLD-02', N'Bộ nhung Hàn Quốc cổ sen 02 [L-Do]', 3, 3, 100, 758000),
+('HLD-02', N'Bộ nhung Hàn Quốc cổ sen 02 [S-Do]', 1, 3, 130, 758000),
+('HLD-02', N'Bộ nhung Hàn Quốc cổ sen 02 [XL-Do]', 4, 3, 320, 758000),
+('HLD-02', N'Bộ nhung Hàn Quốc cổ sen 02 [XXL-Do]', 5, 3, 20, 758000),
+('HLD-02', N'Bộ nhung Hàn Quốc cổ sen 02 [M-Do]', 2, 3, 20, 758000),
+('HLD-02', N'Bộ nhung Hàn Quốc cổ sen 02 [L-Do]', 3, 3, 10, 758000),
 
-('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [S-Do]', 1, 3, 100, 758000),
-('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [XL-Do]', 4, 3, 100, 758000),
-('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [XXL-Do]', 5, 3, 100, 758000),
-('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [M-Do]', 2, 3, 100, 758000),
-('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [L-Do]', 3, 3, 100, 758000);
+('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [S-Do]', 1, 3, 150, 758000),
+('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [XL-Do]', 4, 3, 133, 758000),
+('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [XXL-Do]', 5, 3, 134, 758000),
+('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [M-Do]', 2, 3, 143, 758000),
+('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [L-Do]', 3, 3, 1, 758000);
 -- Query --
 SELECT * FROM NhanVien
 SELECT * FROM Size
 SELECT * FROM COLOR
 SELECT * FROM SanPham
-SELECT * FROM SanPhamBienThe
+SELECT * FROM SanPhamBienThe WHERE id_san_pham = 'HLD-4421060    '
 
 SELECT SP.id,BT.id, SP.ten_san_pham, BT.ten_bien_the, SZ.loai_size, COL.loai_mau, BT.hinhAnh, BT.gia,BT.so_luong
 FROM SanPham SP
@@ -150,3 +150,4 @@ INNER JOIN SanPhamBienThe BT ON BT.id_san_pham = SP.id
 INNER JOIN Size SZ ON SZ.id = BT.id_size
 INNER JOIN Color COL ON COL.id = BT.id_color
 WHERE SP.id = 'HLD-9011146'
+
