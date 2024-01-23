@@ -1,5 +1,6 @@
 package haladesign.mainMenu;
 
+import haladesign.form.FormQlyNhanVien;
 import haladesign.form.ThongKe;
 import java.awt.Component;
 import haladesign.form.Form_Empty;
@@ -51,6 +52,15 @@ public class Main extends javax.swing.JFrame {
                             showForm(new Form_Empty(index + " " + indexSubMenu));
                     }
                 }
+                case 3 -> {
+                    switch (indexSubMenu) {
+                        case 1 ->
+                            showForm(new FormQlyNhanVien(this));
+                        default ->
+                            showForm(new Form_Empty(index + " " + indexSubMenu));
+                    }
+                }
+                
                 case 4 ->
                     showForm(new Setting());
                 default ->
