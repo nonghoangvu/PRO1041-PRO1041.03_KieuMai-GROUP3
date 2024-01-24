@@ -1,6 +1,7 @@
 package haladesign.component;
 
 import haladesign.Utitlity.ValidateNumber;
+import haladesign.api.JnaFileChooser;
 import haladesign.form.ListProductForm;
 import haladesign.mainMenu.Main;
 import haladesign.model.Color;
@@ -8,11 +9,14 @@ import haladesign.model.SanPham;
 import haladesign.model.SanPhamBienThe;
 import haladesign.model.Size;
 import haladesign.service.SanPhamService;
+import haladesign.system.GlassPanePopup;
+import haladesign.system.Message;
 import haladesign.system.Notification;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +25,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -192,7 +197,9 @@ public class ThongTinSanPham extends javax.swing.JPanel {
     /*__________________________Controller__________________________*/
     private void complete() {
         SanPham sp = this.bienTheList.get(0).getId_san_pham();
+        sp.setTen_san_pham(txtSanPham.getText());
         sp.setTrang_thai(btnTrangThai.isSelected());
+        sp.setMo_ta(txtMoTa.getText());
         if (this.list.insertSanPham(sp)) {
             new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Hoàn thành chỉnh sửa!").showNotification();
             this.main.showForm(new ListProductForm(this.main));
@@ -212,6 +219,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
         sp.setGia(Integer.valueOf(txtGia.getText()));
         sp.setHinhAnh(this.url);
         if (this.list.insertBienThe(sp)) {
+            clear();
             new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Hoàn thành chỉnh sửa!").showNotification();
             this.bienTheList = this.list.getByIdSanPhamBienThe(this.idProduct);
             fillTable();
@@ -222,12 +230,38 @@ public class ThongTinSanPham extends javax.swing.JPanel {
     }
 
     private void add() {
-        if (this.list.insertBienThe(getSanPhamBienThe())) {
-            this.bienTheList = this.list.getByIdSanPhamBienThe(this.idProduct);
-            new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Thêm thành công!").showNotification();
-            fillTable();
+        if (existsBienTheWithColorAndSize(this.bienTheList, getColorForm().getLoaiMau(), getSizeForm().getLoaiSize())) {
+            Message message = new Message();
+            message.setTitle("Cảnh báo");
+            message.setMessage("Thuộc tính này đã tồn tại bạn có muốn bổ sung thêm số lượng và thay đổi thông tin không?");
+            message.eventOK(new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    SanPhamBienThe sp = ThongTinSanPham.this.list.getByColorAndSize(ThongTinSanPham.this.idProduct, getColorForm(), getSizeForm()).get(0);
+                    sp.setSoLuong(sp.getSoLuong() + Integer.valueOf(txtSoLuong.getText()));
+                    sp.setTenBienThe(txtTenBienThe.getText());
+                    sp.setGia(Integer.valueOf(txtGia.getText()));
+                    if (ThongTinSanPham.this.list.insertBienThe(sp)) {
+                        ThongTinSanPham.this.bienTheList = ThongTinSanPham.this.list.getByIdSanPhamBienThe(ThongTinSanPham.this.idProduct);
+                        new Notification(ThongTinSanPham.this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Đã bổ sung số lượng và thông tin sản phẩm!").showNotification();
+                        clear();
+                        fillTable();
+                    } else {
+                        new Notification(ThongTinSanPham.this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng thử lại!").showNotification();
+                    }
+                    GlassPanePopup.closePopupLast();
+                }
+            });
+            GlassPanePopup.showPopup(message);
         } else {
-            new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng thử lại!").showNotification();
+            System.out.println("Chua co thuoc tinh");
+            if (this.list.insertBienThe(getSanPhamBienThe())) {
+                this.bienTheList = this.list.getByIdSanPhamBienThe(this.idProduct);
+                new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Thêm thành công!").showNotification();
+                fillTable();
+            } else {
+                new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng thử lại!").showNotification();
+            }
         }
     }
 
@@ -335,7 +369,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
         try {
             String currentDirectory = System.getProperty("user.dir")
                     + "/src/main/java/haladesign/photo/";
-            JFileChooser fileChooser = new JFileChooser(currentDirectory);
+            JnaFileChooser fileChooser = new  JnaFileChooser(currentDirectory);
             fileChooser.showOpenDialog(null);
             File selectedFile = fileChooser.getSelectedFile();
 
@@ -355,6 +389,10 @@ public class ThongTinSanPham extends javax.swing.JPanel {
             ex.printStackTrace(System.out);
         }
         return null;
+    }
+
+    private Boolean existsBienTheWithColorAndSize(List<SanPhamBienThe> bienThe, String targetColor, String targetSize) {
+        return bienThe.stream().anyMatch(sp -> targetColor.equals(sp.getColor().getLoaiMau()) && targetSize.equals(sp.getSize().getLoaiSize()));
     }
 
     @SuppressWarnings("unchecked")
@@ -379,7 +417,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
         txtMoTa = new haladesign.swingStyle.TextArea();
         jPanel1 = new javax.swing.JPanel();
         lbImage = new javax.swing.JLabel();
-        btnLuu = new haladesign.swingStyle.Button();
+        btnThem = new haladesign.swingStyle.Button();
         btnUpdate = new haladesign.swingStyle.Button();
         btnHoanThanh = new haladesign.swingStyle.Button();
 
@@ -482,13 +520,13 @@ public class ThongTinSanPham extends javax.swing.JPanel {
         });
         jPanel1.add(lbImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 190, 210));
 
-        btnLuu.setBackground(new java.awt.Color(102, 204, 255));
-        btnLuu.setForeground(new java.awt.Color(255, 255, 255));
-        btnLuu.setText("Thêm");
-        btnLuu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnLuu.addActionListener(new java.awt.event.ActionListener() {
+        btnThem.setBackground(new java.awt.Color(102, 204, 255));
+        btnThem.setForeground(new java.awt.Color(255, 255, 255));
+        btnThem.setText("Thêm");
+        btnThem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLuuActionPerformed(evt);
+                btnThemActionPerformed(evt);
             }
         });
 
@@ -553,7 +591,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(btnTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(btnLuu, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                                .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -590,7 +628,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
                                     .addComponent(btnTrangThai, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(btnHoanThanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(textAreaScroll1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -608,11 +646,11 @@ public class ThongTinSanPham extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         if (isValidate()) {
             add();
         }
-    }//GEN-LAST:event_btnLuuActionPerformed
+    }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnHoanThanhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoanThanhActionPerformed
         complete();
@@ -640,7 +678,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private haladesign.swingStyle.Button btnHoanThanh;
-    private haladesign.swingStyle.Button btnLuu;
+    private haladesign.swingStyle.Button btnThem;
     private haladesign.swingStyle.SwitchButton btnTrangThai;
     private haladesign.swingStyle.Button btnUpdate;
     private haladesign.swingStyle.Combobox cbbColor;

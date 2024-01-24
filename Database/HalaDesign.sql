@@ -57,7 +57,8 @@ CREATE TABLE [NhanVien] (
   [mat_khau] NVARCHAR(MAX),
   [trang_thai] NVARCHAR(MAX),
   [ngay_tao] DATETIME DEFAULT (GETDATE()),
-  [id_quyen_han] INT
+  [id_quyen_han] INT,
+  [ghi_chu] NVARCHAR(MAX)
 )
 GO
 ALTER TABLE [NhanVien] ADD FOREIGN KEY ([id_quyen_han]) REFERENCES [QuyenHan] ([id])
@@ -142,7 +143,7 @@ SELECT * FROM NhanVien
 SELECT * FROM Size
 SELECT * FROM COLOR
 SELECT * FROM SanPham
-SELECT * FROM SanPhamBienThe WHERE id_san_pham = 'HLD-4421060    '
+SELECT * FROM SanPhamBienThe WHERE id_san_pham = 'HLD-03         '
 
 SELECT SP.id,BT.id, SP.ten_san_pham, BT.ten_bien_the, SZ.loai_size, COL.loai_mau, BT.hinhAnh, BT.gia,BT.so_luong
 FROM SanPham SP
@@ -151,3 +152,9 @@ INNER JOIN Size SZ ON SZ.id = BT.id_size
 INNER JOIN Color COL ON COL.id = BT.id_color
 WHERE SP.id = 'HLD-9011146'
 
+DROP TABLE [SanPhamBienThe];
+DROP TABLE [Color];
+DROP TABLE [Size];
+DROP TABLE [SanPham];
+DROP TABLE [QuyenHan];
+DROP TABLE [NhanVien];

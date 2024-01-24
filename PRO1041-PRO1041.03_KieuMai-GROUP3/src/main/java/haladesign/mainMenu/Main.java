@@ -5,6 +5,7 @@ import haladesign.form.ThongKe;
 import java.awt.Component;
 import haladesign.form.Form_Empty;
 import haladesign.form.ListProductForm;
+import haladesign.form.ThuocTinhSanPham;
 import haladesign.system.GlassPanePopup;
 import haladesign.system.Message;
 import haladesign.system.Setting;
@@ -17,6 +18,7 @@ import java.awt.event.ActionEvent;
 public class Main extends javax.swing.JFrame {
 
     private static Main main;
+
     public Main() {
         initComponents();
         init();
@@ -48,6 +50,7 @@ public class Main extends javax.swing.JFrame {
                     switch (indexSubMenu) {
                         case 1 ->
                             showForm(new ListProductForm(this));
+                        case 2 -> showForm(new ThuocTinhSanPham(this));
                         default ->
                             showForm(new Form_Empty(index + " " + indexSubMenu));
                     }
@@ -60,7 +63,7 @@ public class Main extends javax.swing.JFrame {
                             showForm(new Form_Empty(index + " " + indexSubMenu));
                     }
                 }
-                
+
                 case 4 ->
                     showForm(new Setting());
                 default ->

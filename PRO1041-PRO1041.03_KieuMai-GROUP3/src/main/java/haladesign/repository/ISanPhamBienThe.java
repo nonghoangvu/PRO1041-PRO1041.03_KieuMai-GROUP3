@@ -10,11 +10,19 @@ import org.springframework.data.repository.query.Param;
  *
  * @author NONG HOANG VU
  */
-public interface ISanPhamBienThe extends JpaRepository<SanPhamBienThe, Long>{
-     @Query("SELECT bienThe FROM SanPhamBienThe bienThe "
+public interface ISanPhamBienThe extends JpaRepository<SanPhamBienThe, Long> {
+
+    @Query("SELECT bienThe FROM SanPhamBienThe bienThe "
             + "LEFT JOIN FETCH bienThe.size size "
             + "LEFT JOIN FETCH bienThe.color color "
             + "LEFT JOIN FETCH bienThe.id_san_pham sanPham "
             + "WHERE sanPham.id = :productId")
     List<SanPhamBienThe> findByIdSanPhamBienThe(@Param("productId") String productId);
+
+    @Query("SELECT bienThe FROM SanPhamBienThe bienThe "
+            + "LEFT JOIN FETCH bienThe.size size "
+            + "LEFT JOIN FETCH bienThe.color color "
+            + "LEFT JOIN FETCH bienThe.id_san_pham sanPham "
+            + "WHERE sanPham.id = :productId AND size.loaiSize = :targetSize AND color.loaiMau = :targetColor")
+    List<SanPhamBienThe> findBySizeAndColor(@Param("productId") String productId, @Param("targetSize") String targetSize, @Param("targetColor") String targetColor);
 }

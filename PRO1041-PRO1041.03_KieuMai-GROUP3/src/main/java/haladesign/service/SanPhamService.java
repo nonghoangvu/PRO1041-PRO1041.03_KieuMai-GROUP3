@@ -40,6 +40,10 @@ public class SanPhamService {
         return this.iSPBT.findByIdSanPhamBienThe(id);
     }
 
+    public List<SanPhamBienThe> getByColorAndSize(String id, Color color, Size size) {
+        return iSPBT.findBySizeAndColor(id, size.getLoaiSize(), color.getLoaiMau());
+    }
+
     public List<Size> getSize() {
         return this.iSize.findAll();
     }

@@ -30,10 +30,10 @@ import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import haladesign.api.JnaFileChooser;
 
 /**
  *
@@ -364,7 +364,7 @@ public class ThemSanPham extends javax.swing.JPanel {
         try {
             String currentDirectory = System.getProperty("user.dir")
                     + "/src/main/java/haladesign/photo/";
-            JFileChooser fileChooser = new JFileChooser(currentDirectory);
+            JnaFileChooser fileChooser = new  JnaFileChooser(currentDirectory);
             fileChooser.showOpenDialog(null);
             File selectedFile = fileChooser.getSelectedFile();
 
