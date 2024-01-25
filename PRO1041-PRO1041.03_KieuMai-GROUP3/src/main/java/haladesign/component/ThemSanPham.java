@@ -34,6 +34,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import haladesign.api.JnaFileChooser;
+import java.util.List;
 
 /**
  *
@@ -231,6 +232,7 @@ public class ThemSanPham extends javax.swing.JPanel {
     }
 
     private void add() {
+        //Fix add properties
         this.bienTheList.add(getSanPhamBienThe());
         txtSoLuong.setText("");
         cbbSize.setSelectedIndex(0);
@@ -395,6 +397,9 @@ public class ThemSanPham extends javax.swing.JPanel {
         };
         tblSanPham.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRender2());
         tblSanPham.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditor2(event));
+    }
+    private Boolean existsBienTheWithColorAndSize(List<SanPhamBienThe> bienThe, String targetColor, String targetSize) {
+        return bienThe.stream().anyMatch(sp -> targetColor.equals(sp.getColor().getLoaiMau()) && targetSize.equals(sp.getSize().getLoaiSize()));
     }
 
     @SuppressWarnings("unchecked")

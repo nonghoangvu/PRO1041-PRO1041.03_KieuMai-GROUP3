@@ -68,4 +68,14 @@ public class SanPhamService {
     public Boolean insertBienThe(SanPhamBienThe sp) {
         return this.iSPBT.saveAndFlush(sp) != null;
     }
+
+    @Transactional
+    public Boolean insertColor(Color color) {
+        return this.iColor.save(color) != null;
+    }
+
+    @Transactional
+    public Boolean insertSize(Size size) {
+        return this.iSize.save(size) != null;
+    }
 }

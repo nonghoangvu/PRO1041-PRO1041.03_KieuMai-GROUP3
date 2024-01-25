@@ -50,7 +50,8 @@ public class Main extends javax.swing.JFrame {
                     switch (indexSubMenu) {
                         case 1 ->
                             showForm(new ListProductForm(this));
-                        case 2 -> showForm(new ThuocTinhSanPham(this));
+                        case 2 ->
+                            showForm(new ThuocTinhSanPham(this));
                         default ->
                             showForm(new Form_Empty(index + " " + indexSubMenu));
                     }
