@@ -5,6 +5,7 @@ import haladesign.system.DataConfigSerializationUtil;
 import haladesign.system.DatabaseConfig;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Connection;
 
 /**
  *
@@ -12,19 +13,35 @@ import java.sql.SQLException;
  */
 public class JDBC_Connect {
 
-    private static final DatabaseConfig config = new DataConfigSerializationUtil().readConfigInfoFromFile();
-    private static final BcryptHash bcryptHash = new BcryptHash();
+    public static final String HOSTNAME = "localhost";
+    public static final String PORT = "1433";
+    public static final String DBNAME = "HalaDesign";
+    public static final String USERNAME = "sa";
+    public static final String PASSWORD = "khoa710a";
 
-    public static java.sql.Connection getConnection() {
-        String connectionUrl = "jdbc:sqlserver://" + bcryptHash.decodeBase64(config.getServer()) + ":" + bcryptHash.decodeBase64(config.getPort()) + ";"
-                + "databaseName=" + bcryptHash.decodeBase64(config.getDatabase_name()) + ";encrypt=true;trustservercertificate=true;";
+    /**
+     * Get connection to MSSQL Server
+     *
+     * @return Connection
+     */
+    public static Connection getConnection() {
+
+// Create a variable for the connection string.
+        String connectionUrl = "jdbc:sqlserver://" + HOSTNAME + ":" + PORT + ";"
+                + "databaseName=" + DBNAME + ";encrypt=true;trustservercertificate=true";
+
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            return DriverManager.getConnection(connectionUrl, bcryptHash.decodeBase64(config.getUsername()), bcryptHash.decodeBase64(config.getPassword()));
-
-        } catch (ClassNotFoundException | SQLException e) {
+            return DriverManager.getConnection(connectionUrl, USERNAME, PASSWORD);
+        } // Handle any errors that may have occurred.
+        catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace(System.out);
         }
         return null;
     }
+
+    public static void main(String[] args) {
+        System.out.println(getConnection());
+    }
+
 }

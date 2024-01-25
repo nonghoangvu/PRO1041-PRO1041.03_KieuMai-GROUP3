@@ -81,4 +81,9 @@ public class Size {
         return Objects.equals(this.sanPhamBienTheList, other.sanPhamBienTheList);
     }
 
+    public Size(String loaiSize) {
+        this.loaiSize = loaiSize;
+    }
+
+    
 }

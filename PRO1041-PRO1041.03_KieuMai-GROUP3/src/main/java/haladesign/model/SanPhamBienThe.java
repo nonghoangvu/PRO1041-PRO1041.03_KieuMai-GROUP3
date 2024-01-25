@@ -53,4 +53,20 @@ public class SanPhamBienThe {
     
     @Column(name = "hinhAnh")
     private String hinhAnh;
+
+    public SanPhamBienThe(Long id) {
+        this.id = id;
+    }
+    
+    public Object[] dataBienThe(){
+        return new Object[]{
+            this.id,
+            this.tenBienThe,
+            this.size,
+            this.color,
+            this.soLuong,
+            this.gia,
+            this.hinhAnh
+        };
+    }
 }

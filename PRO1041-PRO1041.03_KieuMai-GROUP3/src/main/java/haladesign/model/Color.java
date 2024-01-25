@@ -26,9 +26,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Color {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "loai_mau", nullable = false)
     private String loaiMau;
@@ -38,7 +39,7 @@ public class Color {
 
     @Column(name = "ngay_tao", columnDefinition = "DATETIME DEFAULT GETDATE()")
     private Date ngayTao;
-    
+
     @OneToMany(mappedBy = "color")
     private List<SanPhamBienThe> sanPhamBienTheList;
 
@@ -49,7 +50,12 @@ public class Color {
 
     @Override
     public int hashCode() {
-        int hash = 5;
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.id);
+        hash = 47 * hash + Objects.hashCode(this.loaiMau);
+        hash = 47 * hash + Objects.hashCode(this.trangThai);
+        hash = 47 * hash + Objects.hashCode(this.ngayTao);
+        hash = 47 * hash + Objects.hashCode(this.sanPhamBienTheList);
         return hash;
     }
 
@@ -79,5 +85,9 @@ public class Color {
         }
         return Objects.equals(this.sanPhamBienTheList, other.sanPhamBienTheList);
     }
-    
+
+    public Color(String loaiMau) {
+        this.loaiMau = loaiMau;
+    }
+
 }
