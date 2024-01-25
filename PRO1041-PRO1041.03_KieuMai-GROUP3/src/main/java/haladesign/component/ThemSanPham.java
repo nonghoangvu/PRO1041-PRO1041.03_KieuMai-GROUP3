@@ -232,15 +232,39 @@ public class ThemSanPham extends javax.swing.JPanel {
     }
 
     private void add() {
-        //Fix add properties
-        this.bienTheList.add(getSanPhamBienThe());
-        txtSoLuong.setText("");
-        cbbSize.setSelectedIndex(0);
-        cbbColor.setSelectedIndex(0);
-        txtGia.setText("");
-        setImange(null);
-        fillTable();
-        new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Thêm thành công!").showNotification();
+        if (existsBienTheWithColorAndSize(this.bienTheList, getColorForm().getLoaiMau(), getSizeForm().getLoaiSize())) {
+            Message message = new Message();
+            message.setTitle("Cảnh báo");
+            message.setMessage("Thuộc tính này đã tồn tại bạn có muốn bổ sung thêm số lượng không?");
+            message.eventOK(new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ThemSanPham.this.bienTheList.forEach(s -> {
+                        if (getSizeForm().getLoaiSize().equals(s.getSize().getLoaiSize()) && getColorForm().getLoaiMau().equals(s.getColor().getLoaiMau())) {
+                            s.setSoLuong(s.getSoLuong() + Integer.valueOf(txtSoLuong.getText()));
+                            txtSoLuong.setText("");
+                            cbbSize.setSelectedIndex(0);
+                            cbbColor.setSelectedIndex(0);
+                            txtGia.setText("");
+                            setImange(null);
+                            fillTable();
+                            new Notification(ThemSanPham.this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Thêm thành công!").showNotification();
+                            GlassPanePopup.closePopupLast();
+                        }
+                    });
+                }
+            });
+            GlassPanePopup.showPopup(message);
+        } else {
+            this.bienTheList.add(getSanPhamBienThe());
+            txtSoLuong.setText("");
+            cbbSize.setSelectedIndex(0);
+            cbbColor.setSelectedIndex(0);
+            txtGia.setText("");
+            setImange(null);
+            fillTable();
+            new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Thêm thành công!").showNotification();
+        }
     }
 
     private void DeleteRow(int row) {
@@ -366,7 +390,7 @@ public class ThemSanPham extends javax.swing.JPanel {
         try {
             String currentDirectory = System.getProperty("user.dir")
                     + "/src/main/java/haladesign/photo/";
-            JnaFileChooser fileChooser = new  JnaFileChooser(currentDirectory);
+            JnaFileChooser fileChooser = new JnaFileChooser(currentDirectory);
             fileChooser.showOpenDialog(null);
             File selectedFile = fileChooser.getSelectedFile();
 
@@ -398,6 +422,7 @@ public class ThemSanPham extends javax.swing.JPanel {
         tblSanPham.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRender2());
         tblSanPham.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditor2(event));
     }
+
     private Boolean existsBienTheWithColorAndSize(List<SanPhamBienThe> bienThe, String targetColor, String targetSize) {
         return bienThe.stream().anyMatch(sp -> targetColor.equals(sp.getColor().getLoaiMau()) && targetSize.equals(sp.getSize().getLoaiSize()));
     }
