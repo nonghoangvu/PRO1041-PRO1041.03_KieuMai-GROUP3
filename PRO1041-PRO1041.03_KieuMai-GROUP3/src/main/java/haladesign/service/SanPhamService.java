@@ -47,9 +47,15 @@ public class SanPhamService {
     public List<Size> getSize() {
         return this.iSize.findAll();
     }
+    public Size findBySize(String loaiSize){
+        return this.iSize.findByLoaiSize(loaiSize);
+    }
 
     public List<Color> getCOlor() {
         return this.iColor.findAll();
+    }
+    public Color findByColor(String loaiMau){
+        return this.iColor.findByLoaiMau(loaiMau);
     }
 
     @Transactional

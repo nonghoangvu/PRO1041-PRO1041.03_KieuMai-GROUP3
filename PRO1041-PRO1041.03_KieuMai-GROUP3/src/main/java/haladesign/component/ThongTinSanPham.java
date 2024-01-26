@@ -93,7 +93,9 @@ public class ThongTinSanPham extends javax.swing.JPanel {
         cbbSize.setModel(cbbModel);
         cbbModel.addElement(sizeNull);
         this.list.getSize().forEach(size -> {
-            cbbModel.addElement(size);
+            if (size.getTrangThai()) {
+                cbbModel.addElement(size);
+            }
         });
     }
 
@@ -105,7 +107,9 @@ public class ThongTinSanPham extends javax.swing.JPanel {
         cbbColor.setModel(cbbModel);
         cbbModel.addElement(colorNull);
         this.list.getCOlor().forEach(color -> {
-            cbbModel.addElement(color);
+            if (color.getTrangThai()) {
+                cbbModel.addElement(color);
+            }
         });
     }
 
@@ -368,7 +372,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
         try {
             String currentDirectory = System.getProperty("user.dir")
                     + "/src/main/java/haladesign/photo/";
-            JnaFileChooser fileChooser = new  JnaFileChooser(currentDirectory);
+            JnaFileChooser fileChooser = new JnaFileChooser(currentDirectory);
             fileChooser.showOpenDialog(null);
             File selectedFile = fileChooser.getSelectedFile();
 

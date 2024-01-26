@@ -1,14 +1,18 @@
 package haladesign.form;
 
-import haladesign.component.NewProperties;
+import haladesign.component.PropertiesProduct;
 import haladesign.mainMenu.Main;
 import haladesign.model.Color;
 import haladesign.model.Size;
 import haladesign.service.SanPhamService;
+import haladesign.swing.table.TableActionCellEditor;
 import haladesign.swing.table.TableActionCellRender;
+import haladesign.swing.table.TableActionEvent;
 import haladesign.system.GlassPanePopup;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.AbstractAction;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,9 +25,11 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
     private final SanPhamService list;
     private List<Size> listSize;
     private List<Color> listColor;
+    private final Main main;
 
     public ThuocTinhSanPham(Main main) {
         initComponents();
+        this.main = main;
         this.list = new SanPhamService();
         this.listSize = new ArrayList<>();
         this.listColor = new ArrayList<>();
@@ -53,29 +59,62 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
         tblModel.addColumn("Trạng thái");
         tblModel.addColumn("Ngày tạo");
         tblModel.addColumn("Thao tác");
+        tblProperties.getColumnModel().getColumn(0).setMinWidth(50);
+        tblProperties.getColumnModel().getColumn(0).setMaxWidth(50);
+        tblProperties.getColumnModel().getColumn(4).setMinWidth(110);
+        tblProperties.getColumnModel().getColumn(4).setMaxWidth(110);
         tblModel.setRowCount(0);
+        TableActionEvent event = (int data) -> {
+            if (tblProperties.getSelectedRow() < 0) {
+                tblProperties.getCellEditor().stopCellEditing();
+            }
+            PropertiesProduct properties = new PropertiesProduct(rdoSize.isSelected(), main, tblProperties.getValueAt(tblProperties.getSelectedRow(), 1).toString(), tblProperties.getValueAt(tblProperties.getSelectedRow(), 2).equals("Đang hoạt động") ? true : false);
+            properties.evenSave(new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (rdoSize.isSelected()) {
+                        setTable("Size");
+                        btnAdd.setText("Thêm size");
+                        setTempSize();
+                        fillSize();
+                    } else {
+                        setTable("Color");
+                        btnAdd.setText("Thêm color");
+                        setTempColor();
+                        fillColor();
+                    }
+                    GlassPanePopup.closePopupLast();
+                }
+            });
+            GlassPanePopup.showPopup(properties);
+            System.out.println("Index: " + tblProperties.getSelectedRow());
+        };
         tblProperties.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRender());
+        tblProperties.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditor(event));
     }
 
     private void fillSize() {
         tblModel = (DefaultTableModel) tblProperties.getModel();
+        tblModel.setRowCount(0);
         this.listSize.forEach(sz -> {
             Object[] row = {
                 sz.getId(),
                 sz.getLoaiSize(),
-                sz.getTrangThai()?"Đang hoạt động":"Ngừng hoạt động",
+                sz.getTrangThai() ? "Đang hoạt động" : "Ngừng hoạt động",
                 sz.getNgayTao()
             };
             tblModel.addRow(row);
         });
     }
-    private  void fillColor(){
+
+    private void fillColor() {
         tblModel = (DefaultTableModel) tblProperties.getModel();
+        tblModel.setRowCount(0);
         this.listColor.forEach(color -> {
             Object[] row = {
                 color.getId(),
                 color.getLoaiMau(),
-                color.getTrangThai()?"Đang hoạt động":"Ngừng hoạt động",
+                color.getTrangThai() ? "Đang hoạt động" : "Ngừng hoạt động",
                 color.getNgayTao()
             };
             tblModel.addRow(row);
@@ -87,13 +126,14 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane1 = new haladesign.swing.scroll.ScrollPaneWin11();
         tblProperties = new haladesign.swing.table.Table();
         jLabel1 = new javax.swing.JLabel();
         rdoSize = new javax.swing.JRadioButton();
         rdoColor = new javax.swing.JRadioButton();
         textField1 = new haladesign.swingStyle.TextField();
         btnAdd = new haladesign.swingStyle.Button();
+        button1 = new haladesign.swingStyle.Button();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -142,6 +182,16 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
             }
         });
 
+        button1.setBackground(new java.awt.Color(153, 255, 153));
+        button1.setForeground(new java.awt.Color(255, 255, 255));
+        button1.setText("Làm mới");
+        button1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -155,12 +205,14 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textField1, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
                                 .addGap(20, 20, 20)
                                 .addComponent(rdoSize)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(rdoColor)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(34, 34, 34)
+                                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 896, Short.MAX_VALUE))
                         .addGap(20, 20, 20))))
@@ -173,7 +225,9 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(rdoSize)
                         .addComponent(rdoColor)))
@@ -181,6 +235,9 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAdd, button1});
+
     }// </editor-fold>//GEN-END:initComponents
 
     private void rdoSizeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoSizeItemStateChanged
@@ -196,13 +253,41 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_rdoColorItemStateChanged
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        NewProperties properties = new NewProperties(rdoSize.isSelected());
+        PropertiesProduct properties = new PropertiesProduct(rdoSize.isSelected(), main, "", false);
+        properties.evenSave(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (rdoSize.isSelected()) {
+                    setTable("Size");
+                    btnAdd.setText("Thêm size");
+                    setTempSize();
+                    fillSize();
+                } else {
+                    setTable("Color");
+                    btnAdd.setText("Thêm color");
+                    setTempColor();
+                    fillColor();
+                }
+                GlassPanePopup.closePopupLast();
+            }
+        });
         GlassPanePopup.showPopup(properties);
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        setTempSize();
+        setTempColor();
+        if (rdoSize.isSelected()) {
+            fillSize();
+        } else {
+            fillColor();
+        }
+    }//GEN-LAST:event_button1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private haladesign.swingStyle.Button btnAdd;
+    private haladesign.swingStyle.Button button1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

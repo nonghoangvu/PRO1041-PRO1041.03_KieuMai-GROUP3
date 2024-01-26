@@ -92,7 +92,9 @@ public class ThemSanPham extends javax.swing.JPanel {
         cbbSize.setModel(cbbModel);
         cbbModel.addElement(sizeNull);
         this.list.getSize().forEach(size -> {
-            cbbModel.addElement(size);
+            if (size.getTrangThai()) {
+                cbbModel.addElement(size);
+            }
         });
     }
 
@@ -104,7 +106,9 @@ public class ThemSanPham extends javax.swing.JPanel {
         cbbColor.setModel(cbbModel);
         cbbModel.addElement(colorNull);
         this.list.getCOlor().forEach(color -> {
-            cbbModel.addElement(color);
+            if (color.getTrangThai()) {
+                cbbModel.addElement(color);
+            }
         });
     }
 
