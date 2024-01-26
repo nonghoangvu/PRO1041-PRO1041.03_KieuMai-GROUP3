@@ -5,7 +5,9 @@ import haladesign.form.ThongKe;
 import java.awt.Component;
 import haladesign.form.Form_Empty;
 import haladesign.form.ListProductForm;
+import haladesign.form.SuaTaiKhoan;
 import haladesign.form.ThuocTinhSanPham;
+import haladesign.model.NhanVien;
 import haladesign.system.GlassPanePopup;
 import haladesign.system.Message;
 import haladesign.system.Setting;
@@ -18,8 +20,9 @@ import java.awt.event.ActionEvent;
 public class Main extends javax.swing.JFrame {
 
     private static Main main;
-
-    public Main() {
+    private final NhanVien nhanVien;
+    public Main(NhanVien nhanVien) {
+        this.nhanVien = nhanVien;
         initComponents();
         init();
         GlassPanePopup.install(this);
@@ -50,7 +53,8 @@ public class Main extends javax.swing.JFrame {
                     switch (indexSubMenu) {
                         case 1 ->
                             showForm(new ListProductForm(this));
-                        case 2 -> showForm(new ThuocTinhSanPham(this));
+                        case 2 ->
+                            showForm(new ThuocTinhSanPham(this));
                         default ->
                             showForm(new Form_Empty(index + " " + indexSubMenu));
                     }
@@ -68,6 +72,14 @@ public class Main extends javax.swing.JFrame {
                     showForm(new Setting());
                 default ->
                     showForm(new Form_Empty(index + " " + indexSubMenu));
+                case 5 -> {
+                    switch (indexSubMenu) {
+                        case 0 ->
+                            showForm(new SuaTaiKhoan(this.nhanVien));
+                        default ->
+                            showForm(new Form_Empty(index + " " + indexSubMenu));
+                    }
+                }
             }
         });
         menu.setSelectedIndex(0, 0);

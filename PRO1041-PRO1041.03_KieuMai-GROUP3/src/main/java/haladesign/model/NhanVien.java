@@ -68,7 +68,7 @@ public class NhanVien {
 
     @Override
     public String toString() {
-        return "NhanVien{" + "id=" + id + ", fullName=" + fullName + ", phoneNum=" + phoneNum + ", email=" + email + ", gender=" + gender + ", birthdate=" + birthdate + ", address=" + address + ", password=" + password + ", createdDate=" + createdDate + ", userState=" + userState + ", note=" + note + ", role=" + role + '}';
+        return "NhanVien{" + "id=" + id + ", fullName=" + fullName + ", phoneNum=" + phoneNum + ", email=" + email + ", gender=" + gender + ", birthdate=" + birthdate + ", address=" + address + ", password=" + password + ", createdDate=" + createdDate + ", userState=" + userState + ", note=" + note + ", role=" + role + '}' + "\n";
     }
     
 }

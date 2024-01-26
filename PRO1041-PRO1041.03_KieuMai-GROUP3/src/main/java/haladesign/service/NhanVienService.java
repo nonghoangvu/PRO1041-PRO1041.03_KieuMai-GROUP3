@@ -8,6 +8,7 @@ import haladesign.model.NhanVien;
 import haladesign.repository.INhanVien;
 import java.util.List;
 import static haladesign.Application.getBean;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -27,6 +28,9 @@ public class NhanVienService {
     public boolean addNewNhanVien(NhanVien nhanVien) {
         return this.iNhanVien.save(nhanVien) != null;
     }
-    
+
+    public NhanVien getEmplLogin(String phoneNumber) {
+        return iNhanVien.findBySdtAndNotDeleted(phoneNumber);
+    }
 
 }
