@@ -110,7 +110,7 @@ public class HoaDon {
     public Object[] dataHoaDon(){
         return new Object[]{
             this.id,
-            this.nv.getHoTen(),
+            this.nv.getFullName(),
             this.ngayTao,
             this.trangThai
         };

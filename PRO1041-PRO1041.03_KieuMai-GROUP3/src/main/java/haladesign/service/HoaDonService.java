@@ -32,7 +32,7 @@ public class HoaDonService {
             while(rs.next()){
                 HoaDon hd = new HoaDon();
                 hd.setId(rs.getInt(1));
-                NhanVien nv = new NhanVien(rs.getString(2));
+                NhanVien nv = new NhanVien();
                 hd.setNv(nv);
                 hd.setNgayTao(rs.getDate(3));
                 hd.setTrangThai(rs.getString(4));
