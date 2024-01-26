@@ -50,4 +50,50 @@ public class SanPhamBienTheService {
             return null;
         }
     }
+    
+    public int updateSanPham(long id, SanPhamBienThe spbt){
+        sql = "update SanPhamBienThe set so_luong = ? where id = ?";
+        try {
+            con = JDBC_Connect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, spbt.getSoLuong());
+            ps.setObject(2, id);
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    
+    public List<SanPhamBienThe> findSanPham(String ten){
+        List<SanPhamBienThe> listBT = new ArrayList<>();
+        sql = """
+              select SanPhamBienThe.id, ten_bien_the, loai_size, loai_mau, so_luong, gia, hinhAnh 
+              from SanPhamBienThe
+              join SanPham on SanPhamBienThe.id_san_pham = SanPham.id
+              join Color on SanPhamBienThe.id_color = Color.id
+              join Size on SanPhamBienThe.id_size = Size.id
+              where ten_bien_the like ?""";
+        try {
+            con = JDBC_Connect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, ten);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                SanPhamBienThe spbt = new SanPhamBienThe();
+                spbt.setId(rs.getLong(1));
+                spbt.setTenBienThe(rs.getString(2));
+                spbt.setSize(new Size(rs.getString(3)));
+                spbt.setColor(new Color(rs.getString(4)));
+                spbt.setSoLuong(rs.getInt(5));
+                spbt.setGia(rs.getInt(6));
+                spbt.setHinhAnh(rs.getString(7));
+                listBT.add(spbt);
+            }
+            return listBT;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

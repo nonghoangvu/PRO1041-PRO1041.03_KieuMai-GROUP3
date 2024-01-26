@@ -1,5 +1,6 @@
 package haladesign.mainMenu;
 
+import haladesign.form.BanHang;
 import haladesign.form.ThongKe;
 import java.awt.Component;
 import haladesign.form.Form_Empty;
@@ -39,6 +40,14 @@ public class Main extends javax.swing.JFrame {
                     switch (indexSubMenu) {
                         case 0 ->
                             showForm(new ThongKe());
+                        default ->
+                            showForm(new Form_Empty(index + " " + indexSubMenu));
+                    }
+                }
+                case 1 -> {
+                    switch (indexSubMenu) {
+                        case 1 ->
+                            showForm(new BanHang());
                         default ->
                             showForm(new Form_Empty(index + " " + indexSubMenu));
                     }

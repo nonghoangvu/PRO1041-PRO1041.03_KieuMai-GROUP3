@@ -57,6 +57,15 @@ public class SanPhamBienThe {
     public SanPhamBienThe(Long id) {
         this.id = id;
     }
+
+    public SanPhamBienThe(Long id, String tenBienThe, Size size, Color color, Integer gia, String hinhAnh) {
+        this.id = id;
+        this.tenBienThe = tenBienThe;
+        this.size = size;
+        this.color = color;
+        this.gia = gia;
+        this.hinhAnh = hinhAnh;
+    }
     
     public Object[] dataBienThe(){
         return new Object[]{
