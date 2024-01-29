@@ -16,7 +16,7 @@ public final class DbMetadata {
                 .append(bcryptHash.decodeBase64(config.getServer())).append(":").append(bcryptHash.decodeBase64(config.getPort())).append(";")
                 .append("databaseName=").append(bcryptHash.decodeBase64(config.getDatabase_name())).append(";")
                 .append("user=").append(bcryptHash.decodeBase64(config.getUsername())).append(";")
-                .append("password=").append(bcryptHash.decodeBase64(config.getPassword())).append(";");
+                .append("password=").append("123").append(";");
         if (config.getUsing_ssl()) {
             connectStringBuilder.append("encrypt=true;trustServerCertificate=true;");
         }
@@ -28,3 +28,4 @@ public final class DbMetadata {
         return CONNECT_STRING;
     }
 }
+//bcryptHash.decodeBase64(config.getPassword())

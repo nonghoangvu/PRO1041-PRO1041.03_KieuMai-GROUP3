@@ -131,8 +131,8 @@ public class PasswordField extends JPasswordField {
             }
 
         };
-        eye = new ImageIcon(Objects.requireNonNull(getClass().getResource("haladesign/icon/eye.png"))).getImage();
-        eye_hide = new ImageIcon(Objects.requireNonNull(getClass().getResource("/haladesign/icon/eye_hide.png")))
+        eye = new ImageIcon(Objects.requireNonNull(getClass().getResource("../icon/eye.png"))).getImage();
+        eye_hide = new ImageIcon(Objects.requireNonNull(getClass().getResource("../icon/eye_hide.png")))
                 .getImage();
         animator = new Animator(300, target);
         animator.setResolution(0);

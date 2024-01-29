@@ -45,8 +45,8 @@ public class Main extends javax.swing.JFrame {
                 case 0 -> {
                     switch (indexSubMenu) {
                         case 0 ->
-//                            showForm(new ThongKe());
-                            showForm(new ThuocTinhSanPham(this));
+                            showForm(new ThongKe());
+//                            showForm(new ThuocTinhSanPham(this));
                         default ->
                             showForm(new Form_Empty(index + " " + indexSubMenu));
                     }
