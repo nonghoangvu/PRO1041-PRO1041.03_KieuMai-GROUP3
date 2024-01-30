@@ -1,5 +1,6 @@
 package haladesign.component;
 
+import haladesign.Utitlity.FormartData;
 import haladesign.Utitlity.ValidateNumber;
 import haladesign.api.JnaFileChooser;
 import haladesign.form.ListProductForm;
@@ -79,7 +80,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
                     s.getSoLuong(),
                     s.getColor().getLoaiMau(),
                     s.getSize().getLoaiSize(),
-                    s.getGia()
+                    new FormartData().moneyFormat(s.getGia()) + "VND"
             };
             tblModel.addRow(row);
         });

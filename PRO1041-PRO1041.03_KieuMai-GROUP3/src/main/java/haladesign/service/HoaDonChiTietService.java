@@ -6,8 +6,8 @@ package haladesign.service;
 
 import haladesign.config.JDBC_Connect;
 import haladesign.model.Color;
-import haladesign.model.HoaDon;
-import haladesign.model.HoaDonChiTiet;
+import haladesign.model.HoaDon0;
+import haladesign.model.HoaDonChiTiet0;
 import haladesign.model.NhanVien;
 import haladesign.model.SanPhamBienThe;
 import haladesign.model.Size;
@@ -27,8 +27,8 @@ public class HoaDonChiTietService {
     private ResultSet rs = null;
     private String sql = "";
     
-    public List<HoaDonChiTiet> getHoaDon(int id){
-        List<HoaDonChiTiet> listHDCT = new ArrayList();
+    public List<HoaDonChiTiet0> getHoaDon(int id){
+        List<HoaDonChiTiet0> listHDCT = new ArrayList();
         sql = """
               select HoaDonChiTiet.id, id_hoa_don, id_san_pham_chi_tiet, ten_bien_the, loai_mau, loai_size, HoaDonChiTiet.gia, HoaDonChiTiet.so_luong from HoaDonChiTiet 
               join SanPhamBienThe on HoaDonChiTiet.id_san_pham_chi_tiet = SanPhamBienThe.id
@@ -41,9 +41,9 @@ public class HoaDonChiTietService {
             ps.setObject(1, id);
             rs = ps.executeQuery();
             while(rs.next()){
-                HoaDonChiTiet hdct = new HoaDonChiTiet();
+                HoaDonChiTiet0 hdct = new HoaDonChiTiet0();
                 hdct.setId(rs.getInt(1));
-                hdct.setHd(new HoaDon(rs.getInt(2)));
+                hdct.setHd(new HoaDon0(rs.getInt(2)));
                 SanPhamBienThe spbt = new SanPhamBienThe();
                 spbt.setId(rs.getLong(3));
                 spbt.setTenBienThe(rs.getString(4));
@@ -61,7 +61,7 @@ public class HoaDonChiTietService {
         }
     }
     
-    public int addHoaDonChiTiet(HoaDonChiTiet hdct){
+    public int addHoaDonChiTiet(HoaDonChiTiet0 hdct){
         sql = "insert into HoaDonChiTiet(id_hoa_don,id_san_pham_chi_tiet,so_luong,gia) values(?,?,?,?)";
         try {
             con = JDBC_Connect.getConnection();
@@ -77,7 +77,7 @@ public class HoaDonChiTietService {
         }
     }
     
-    public int updateHoaDonChiTiet(int idHD, long idSP, HoaDonChiTiet hdct){
+    public int updateHoaDonChiTiet(int idHD, long idSP, HoaDonChiTiet0 hdct){
         sql = "update HoaDonChiTiet set so_luong = ? where id_hoa_don = ? and id_san_pham_chi_tiet = ?";
         try {
             con = JDBC_Connect.getConnection();

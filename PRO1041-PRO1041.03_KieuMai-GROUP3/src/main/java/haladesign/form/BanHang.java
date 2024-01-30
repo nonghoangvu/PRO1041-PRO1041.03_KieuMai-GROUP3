@@ -4,8 +4,8 @@
  */
 package haladesign.form;
 
-import haladesign.model.HoaDon;
-import haladesign.model.HoaDonChiTiet;
+import haladesign.model.HoaDon0;
+import haladesign.model.HoaDonChiTiet0;
 import haladesign.model.SanPhamBienThe;
 import haladesign.service.HoaDonChiTietService;
 import haladesign.service.HoaDonService;
@@ -33,10 +33,10 @@ public class BanHang extends javax.swing.JPanel {
         this.fillSanPham(serBT.getSanPham());
     }
     
-    private void fillHoaDon(List<HoaDon> list) {
+    private void fillHoaDon(List<HoaDon0> list) {
         mol = (DefaultTableModel) tbl_HoaDon.getModel();
         mol.setRowCount(0);
-        for (HoaDon hd : list) {
+        for (HoaDon0 hd : list) {
             mol.addRow(hd.dataHoaDon());
         }
     }
@@ -49,10 +49,10 @@ public class BanHang extends javax.swing.JPanel {
         }
     }
 
-    private void fillHoaDonChiTiet(List<HoaDonChiTiet> list) {
+    private void fillHoaDonChiTiet(List<HoaDonChiTiet0> list) {
         mol = (DefaultTableModel) tbl_HoaDonChiTiet.getModel();
         mol.setRowCount(0);
-        for (HoaDonChiTiet hdct : list) {
+        for (HoaDonChiTiet0 hdct : list) {
             mol.addRow(hdct.dataHoaDonChiTiet());
         }
     }
@@ -469,7 +469,7 @@ public class BanHang extends javax.swing.JPanel {
             check++;
         }
         if (check == 0) {
-            if (serHDCT.updateHoaDonChiTiet(idHD, idSP, new HoaDonChiTiet(soLuongNhap)) > 0) {
+            if (serHDCT.updateHoaDonChiTiet(idHD, idSP, new HoaDonChiTiet0(soLuongNhap)) > 0) {
                 this.fillHoaDonChiTiet(serHDCT.getHoaDon(idHD));
             }
             soLuongSP = soLuongSP + soLuongHDCT - soLuongNhap;
@@ -555,7 +555,7 @@ public class BanHang extends javax.swing.JPanel {
         }
         int soLuongHDCT = 0;
         int check = 0;
-        for (HoaDonChiTiet ct : serHDCT.getHoaDon(idHD)) {
+        for (HoaDonChiTiet0 ct : serHDCT.getHoaDon(idHD)) {
             if (idSP == ct.getSp().getId()) {
                 soLuongHDCT = ct.getSoLuong();
                 check++;
@@ -565,8 +565,8 @@ public class BanHang extends javax.swing.JPanel {
             soLuongNhap = soLuongNhap + soLuongHDCT;
 
             soLuongSP = soLuongSP + soLuongHDCT - soLuongNhap;
-            HoaDonChiTiet hdct = new HoaDonChiTiet();
-            hdct.setHd(new HoaDon(idHD));
+            HoaDonChiTiet0 hdct = new HoaDonChiTiet0();
+            hdct.setHd(new HoaDon0(idHD));
             hdct.setSp(new SanPhamBienThe(idSP));
             hdct.setGia(gia);
             hdct.setSoLuong(soLuongNhap);
@@ -577,7 +577,7 @@ public class BanHang extends javax.swing.JPanel {
                     this.fillHoaDonChiTiet(serHDCT.getHoaDon(idHD));
                 }
             } else {
-                if (serHDCT.updateHoaDonChiTiet(idHD, idSP, new HoaDonChiTiet(soLuongNhap)) > 0) {
+                if (serHDCT.updateHoaDonChiTiet(idHD, idSP, new HoaDonChiTiet0(soLuongNhap)) > 0) {
                     this.fillHoaDonChiTiet(serHDCT.getHoaDon(idHD));
                 }
             }
