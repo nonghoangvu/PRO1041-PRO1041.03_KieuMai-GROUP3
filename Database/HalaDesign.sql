@@ -61,6 +61,28 @@ CREATE TABLE [NhanVien] (
   [ghi_chu] NVARCHAR(MAX)
 )
 GO
+CREATE TABLE [HoaDon] (
+  [id] INT IDENTITY(1,1) PRIMARY KEY,
+  [id_khach_hang] INT,
+  [id_nhan_vien] INT,
+  [trang_thai] NVARCHAR(100),
+  [tong_gia_tri_hoa_don] INT,
+  [hinh_thuc_thanh_toan] NVARCHAR(MAX),
+  [tien_dua] INT,
+  [tien_thua] INT,
+  [ngay_tao] DATETIME DEFAULT (GETDATE()),
+  [ngay_sua] DATETIME
+)
+GO
+CREATE TABLE [HoaDonChiTiet] (
+  [id] INT IDENTITY(1,1) PRIMARY KEY,
+  [id_hoa_don] INT,
+  [id_san_pham_chi_tiet] INT,
+  [so_luong] INT,
+  [gia] INT,
+  [tong_tien] INT
+)
+GO
 ALTER TABLE [NhanVien] ADD FOREIGN KEY ([id_quyen_han]) REFERENCES [QuyenHan] ([id])
 GO
 ALTER TABLE [SanPham] ADD FOREIGN KEY ([id_nhan_vien]) REFERENCES [NhanVien] ([id])
@@ -71,23 +93,32 @@ ALTER TABLE [SanPhamBienThe] ADD FOREIGN KEY ([id_size]) REFERENCES [Size] ([id]
 GO
 ALTER TABLE [SanPhamBienThe] ADD FOREIGN KEY ([id_color]) REFERENCES [Color] ([id])
 GO
+ALTER TABLE [HoaDonChiTiet] ADD FOREIGN KEY ([id_hoa_don]) REFERENCES [HoaDon] ([id])
+GO
+ALTER TABLE [HoaDonChiTiet] ADD FOREIGN KEY ([id_san_pham_chi_tiet]) REFERENCES [SanPhamBienThe] ([id])
+GO
 -- INSERT DATA --
 -- Quen Han --
-INSERT INTO QuyenHan (ten_quyen_han, nhin_gia_von, nhap_kho, huy_don_hang, sua_tt_khach_hang, xem_bao_cao) VALUES
-(N'Quyền 1', 1, 1, 0, 1, 1),
-(N'Quyền 2', 0, 1, 1, 0, 1),
-(N'Quyền 3', 1, 0, 1, 1, 0);
+INSERT INTO [QuyenHan] ([ten_quyen_han], [nhin_gia_von], [nhap_kho], [huy_don_hang], [sua_tt_khach_hang], [xem_bao_cao])
+VALUES 
+  (N'Chủ cửa hàng', 1, 1, 1, 1, 1),
+  (N'Nhân viên bán hàng', 0,0,0,1,0),
+  (N'Quản lý cửa hàng', 0, 1, 1, 1, 0);
+GO
 -- Nhan Vien --
-INSERT INTO NhanVien (ho_ten, sdt, email, gioi_tinh, ngay_sinh, dia_chi, mat_khau, trang_thai, id_quyen_han) VALUES
-(N'Nguyen Van A', '0123456789', 'nguyen.a@example.com', 1, '1990-01-01', N'123 Đường ABC, Quận XYZ', 'password123', 'Hoạt động', 1),
-(N'Tran Thi B', '0987654321', 'tran.b@example.com', 0, '1995-05-15', N'456 Đường DEF, Quận LMN', 'pass456', N'Nghỉ làm', 2),
-(N'Le Van C', '0112233445', 'le.c@example.com', 1, '1985-08-20', N'789 Đường GHI, Quận PQR', 'pass789', N'Hoạt động', 3);
+INSERT INTO [NhanVien] ([ho_ten], [sdt], [email], [gioi_tinh], [ngay_sinh], [dia_chi], [mat_khau], [trang_thai], [id_quyen_han], [ghi_chu])
+VALUES
+  ('Nguyen Van A', '0123456789', 'nv_a@email.com', 1, '1990-01-15', '123 Main Street, City', 'password123', N'Đang làm việc', 1, 'Ghi chú 1'),
+  ('Tran Thi B', '0987654321', 'tt_b@email.com', 0, '1995-05-20', '456 Park Avenue, Town', 'securepass456', N'Đang nghỉ việc', 2, 'Ghi chú 2'),
+  ('Le Van C', '0369871542', null, 1, null, null, null, 'Đã gửi lời mời', 2, 'Ghi chú 3'),
+  ('Le Van Minh', '0369877729', null, 1, null, null, null, 'deleted', 3, 'Ghi chú 3');
+GO
 -- Size --
-INSERT INTO [Size] ([loai_size])
-VALUES ('S'), ('M'), ('L'), ('XL'), ('XXL');
+INSERT INTO [Size] ([loai_size], [trang_thai])
+VALUES ('S', 1), ('M', 1), ('L', 1), ('XL', 1), ('XXL', 1);
 -- Color --
-INSERT INTO [Color] ([loai_mau])
-VALUES (N'Cam'), (N'Hồng'), (N'Đỏ');
+INSERT INTO [Color] ([loai_mau], [trang_thai])
+VALUES (N'Cam', 1), (N'Hồng', 1), (N'Đỏ', 1);
 -- San Pham --
 INSERT INTO [SanPham] ([id], [ten_san_pham], [id_nhan_vien])
 VALUES

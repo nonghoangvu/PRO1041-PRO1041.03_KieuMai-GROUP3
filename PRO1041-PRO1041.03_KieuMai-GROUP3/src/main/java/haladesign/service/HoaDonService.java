@@ -4,7 +4,7 @@
  */
 package haladesign.service;
 import haladesign.config.JDBC_Connect;
-import haladesign.model.HoaDon;
+import haladesign.model.HoaDon0;
 import haladesign.model.NhanVien;
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,8 +19,8 @@ public class HoaDonService {
     private ResultSet rs = null;
     private String sql = "";
     
-    public List<HoaDon> getHoaDon(){
-        List<HoaDon> listHD = new ArrayList();
+    public List<HoaDon0> getHoaDon(){
+        List<HoaDon0> listHD = new ArrayList();
         sql = """
               select HoaDon.id, ho_ten, HoaDon.ngay_tao, HoaDon.trang_thai 
               from HoaDon join NhanVien on HoaDon.id_nhan_vien = NhanVien.id
@@ -30,7 +30,7 @@ public class HoaDonService {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
-                HoaDon hd = new HoaDon();
+                HoaDon0 hd = new HoaDon0();
                 hd.setId(rs.getInt(1));
                 NhanVien nv = new NhanVien();
                 hd.setNv(nv);

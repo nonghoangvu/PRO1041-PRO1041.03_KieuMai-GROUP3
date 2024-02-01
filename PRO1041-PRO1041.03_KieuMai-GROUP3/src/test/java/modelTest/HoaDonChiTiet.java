@@ -1,5 +1,6 @@
-package haladesign.model;
+package modelTest;
 
+import haladesign.model.SanPhamBienThe;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public class HoaDonChiTiet {
     @JoinColumn(name = "id_hoa_don", referencedColumnName = "id")
     private HoaDon hoaDon;
 
-    @ManyToOne
+    
     @JoinColumn(name = "id_san_pham_chi_tiet")
     private SanPhamBienThe sanPhamBienThe;
 
@@ -41,4 +42,6 @@ public class HoaDonChiTiet {
 
     @Column(name = "tong_tien")
     private Float tongTien;
+    
+    
 }

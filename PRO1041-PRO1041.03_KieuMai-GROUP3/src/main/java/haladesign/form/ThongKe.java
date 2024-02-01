@@ -1,18 +1,61 @@
 package haladesign.form;
 
+import haladesign.card.LabelIcon;
+import java.awt.Color;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author NONG HOANG VU
  */
 public class ThongKe extends javax.swing.JPanel {
-
+    
+    LabelIcon lb = new LabelIcon();
+    
     public ThongKe() {
         initComponents();
+        init();
     }
-    private void init(){
+    
+    private void init() {
+        tbl.fixTable(jScrollPane1);
+        fillTable();
+    }
+    
+    private void fillTable() {
+        tbl.getColumnModel().getColumn(0).setMinWidth(50);
+        tbl.getColumnModel().getColumn(0).setMaxWidth(50);
+        this.lb.setText("On");
+        this.lb.setHorizontalAlignment((int) CENTER_ALIGNMENT);
+        this.lb.setColor1(new Color(255, 204, 204));
+        this.lb.setColor1(new Color(51,255,255));
+        DefaultTableModel tblModel = (DefaultTableModel) tbl.getModel();
+        tblModel.setRowCount(0);
+        Object[] row = {this.lb};
+        tbl.setDefaultRenderer(Object.class, new CenteredTableCellRenderer());
+        tblModel.addRow(row);
         tbl.fixTable(jScrollPane1);
     }
+    
+    class CenteredTableCellRenderer extends DefaultTableCellRenderer {
+        public CenteredTableCellRenderer() {
+            setHorizontalAlignment(SwingConstants.CENTER);
+        }
 
+        @Override
+        public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            if (value instanceof LabelIcon) {
+                LabelIcon labelIcon = (LabelIcon) value;
+                return labelIcon;
+            }
+            return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        }
+    }
+
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -26,7 +69,7 @@ public class ThongKe extends javax.swing.JPanel {
 
         setOpaque(false);
 
-        card1.setIcon(javaswingdev.GoogleMaterialDesignIcon.BLUR_CIRCULAR);
+        card1.setIcon(javaswingdev.GoogleMaterialDesignIcon.ARROW_DROP_DOWN_CIRCLE);
 
         card2.setColor1(new java.awt.Color(51, 255, 255));
         card2.setColor2(new java.awt.Color(204, 0, 102));
@@ -50,8 +93,22 @@ public class ThongKe extends javax.swing.JPanel {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tbl);
+        if (tbl.getColumnModel().getColumnCount() > 0) {
+            tbl.getColumnModel().getColumn(0).setResizable(false);
+            tbl.getColumnModel().getColumn(1).setResizable(false);
+            tbl.getColumnModel().getColumn(2).setResizable(false);
+            tbl.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         javax.swing.GroupLayout roundPanel1Layout = new javax.swing.GroupLayout(roundPanel1);
         roundPanel1.setLayout(roundPanel1Layout);
