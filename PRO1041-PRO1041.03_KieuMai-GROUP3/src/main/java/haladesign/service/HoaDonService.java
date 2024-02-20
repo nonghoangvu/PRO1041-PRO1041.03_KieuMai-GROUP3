@@ -67,7 +67,7 @@ public class HoaDonService {
         try {
             con = JDBC_Connect.getConnection();
             ps = con.prepareStatement(sql);
-            ps.setObject(1, hd.getKh());
+            ps.setObject(1, hd.getKh().getId());
             ps.setObject(2, hd.getTrangThai());
             ps.setObject(3, hd.getThanhTien());
             ps.setObject(4, hd.getHinhThuc());

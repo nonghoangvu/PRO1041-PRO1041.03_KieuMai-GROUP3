@@ -25,7 +25,7 @@ public class KhachHangService {
     
     public List<KhachHang> getKhachHang(){
         List<KhachHang> listKH = new ArrayList();
-        sql = "select id, ho_ten from NhanVien";
+        sql = "select id, ho_ten from KhachHang";
         try {
             con = JDBC_Connect.getConnection();
             ps = con.prepareStatement(sql);
@@ -40,6 +40,19 @@ public class KhachHangService {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    
+    public int addKhachHang(KhachHang kh){
+        sql = "insert into KhachHang (ho_ten) values(?)";
+        try {
+            con = JDBC_Connect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, kh.getHoTen());
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 }

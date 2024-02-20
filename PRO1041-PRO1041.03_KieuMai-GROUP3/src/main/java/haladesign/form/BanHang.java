@@ -528,7 +528,7 @@ public class BanHang extends javax.swing.JPanel {
             if (this.idHD() == hd.getId()) {
                 txt_IDHoaDon.setText(String.valueOf(hd.getId()));
                 txt_NgayTao.setText(String.valueOf(hd.getNgayTao()));
-                txt_TenKhachHang.setText(String.valueOf(hd.getKh()));
+                txt_TenKhachHang.setText("Khách lẻ");
                 txt_TenNhanVien.setText(hd.getNv().getHoTen());
                 double tongTien = 0;
                 for (int i = 0; i < tbl_HoaDonChiTiet.getRowCount(); i++) {
@@ -652,11 +652,22 @@ public class BanHang extends javax.swing.JPanel {
             HoaDon hd = new HoaDon();
             hd.setHinhThuc(cbo_HinhThucThanhToan.getSelectedItem().toString());
             String tenKH = txt_TenKhachHang.getText();
+            int cont = 0;
             for (KhachHang kh : serKH.getKhachHang()) {
                 if (tenKH.equals(kh.getHoTen())) {
-                    KhachHang kh1 = new KhachHang();
-                    kh1.setHoTen(kh.getHoTen());
-                    hd.setKh(kh1);
+                    cont++;
+                }
+            }
+            if (cont == 0) {
+                KhachHang kh = new KhachHang();
+                kh.setHoTen(tenKH);
+                if (serKH.addKhachHang(kh) > 0) {
+                    JOptionPane.showMessageDialog(this, "khách mới");
+                }
+            }
+            for (KhachHang kh : serKH.getKhachHang()) {
+                if (tenKH.equals(kh.getHoTen())) {
+                    hd.setKh(new KhachHang(kh.getId()));
                 }
             }
 

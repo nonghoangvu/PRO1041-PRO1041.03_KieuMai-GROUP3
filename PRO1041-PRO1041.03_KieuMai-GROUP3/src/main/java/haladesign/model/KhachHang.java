@@ -9,6 +9,7 @@ package haladesign.model;
  * @author ADMIN
  */
 public class KhachHang {
+
     private int id;
     private String hoTen;
 
@@ -23,8 +24,6 @@ public class KhachHang {
     public KhachHang(int id) {
         this.id = id;
     }
-
-    
 
     public int getId() {
         return id;
