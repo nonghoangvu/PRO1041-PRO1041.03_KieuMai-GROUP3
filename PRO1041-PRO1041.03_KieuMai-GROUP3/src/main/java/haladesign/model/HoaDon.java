@@ -12,25 +12,40 @@ import java.util.Date;
  */
 public class HoaDon {
     private int id;
-    private int kh;
+    private KhachHang kh;
     private NhanVien nv;
     private String trangThai;
     private double thanhTien;
+    private String hinhThuc;
+    private double tienDua;
     private double tienThua;
     private Date ngayTao;
 
     public HoaDon() {
     }
 
-    public HoaDon(int id, int kh, NhanVien nv, String trangThai, double thanhTien, double tienThua, Date ngayTao) {
+    public HoaDon(KhachHang kh, String trangThai, double thanhTien, String hinhThuc, double tienDua, double tienThua) {
+        this.kh = kh;
+        this.trangThai = trangThai;
+        this.thanhTien = thanhTien;
+        this.hinhThuc = hinhThuc;
+        this.tienDua = tienDua;
+        this.tienThua = tienThua;
+    }
+
+    public HoaDon(int id, KhachHang kh, NhanVien nv, String trangThai, double thanhTien, String hinhThuc, double tienDua, double tienThua, Date ngayTao) {
         this.id = id;
         this.kh = kh;
         this.nv = nv;
         this.trangThai = trangThai;
         this.thanhTien = thanhTien;
+        this.hinhThuc = hinhThuc;
+        this.tienDua = tienDua;
         this.tienThua = tienThua;
         this.ngayTao = ngayTao;
     }
+
+    
 
     public HoaDon(NhanVien nv, String trangThai) {
         this.nv = nv;
@@ -42,6 +57,14 @@ public class HoaDon {
         this.nv = nv;
         this.trangThai = trangThai;
         this.ngayTao = ngayTao;
+    }
+
+    public String getHinhThuc() {
+        return hinhThuc;
+    }
+
+    public void setHinhThuc(String hinhThuc) {
+        this.hinhThuc = hinhThuc;
     }
     
 
@@ -57,13 +80,15 @@ public class HoaDon {
         this.id = id;
     }
 
-    public int getKh() {
+    public KhachHang getKh() {
         return kh;
     }
 
-    public void setKh(int kh) {
+    public void setKh(KhachHang kh) {
         this.kh = kh;
     }
+
+   
 
     public NhanVien getNv() {
         return nv;
@@ -71,6 +96,14 @@ public class HoaDon {
 
     public void setNv(NhanVien nv) {
         this.nv = nv;
+    }
+
+    public double getTienDua() {
+        return tienDua;
+    }
+
+    public void setTienDua(double tienDua) {
+        this.tienDua = tienDua;
     }
 
     

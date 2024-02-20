@@ -32,7 +32,8 @@ public class HoaDonService {
             while(rs.next()){
                 HoaDon hd = new HoaDon();
                 hd.setId(rs.getInt(1));
-                NhanVien nv = new NhanVien(rs.getString(2));
+                NhanVien nv = new NhanVien();
+                nv.setHoTen(rs.getString(2));
                 hd.setNv(nv);
                 hd.setNgayTao(rs.getDate(3));
                 hd.setTrangThai(rs.getString(4));
@@ -52,6 +53,27 @@ public class HoaDonService {
             ps = con.prepareStatement(sql);
             ps.setObject(1, 1);
             ps.setObject(2, "Chờ thanh toán");
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    
+    public int updateHoaDon(HoaDon hd, int id){
+        sql = """
+              update HoaDon set id_khach_hang = ?, trang_thai = ?, tong_gia_tri_hoa_don = ?,
+              hinh_thuc_thanh_toan = ?, tien_dua = ?, tien_thua = ? where id = ?""";
+        try {
+            con = JDBC_Connect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, hd.getKh());
+            ps.setObject(2, hd.getTrangThai());
+            ps.setObject(3, hd.getThanhTien());
+            ps.setObject(4, hd.getHinhThuc());
+            ps.setObject(5, hd.getTienDua());
+            ps.setObject(6, hd.getTienThua());
+            ps.setObject(7, id);
             return ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
