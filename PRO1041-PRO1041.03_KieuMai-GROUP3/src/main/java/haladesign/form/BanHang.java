@@ -13,6 +13,7 @@ import haladesign.service.HoaDonChiTietService;
 import haladesign.service.HoaDonService;
 import haladesign.service.KhachHangService;
 import haladesign.service.SanPhamBienTheService;
+import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -690,7 +691,9 @@ public class BanHang extends javax.swing.JPanel {
         double tienDua = Double.parseDouble(txt_TienDua.getText());
         double thanhTien = Double.parseDouble(txt_ThanhTien.getText());
         double tienThua = tienDua - thanhTien;
-        txt_TienThua.setText(String.valueOf(tienThua));
+        DecimalFormat decimalFormat = new DecimalFormat("#.0");
+        String decimalString = decimalFormat.format(tienThua);
+        txt_TienThua.setText(decimalString);
     }//GEN-LAST:event_txt_TienDuaMouseExited
 
 

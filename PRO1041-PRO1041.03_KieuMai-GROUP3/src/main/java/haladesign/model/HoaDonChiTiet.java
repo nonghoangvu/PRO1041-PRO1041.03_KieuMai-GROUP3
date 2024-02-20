@@ -4,6 +4,8 @@
  */
 package haladesign.model;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author ADMIN
@@ -84,8 +86,11 @@ public class HoaDonChiTiet {
         this.gia = gia;
     }
     
-    public double tongTien(){
-        return this.soLuong * this.gia;
+    public String tongTien(){
+        double tongTien = this.soLuong * this.gia;
+        DecimalFormat decimalFormat = new DecimalFormat("#.0");
+        String decimalString = decimalFormat.format(tongTien);
+        return decimalString;
     }
     public Object[] dataHoaDonChiTiet(){
         return new Object[]{
