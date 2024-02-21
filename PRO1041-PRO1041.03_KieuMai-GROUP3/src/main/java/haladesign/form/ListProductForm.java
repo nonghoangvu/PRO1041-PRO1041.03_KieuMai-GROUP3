@@ -39,13 +39,15 @@ public class ListProductForm extends javax.swing.JPanel {
         this.tblModel = (DefaultTableModel) tblProduct.getModel();
         this.tblModel.setRowCount(0);
         Collections.sort(sanPhamList, Comparator.comparing(SanPham::getNgay_tao).reversed());
-        Integer[] count = {0};
+        Integer[] count = { 0 };
         sanPhamList.forEach(sp -> {
             Integer totalQuantity = sp.getBienTheList().stream()
                     .filter(spbt -> sp.getId().startsWith(spbt.getId_san_pham().getId()))
                     .mapToInt(SanPhamBienThe::getSoLuong)
                     .sum();
-            Object[] row = {++count[0], sp.getId(), sp.getTen_san_pham(), totalQuantity, sp.getTrang_thai() ? bcryptHash.decodeBase64("xJBhbmcgYsOhbg==") : bcryptHash.decodeBase64("Tmfhu6tuZyBiw6Fu")};
+            Object[] row = { ++count[0], sp.getId(), sp.getTen_san_pham(), totalQuantity,
+                    sp.getTrang_thai() ? bcryptHash.decodeBase64("xJBhbmcgYsOhbg==")
+                            : bcryptHash.decodeBase64("Tmfhu6tuZyBiw6Fu") };
             this.tblModel.addRow(row);
             TableActionEvent event = (int data) -> {
                 if (tblProduct.getSelectedRow() < 0) {
@@ -54,7 +56,7 @@ public class ListProductForm extends javax.swing.JPanel {
                 String selectedProductId = String.valueOf(tblProduct.getValueAt(data, 1));
                 String hashedPassword = bcryptHash.decodeBase64("xJBhbmcgYsOhbg==");
                 Boolean activity = tblProduct.getValueAt(data, 4).equals(hashedPassword);
-                ThongTinSanPham info = new  ThongTinSanPham(main, selectedProductId, activity);
+                ThongTinSanPham info = new ThongTinSanPham(main, selectedProductId, activity);
                 this.main.showForm(info);
             };
             tblProduct.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
@@ -68,7 +70,8 @@ public class ListProductForm extends javax.swing.JPanel {
     }
 
     @SuppressWarnings("unchecked")
-// <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -107,7 +110,6 @@ public class ListProductForm extends javax.swing.JPanel {
 
         btnAdd.setBackground(new java.awt.Color(255, 204, 51));
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
-        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/haladesign/icon/plus.png"))); // NOI18N
         btnAdd.setText("Thêm sản phẩm");
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -198,10 +200,10 @@ public class ListProductForm extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAddActionPerformed
         ThemSanPham themSanPham = new ThemSanPham(this.main, "HLD-" + generateRandomNumber(10000, 10000000));
         this.main.showForm(themSanPham);
-    }//GEN-LAST:event_btnAddActionPerformed
+    }// GEN-LAST:event_btnAddActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private haladesign.swingStyle.Button btnAdd;
