@@ -1,6 +1,8 @@
 package haladesign;
 
+import haladesign.loginFeature.Login;
 import haladesign.mainMenu.Main;
+import haladesign.model.NhanVien;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
@@ -31,6 +33,7 @@ public class Application {
 
     public static void main(String[] args) {
         context = createApplicationContext(args);
-        new Main().setVisible(true);
+//        new Login().setVisible(true);
+        new Main(new NhanVien("A", "1", "0", "m", "Nam", null, null, null, null, null, null, null)).setVisible(true);
     }
 }

@@ -7,7 +7,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,7 +52,35 @@ public class SanPhamBienThe {
 
     @Column(name = "gia", nullable = false, columnDefinition = "INT CHECK (gia >= 0)")
     private Integer gia;
-    
+
     @Column(name = "hinhAnh")
     private String hinhAnh;
+
+    @OneToMany(mappedBy = "sanPhamBienThe")
+    private List<HoaDonChiTiet> hoaDonChiTietList;
+
+    public SanPhamBienThe(Long id) {
+        this.id = id;
+    }
+
+    public SanPhamBienThe(Long id, String tenBienThe, Size size, Color color, Integer gia, String hinhAnh) {
+        this.id = id;
+        this.tenBienThe = tenBienThe;
+        this.size = size;
+        this.color = color;
+        this.gia = gia;
+        this.hinhAnh = hinhAnh;
+    }
+
+    public Object[] dataBienThe() {
+        return new Object[]{
+            this.id,
+            this.tenBienThe,
+            this.size,
+            this.color,
+            this.soLuong,
+            this.gia,
+            this.hinhAnh
+        };
+    }
 }

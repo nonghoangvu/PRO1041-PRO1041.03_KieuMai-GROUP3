@@ -47,9 +47,15 @@ public class SanPhamService {
     public List<Size> getSize() {
         return this.iSize.findAll();
     }
+    public Size findBySize(String loaiSize){
+        return this.iSize.findByLoaiSize(loaiSize);
+    }
 
     public List<Color> getCOlor() {
         return this.iColor.findAll();
+    }
+    public Color findByColor(String loaiMau){
+        return this.iColor.findByLoaiMau(loaiMau);
     }
 
     @Transactional
@@ -67,5 +73,15 @@ public class SanPhamService {
     @Transactional
     public Boolean insertBienThe(SanPhamBienThe sp) {
         return this.iSPBT.saveAndFlush(sp) != null;
+    }
+
+    @Transactional
+    public Boolean insertColor(Color color) {
+        return this.iColor.save(color) != null;
+    }
+
+    @Transactional
+    public Boolean insertSize(Size size) {
+        return this.iSize.save(size) != null;
     }
 }
