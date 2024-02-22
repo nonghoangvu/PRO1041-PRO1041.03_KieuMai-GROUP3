@@ -43,10 +43,10 @@ public class NhanVien {
     private String email;
 
     @Column(name = "gioi_tinh")
-    private String gender;
+    private Boolean gender;
 
     @Column(name = "ngay_sinh")
-    private Date birthdate;
+    private String birthdate;
 
     @Column(name = "dia_chi")
     private String address;

@@ -41,7 +41,6 @@ public class ThemNhanVien extends javax.swing.JPanel {
     }
 
     public boolean validateEmplData() {
-
         if (txtFullname.getText().trim().isBlank()) {
             JOptionPane.showMessageDialog(this, "Tên nhân viên không được để trống");
             return false;
@@ -63,7 +62,6 @@ public class ThemNhanVien extends javax.swing.JPanel {
     public NhanVien getDataFromFields() {
         if (validateEmplData()) {
             NhanVien empl = new NhanVien();
-
             empl.setFullName(txtFullname.getText());
             empl.setPhoneNum(txtPhonenum.getText());
             empl.setNote(txtNote.getText());
