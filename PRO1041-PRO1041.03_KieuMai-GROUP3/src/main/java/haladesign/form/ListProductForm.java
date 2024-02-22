@@ -35,19 +35,19 @@ public class ListProductForm extends javax.swing.JPanel {
     }
 
     private void fillTable() {
-        List<SanPham> sanPhamList = this.list.getList();
+        List<SanPham> sanPhamList = rdoSelling.isSelected() ? this.list.getList() : this.list.getListStoped();
         this.tblModel = (DefaultTableModel) tblProduct.getModel();
         this.tblModel.setRowCount(0);
         Collections.sort(sanPhamList, Comparator.comparing(SanPham::getNgay_tao).reversed());
-        Integer[] count = {0};
+        Integer[] count = { 0 };
         sanPhamList.forEach(sp -> {
             Integer totalQuantity = sp.getBienTheList().stream()
                     .filter(spbt -> sp.getId().startsWith(spbt.getId_san_pham().getId()))
                     .mapToInt(SanPhamBienThe::getSoLuong)
                     .sum();
-            Object[] row = {++count[0], sp.getId(), sp.getTen_san_pham(), totalQuantity,
-                sp.getTrang_thai() ? bcryptHash.decodeBase64("xJBhbmcgYsOhbg==")
-                : bcryptHash.decodeBase64("Tmfhu6tuZyBiw6Fu")};
+            Object[] row = { ++count[0], sp.getId(), sp.getTen_san_pham(), totalQuantity,
+                    sp.getTrang_thai() ? bcryptHash.decodeBase64("xJBhbmcgYsOhbg==")
+                            : bcryptHash.decodeBase64("Tmfhu6tuZyBiw6Fu") };
             this.tblModel.addRow(row);
             TableActionEvent event = (int data) -> {
                 if (tblProduct.getSelectedRow() < 0) {
@@ -72,6 +72,7 @@ public class ListProductForm extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -79,7 +80,6 @@ public class ListProductForm extends javax.swing.JPanel {
         txtSearch = new haladesign.swingStyle.TextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        rdoAll = new javax.swing.JRadioButton();
         rdoSelling = new javax.swing.JRadioButton();
         rdoStopped = new javax.swing.JRadioButton();
         btnAdd = new haladesign.swingStyle.Button();
@@ -96,18 +96,24 @@ public class ListProductForm extends javax.swing.JPanel {
 
         jLabel2.setText("Trạng thái");
 
-        rdoAll.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGroup1.add(rdoAll);
-        rdoAll.setSelected(true);
-        rdoAll.setText("Tất cả");
-
         rdoSelling.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(rdoSelling);
+        rdoSelling.setSelected(true);
         rdoSelling.setText("Đang bán");
+        rdoSelling.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdoSellingItemStateChanged(evt);
+            }
+        });
 
         rdoStopped.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(rdoStopped);
         rdoStopped.setText("Ngừng bán");
+        rdoStopped.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdoStoppedItemStateChanged(evt);
+            }
+        });
 
         btnAdd.setBackground(new java.awt.Color(255, 204, 51));
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
@@ -164,31 +170,31 @@ public class ListProductForm extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(rdoAll, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
                         .addComponent(rdoSelling)
                         .addGap(20, 20, 20)
                         .addComponent(rdoStopped, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(121, 121, 121))
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(452, 452, 452)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(20, 20, 20))
+                                        .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(18, 18, 18))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGap(121, 121, 121))
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(452, 452, 452)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(20, 20, 20))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,16 +213,23 @@ public class ListProductForm extends javax.swing.JPanel {
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
-                .addGap(15, 15, 15)
+                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rdoAll)
                     .addComponent(rdoSelling)
                     .addComponent(rdoStopped))
-                .addGap(25, 25, 25)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1)
                 .addGap(18, 18, 18))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void rdoSellingItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_rdoSellingItemStateChanged
+        fillTable();
+    }// GEN-LAST:event_rdoSellingItemStateChanged
+
+    private void rdoStoppedItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_rdoStoppedItemStateChanged
+        fillTable();
+    }// GEN-LAST:event_rdoStoppedItemStateChanged
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAddActionPerformed
         ThemSanPham themSanPham = new ThemSanPham(this.main, "HLD-" + generateRandomNumber(10000, 10000000));
@@ -230,7 +243,6 @@ public class ListProductForm extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private haladesign.card.LabelIcon lbIcon;
-    private javax.swing.JRadioButton rdoAll;
     private javax.swing.JRadioButton rdoSelling;
     private javax.swing.JRadioButton rdoStopped;
     private haladesign.swing.table.Table tblProduct;

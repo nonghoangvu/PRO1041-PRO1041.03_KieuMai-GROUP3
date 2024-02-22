@@ -5,6 +5,7 @@ import haladesign.form.BanHang;
 import haladesign.form.ThongKe;
 import java.awt.Component;
 import haladesign.form.Form_Empty;
+import haladesign.form.KhachHang_form;
 import haladesign.form.ListProductForm;
 import haladesign.form.SuaTaiKhoan;
 import haladesign.form.ThuocTinhSanPham;
@@ -22,6 +23,7 @@ public class Main extends javax.swing.JFrame {
 
     private static Main main;
     private final NhanVien nhanVien;
+
     public Main(NhanVien nhanVien) {
         this.nhanVien = nhanVien;
         initComponents();
@@ -73,6 +75,8 @@ public class Main extends javax.swing.JFrame {
                     switch (indexSubMenu) {
                         case 1 ->
                             showForm(new FormQlyNhanVien(this));
+                        case 2 ->
+                            showForm(new KhachHang_form(this));
                         default ->
                             showForm(new Form_Empty(index + " " + indexSubMenu));
                     }

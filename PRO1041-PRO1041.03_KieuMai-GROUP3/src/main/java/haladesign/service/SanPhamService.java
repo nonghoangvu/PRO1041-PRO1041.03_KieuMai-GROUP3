@@ -31,6 +31,10 @@ public class SanPhamService {
     public List<SanPham> getList() {
         return this.iSP.findAll();
     }
+    public List<SanPham> getListStoped() {
+        return this.iSP.findAllStatusIsOff();
+    }
+    
 
     public List<SanPham> getByIdSanPham(String id) {
         return this.iSP.findByIdSanPham(id);
