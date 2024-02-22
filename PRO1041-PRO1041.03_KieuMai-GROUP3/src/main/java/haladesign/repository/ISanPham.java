@@ -25,4 +25,7 @@ public interface ISanPham extends JpaRepository<SanPham, String> {
     
     @Query("SELECT sp FROM SanPham sp WHERE sp.trang_thai = FALSE")
     public List<SanPham> findAllStatusIsOff();
+    
+    @Query("SELECT sp FROM SanPham sp WHERE sp.id LIKE %:search% OR sp.ten_san_pham LIKE %:search%")
+    public List<SanPham> findByIdAndName(@Param("search") String search);
 }
