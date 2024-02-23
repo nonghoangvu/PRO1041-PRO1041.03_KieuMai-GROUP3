@@ -43,7 +43,8 @@ CREATE TABLE [QuyenHan] (
   [nhap_kho] BIT,
   [huy_don_hang] BIT,
   [sua_tt_khach_hang] BIT,
-  [xem_bao_cao] BIT
+  [xem_bao_cao] BIT,
+  [sua_quyen_han] BIT
 )
 GO
 CREATE TABLE [NhanVien] (
@@ -99,18 +100,18 @@ ALTER TABLE [HoaDonChiTiet] ADD FOREIGN KEY ([id_san_pham_chi_tiet]) REFERENCES 
 GO
 -- INSERT DATA --
 -- Quen Han --
-INSERT INTO [QuyenHan] ([ten_quyen_han], [nhin_gia_von], [nhap_kho], [huy_don_hang], [sua_tt_khach_hang], [xem_bao_cao])
+INSERT INTO [QuyenHan] ([ten_quyen_han], [nhin_gia_von], [nhap_kho], [huy_don_hang], [sua_tt_khach_hang], [xem_bao_cao], [sua_quyen_han])
 VALUES 
-  (N'Chủ cửa hàng', 1, 1, 1, 1, 1),
-  (N'Nhân viên bán hàng', 0,0,0,1,0),
-  (N'Quản lý cửa hàng', 0, 1, 1, 1, 0);
+  (N'Chủ cửa hàng', 1, 1, 1, 1, 1,1),
+  (N'Nhân viên bán hàng', 0,0,0,1,0,0),
+  (N'Quản lý cửa hàng', 0, 1, 1, 1, 0,0);
 GO
 -- Nhan Vien --
 INSERT INTO [NhanVien] ([ho_ten], [sdt], [email], [gioi_tinh], [ngay_sinh], [dia_chi], [mat_khau], [trang_thai], [id_quyen_han], [ghi_chu])
 VALUES
   ('Nguyen Van A', '0123456789', 'nv_a@email.com', 1, '1990-01-15', '123 Main Street, City', 'password123', N'Đang làm việc', 1, 'Ghi chú 1'),
   ('Tran Thi B', '0987654321', 'tt_b@email.com', 0, '1995-05-20', '456 Park Avenue, Town', 'securepass456', N'Đang nghỉ việc', 2, 'Ghi chú 2'),
-  ('Le Van C', '0369871542', null, 1, null, null, null, 'Đã gửi lời mời', 2, 'Ghi chú 3'),
+  ('Le Van C', '0369871542', null, 1, null, null, null, N'Đã gửi lời mời', 2, 'Ghi chú 3'),
   ('Le Van Minh', '0369877729', null, 1, null, null, null, 'deleted', 3, 'Ghi chú 3');
 GO
 -- Size --
