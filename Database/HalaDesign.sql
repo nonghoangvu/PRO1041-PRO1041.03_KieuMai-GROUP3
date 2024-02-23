@@ -2,6 +2,18 @@
 GO
 USE HalaDesign
 Go
+CREATE TABLE [KhachHang] (
+  [id]  INT IDENTITY(1,1) PRIMARY KEY,
+  [ho_ten] nvarchar(255),
+  [gioi_tinh] bit,
+  [so_dien_thoai] nvarchar(255),
+  [email] nvarchar(255),
+  [diaChi] nvarchar(max),
+  [ngay_tao] datetime DEFAULT (GETDATE()),
+  [ngay_sua] datetime,
+  [xoa_mem] int
+)
+GO
 CREATE TABLE [SanPham] (
   [id] NCHAR(15) PRIMARY KEY,
   [ten_san_pham] NVARCHAR(MAX) NOT NULL,
@@ -35,6 +47,7 @@ CREATE TABLE [SanPhamBienThe] (
   [gia] INT CHECK ([gia] >= 0) NOT NULL,
   [hinhAnh] NVARCHAR(MAX)
 )
+GO
 GO
 CREATE TABLE [QuyenHan] (
   [id] INT IDENTITY(1,1) PRIMARY KEY,
@@ -98,6 +111,10 @@ ALTER TABLE [HoaDonChiTiet] ADD FOREIGN KEY ([id_hoa_don]) REFERENCES [HoaDon] (
 GO
 ALTER TABLE [HoaDonChiTiet] ADD FOREIGN KEY ([id_san_pham_chi_tiet]) REFERENCES [SanPhamBienThe] ([id])
 GO
+ALTER TABLE [HoaDon] ADD FOREIGN KEY ([id_khach_hang]) REFERENCES [KhachHang] ([id])
+GO
+ALTER TABLE [HoaDon] ADD FOREIGN KEY ([id_nhan_vien]) REFERENCES [NhanVien] ([id])
+GO
 -- INSERT DATA --
 -- Quen Han --
 INSERT INTO [QuyenHan] ([ten_quyen_han], [nhin_gia_von], [nhap_kho], [huy_don_hang], [sua_tt_khach_hang], [xem_bao_cao], [sua_quyen_han])
@@ -109,11 +126,18 @@ GO
 -- Nhan Vien --
 INSERT INTO [NhanVien] ([ho_ten], [sdt], [email], [gioi_tinh], [ngay_sinh], [dia_chi], [mat_khau], [trang_thai], [id_quyen_han], [ghi_chu])
 VALUES
-  ('Nguyen Van A', '0123456789', 'nv_a@email.com', 1, '1990-01-15', '123 Main Street, City', 'password123', N'Đang làm việc', 1, 'Ghi chú 1'),
+  ('Nguyen Van A', '0123456789', 'nv_a@email.com', 1, '1990-01-15', '123 Main Street, City', 'password123', 'Deleted', 1, 'Ghi chú 1'),
   ('Tran Thi B', '0987654321', 'tt_b@email.com', 0, '1995-05-20', '456 Park Avenue, Town', 'securepass456', N'Đang nghỉ việc', 2, 'Ghi chú 2'),
   ('Le Van C', '0369871542', null, 1, null, null, null, N'Đã gửi lời mời', 2, 'Ghi chú 3'),
-  ('Le Van Minh', '0369877729', null, 1, null, null, null, 'deleted', 3, 'Ghi chú 3');
+  ('Nong Hoang Vu', '0777049085', 'nonghoangvu04@gmail.com', 1, null, N'HaNoi', '123', N'Đang làm việc', 3, 'Ghi chú 3');
 GO
+-- Khach hang ---
+INSERT INTO [KhachHang] ([ho_ten], [gioi_tinh], [so_dien_thoai], [email], [diaChi], [ngay_sua], [xoa_mem])
+VALUES 
+  (N'Hoang Quoc Binh', 1, N'0123456789', N'binhcute@example.com', N'123 Đường ABC, Quận XYZ, Thành phố HCM', GETDATE(), 0),
+  (N'Nong Hoang Vu', 0, N'0987654321', N'vucute@example.com', N'456 Đường DEF, Quận UVW, Thành phố Hanoi', GETDATE(), 0),
+  (N'Nguyen Thi Phuong Thao', 1, N'0369847521', N'levanc@example.com', N'789 Đường GHI, Quận JKL, Thành phố Danang', GETDATE(), 0);
+
 -- Size --
 INSERT INTO [Size] ([loai_size], [trang_thai])
 VALUES ('S', 1), ('M', 1), ('L', 1), ('XL', 1), ('XXL', 1);
@@ -170,23 +194,3 @@ VALUES
 ('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [XXL-Do]', 5, 3, 134, 758000),
 ('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [M-Do]', 2, 3, 143, 758000),
 ('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [L-Do]', 3, 3, 1, 758000);
--- Query --
-SELECT * FROM NhanVien
-SELECT * FROM Size
-SELECT * FROM COLOR
-SELECT * FROM SanPham
-SELECT * FROM SanPhamBienThe WHERE id_san_pham = 'HLD-03         '
-
-SELECT SP.id,BT.id, SP.ten_san_pham, BT.ten_bien_the, SZ.loai_size, COL.loai_mau, BT.hinhAnh, BT.gia,BT.so_luong
-FROM SanPham SP
-INNER JOIN SanPhamBienThe BT ON BT.id_san_pham = SP.id
-INNER JOIN Size SZ ON SZ.id = BT.id_size
-INNER JOIN Color COL ON COL.id = BT.id_color
-WHERE SP.id = 'HLD-9011146'
-
-DROP TABLE [SanPhamBienThe];
-DROP TABLE [Color];
-DROP TABLE [Size];
-DROP TABLE [SanPham];
-DROP TABLE [QuyenHan];
-DROP TABLE [NhanVien];
