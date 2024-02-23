@@ -7,6 +7,7 @@ import haladesign.form.FormQlyVaiTro;
 import haladesign.form.ThongKe;
 import java.awt.Component;
 import haladesign.form.Form_Empty;
+import haladesign.form.JPHoaDon;
 import haladesign.form.KhachHang_form;
 import haladesign.form.ListProductForm;
 import haladesign.form.SuaTaiKhoan;
@@ -61,6 +62,8 @@ public class Main extends javax.swing.JFrame {
                     switch (indexSubMenu) {
                         case 1 ->
                             showForm(new BanHang());
+                        case 2 ->
+                            showForm(new JPHoaDon(this));
                         default ->
                             showForm(new Form_Empty(index + " " + indexSubMenu));
                     }
