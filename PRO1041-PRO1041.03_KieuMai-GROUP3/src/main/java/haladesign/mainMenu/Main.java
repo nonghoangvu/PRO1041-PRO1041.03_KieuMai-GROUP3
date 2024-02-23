@@ -2,6 +2,7 @@ package haladesign.mainMenu;
 
 import haladesign.form.FormQlyNhanVien;
 import haladesign.form.BanHang;
+import haladesign.form.FormQlyVaiTro;
 import haladesign.form.ThongKe;
 import java.awt.Component;
 import haladesign.form.Form_Empty;
@@ -9,11 +10,13 @@ import haladesign.form.KhachHang_form;
 import haladesign.form.ListProductForm;
 import haladesign.form.SuaTaiKhoan;
 import haladesign.form.ThuocTinhSanPham;
+import haladesign.menu.EventMenuSelected;
 import haladesign.model.NhanVien;
 import haladesign.system.GlassPanePopup;
 import haladesign.system.Message;
 import haladesign.system.Setting;
 import java.awt.event.ActionEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -42,56 +45,65 @@ public class Main extends javax.swing.JFrame {
     private void init() {
         main = this;
         titleBar.initJFram(this);
-        menu.addEvent((var index, var indexSubMenu) -> {
-            switch (index) {
-                case 0 -> {
-                    switch (indexSubMenu) {
-                        case 0 ->
-                            showForm(new ThongKe());
+        menu.addEvent(new EventMenuSelected() {
+            @Override
+            public void menuSelected(int index, int indexSubMenu) {
+                switch (index) {
+                    case 0 -> {
+                        switch (indexSubMenu) {
+                            case 0 ->
+                                showForm(new ThongKe());
 //                            showForm(new ThuocTinhSanPham(this));
-                        default ->
-                            showForm(new Form_Empty(index + " " + indexSubMenu));
+                            default ->
+                                showForm(new Form_Empty(index + " " + indexSubMenu));
+                        }
                     }
-                }
-                case 1 -> {
-                    switch (indexSubMenu) {
-                        case 1 ->
-                            showForm(new BanHang());
-                        default ->
-                            showForm(new Form_Empty(index + " " + indexSubMenu));
+                    case 1 -> {
+                        switch (indexSubMenu) {
+                            case 1 ->
+                                showForm(new BanHang());
+                            default ->
+                                showForm(new Form_Empty(index + " " + indexSubMenu));
+                        }
                     }
-                }
-                case 2 -> {
-                    switch (indexSubMenu) {
-                        case 1 ->
-                            showForm(new ListProductForm(this));
-                        case 2 ->
-                            showForm(new ThuocTinhSanPham(this));
-                        default ->
-                            showForm(new Form_Empty(index + " " + indexSubMenu));
+                    case 2 -> {
+                        switch (indexSubMenu) {
+                            case 1 ->
+                                showForm(new ListProductForm(Main.this));
+                            case 2 ->
+                                showForm(new ThuocTinhSanPham(Main.this));
+                            default ->
+                                showForm(new Form_Empty(index + " " + indexSubMenu));
+                        }
                     }
-                }
-                case 3 -> {
-                    switch (indexSubMenu) {
-                        case 1 ->
-                            showForm(new FormQlyNhanVien(this));
-                        case 2 ->
-                            showForm(new KhachHang_form(this));
-                        default ->
-                            showForm(new Form_Empty(index + " " + indexSubMenu));
+                    case 3 -> {
+                        switch (indexSubMenu) {
+                            case 1 ->
+                                showForm(new FormQlyNhanVien(Main.this));
+                            case 2 ->
+                                showForm(new KhachHang_form(Main.this));
+                            case 3 -> {
+                                if (Main.this.nhanVien.getRole().isCanChangeRole()) {
+                                    showForm(new FormQlyVaiTro(Main.this));
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Bạn không thể truy cập tính năng này, hãy liên hệ chủ cửa hàng để được cấp quyền truy cập");
+                                }
+                            }
+                            default ->
+                                showForm(new Form_Empty(index + " " + indexSubMenu));
+                        }
                     }
-                }
-
-                case 4 ->
-                    showForm(new Setting());
-                default ->
-                    showForm(new Form_Empty(index + " " + indexSubMenu));
-                case 5 -> {
-                    switch (indexSubMenu) {
-                        case 0 ->
-                            showForm(new SuaTaiKhoan(this.nhanVien));
-                        default ->
-                            showForm(new Form_Empty(index + " " + indexSubMenu));
+                    case 4 ->
+                        showForm(new Setting());
+                    default ->
+                        showForm(new Form_Empty(index + " " + indexSubMenu));
+                    case 5 -> {
+                        switch (indexSubMenu) {
+                            case 0 ->
+                                showForm(new SuaTaiKhoan(Main.this.nhanVien));
+                            default ->
+                                showForm(new Form_Empty(index + " " + indexSubMenu));
+                        }
                     }
                 }
             }

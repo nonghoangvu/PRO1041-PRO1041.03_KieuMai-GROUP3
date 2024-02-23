@@ -142,7 +142,7 @@ public class SuaTaiKhoan extends javax.swing.JPanel {
         } else if (!nvien.getGender()) {
             cboGender.setSelectedIndex(1);
         }
-        txtAddress.setText(nvien.getAddress().trim());
+        txtAddress.setText(nvien.getAddress());
         if (nvien.getBirthdate() != null) {
             txtBirthdate.setText(nvien.getBirthdate().trim().substring(0, 10));
         } else {

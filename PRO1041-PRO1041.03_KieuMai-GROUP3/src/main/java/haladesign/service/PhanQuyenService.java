@@ -17,9 +17,18 @@ import java.util.stream.Collectors;
  * @author Administrator
  */
 public class PhanQuyenService {
+
     private final IQuyenHan iQuyenHan = getBean(IQuyenHan.class);
 
     public List<QuyenHan> getList() {
         return iQuyenHan.findAll().stream().collect(Collectors.toList());
+    }
+
+    public boolean addNewQuyenHan(QuyenHan quyenHan) {
+        return this.iQuyenHan.save(quyenHan) != null;
+    }
+
+    public QuyenHan findByName(String ten_quyen_han) {
+        return iQuyenHan.findByName(ten_quyen_han);
     }
 }

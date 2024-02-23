@@ -33,7 +33,7 @@ public class Application {
 
     public static void main(String[] args) {
         context = createApplicationContext(args);
-//        new Login().setVisible(true);
-        new Main(new NhanVien("A", "1", "0", "m", true, null, null, null, null, null, null, null)).setVisible(true);
+        new Login().setVisible(true);
+//        new Main(new NhanVien("A", "1", "0", "m", true, null, null, null, null, null, null, null)).setVisible(true);
     }
 }

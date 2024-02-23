@@ -36,19 +36,22 @@ public class QuyenHan {
     private String roleName;
     
     @Column(name = "nhin_gia_von")
-    private int canViewOrginalPrice;
+    private boolean canViewOrginalPrice;
     
     @Column(name = "nhap_kho")
-    private int canAddProduct;
+    private boolean canAddProduct;
     
     @Column(name = "huy_don_hang")
-    private int canChangeBillState;
+    private boolean canChangeBillState;
     
     @Column(name = "sua_tt_khach_hang")
-    private int canChangeCustomerInfo;
+    private boolean canChangeCustomerInfo;
     
     @Column(name = "xem_bao_cao")
-    private int canViewDashboard;
+    private boolean canViewDashboard;
+    
+    @Column(name = "sua_quyen_han")
+    private boolean canChangeRole;
 
     @Override
     public String toString() {
