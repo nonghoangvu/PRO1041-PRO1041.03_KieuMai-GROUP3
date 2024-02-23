@@ -1,5 +1,6 @@
 package haladesign.mainMenu;
 
+import haladesign.Utitlity.BcryptHash;
 import haladesign.form.FormQlyNhanVien;
 import haladesign.form.BanHang;
 import haladesign.form.ThongKe;
@@ -9,6 +10,7 @@ import haladesign.form.KhachHang_form;
 import haladesign.form.ListProductForm;
 import haladesign.form.SuaTaiKhoan;
 import haladesign.form.ThuocTinhSanPham;
+import haladesign.loginFeature.LoginForm;
 import haladesign.model.NhanVien;
 import haladesign.system.GlassPanePopup;
 import haladesign.system.Message;
@@ -23,6 +25,7 @@ public class Main extends javax.swing.JFrame {
 
     private static Main main;
     private final NhanVien nhanVien;
+    private final BcryptHash bcryptHash = new BcryptHash();
 
     public Main(NhanVien nhanVien) {
         this.nhanVien = nhanVien;
@@ -48,7 +51,6 @@ public class Main extends javax.swing.JFrame {
                     switch (indexSubMenu) {
                         case 0 ->
                             showForm(new ThongKe());
-//                            showForm(new ThuocTinhSanPham(this));
                         default ->
                             showForm(new Form_Empty(index + " " + indexSubMenu));
                     }
@@ -93,6 +95,17 @@ public class Main extends javax.swing.JFrame {
                         default ->
                             showForm(new Form_Empty(index + " " + indexSubMenu));
                     }
+                }
+                case 6 -> {
+                    Message message = new Message();
+                    message.setTitle(this.bcryptHash.decodeBase64("Q+G6o25oIGLDoW8="));
+                    message.setMessage(this.bcryptHash.decodeBase64("QuG6oW4gY8OzIG114buRbiDEkcSDbmcgeHXhuqV0IGtow7RuZz8="));
+                    message.eventOK((ActionEvent ae) -> {
+                        new LoginForm().setVisible(true);
+                        this.dispose();
+                        GlassPanePopup.closePopupLast();
+                    });
+                    GlassPanePopup.showPopup(message);
                 }
             }
         });

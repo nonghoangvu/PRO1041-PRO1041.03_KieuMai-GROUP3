@@ -1,7 +1,5 @@
 package haladesign;
 
-import haladesign.repository.IHoaDon;
-import haladesign.repository.ISanPham;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
@@ -31,10 +29,6 @@ public class Test {
     }
 
     public static void main(String[] args) {
-        context = createApplicationContext(args);
-        ISanPham r = getBean(ISanPham.class);
-//        r.findBySanPhamOutOfStock().forEach(s -> {
-//            System.out.println(s.getTen_san_pham());
-//        });
+//        context = createApplicationContext(args);
     }
 }

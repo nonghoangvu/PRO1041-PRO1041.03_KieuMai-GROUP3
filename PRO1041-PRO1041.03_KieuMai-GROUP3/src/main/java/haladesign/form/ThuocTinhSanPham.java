@@ -12,6 +12,7 @@ import haladesign.system.GlassPanePopup;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javaswingdev.GoogleMaterialDesignIcon;
 import javax.swing.AbstractAction;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,6 +27,7 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
     private List<Size> listSize;
     private List<Color> listColor;
     private final Main main;
+    private GoogleMaterialDesignIcon icon;
 
     public ThuocTinhSanPham(Main main) {
         initComponents();
@@ -39,6 +41,12 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
     private void init() {
         setTempColor();
         setTempSize();
+        btnAdd.setColor1(java.awt.Color.BLACK);
+        btnAdd.setColor2(java.awt.Color.BLACK);
+        btnRefresh.setColor1(java.awt.Color.BLACK);
+        btnRefresh.setColor2(java.awt.Color.BLACK);
+        btnAdd.setIconButton(this.icon.ADD);
+        btnRefresh.setIconButton(this.icon.REFRESH);
         setTable("Size");
         fillSize();
     }
@@ -133,7 +141,7 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
         rdoColor = new javax.swing.JRadioButton();
         textField1 = new haladesign.swingStyle.TextField();
         btnAdd = new haladesign.swingStyle.Button();
-        button1 = new haladesign.swingStyle.Button();
+        btnRefresh = new haladesign.swingStyle.Button();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -171,8 +179,7 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
 
         textField1.setLabelText("Tìm kiếm");
 
-        btnAdd.setBackground(new java.awt.Color(127, 127, 127));
-        btnAdd.setForeground(new java.awt.Color(255, 255, 255));
+        btnAdd.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(229, 229, 229)));
         btnAdd.setText("Thêm size");
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -181,13 +188,12 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
             }
         });
 
-        button1.setBackground(new java.awt.Color(127, 127, 127));
-        button1.setForeground(new java.awt.Color(255, 255, 255));
-        button1.setText("Làm mới");
-        button1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        button1.addActionListener(new java.awt.event.ActionListener() {
+        btnRefresh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(229, 229, 229)));
+        btnRefresh.setText("Làm mới");
+        btnRefresh.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
+                btnRefreshActionPerformed(evt);
             }
         });
 
@@ -210,7 +216,7 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(rdoColor)
                                 .addGap(34, 34, 34)
-                                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 896, Short.MAX_VALUE))
@@ -225,8 +231,8 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(rdoSize)
                         .addComponent(rdoColor)))
@@ -235,7 +241,7 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
                 .addGap(20, 20, 20))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAdd, button1});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAdd, btnRefresh});
 
     }// </editor-fold>//GEN-END:initComponents
 
@@ -273,7 +279,7 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
         GlassPanePopup.showPopup(properties);
     }//GEN-LAST:event_btnAddActionPerformed
 
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         setTempSize();
         setTempColor();
         if (rdoSize.isSelected()) {
@@ -281,12 +287,12 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
         } else {
             fillColor();
         }
-    }//GEN-LAST:event_button1ActionPerformed
+    }//GEN-LAST:event_btnRefreshActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private haladesign.swingStyle.Button btnAdd;
-    private haladesign.swingStyle.Button button1;
+    private haladesign.swingStyle.Button btnRefresh;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

@@ -1,5 +1,4 @@
 package haladesign.system;
-
 /**
  *
  * @author NONG HOANG VU

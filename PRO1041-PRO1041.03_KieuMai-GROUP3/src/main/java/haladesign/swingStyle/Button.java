@@ -3,6 +3,7 @@ package haladesign.swingStyle;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -10,11 +11,15 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import javaswingdev.GoogleMaterialDesignIcon;
+import javaswingdev.GoogleMaterialIcon;
+import javaswingdev.GradientType;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
+
 public class Button extends JButton {
 
     public Color getEffectColor() {
@@ -24,7 +29,8 @@ public class Button extends JButton {
     public void setEffectColor(Color effectColor) {
         this.effectColor = effectColor;
     }
-
+    private Color color1;
+    private Color color2;
     private Animator animator;
     private int targetSize;
     private float animatSize;
@@ -34,6 +40,8 @@ public class Button extends JButton {
 
     public Button() {
         setContentAreaFilled(false);
+        this.color1 = Color.WHITE;
+        this.color2 = Color.WHITE;
         setBorder(new EmptyBorder(5, 0, 5, 0));
         setBackground(Color.WHITE);
         setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -70,6 +78,7 @@ public class Button extends JButton {
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = img.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setPaint(new GradientPaint(0, 0, getColor1(), getWidth(), getHeight(), getColor2()));
         g2.setColor(getBackground());
         g2.fillRoundRect(0, 0, width, height, 5, 5);
         if (pressedPoint != null) {
@@ -80,5 +89,26 @@ public class Button extends JButton {
         g2.dispose();
         grphcs.drawImage(img, 0, 0, null);
         super.paintComponent(grphcs);
+    }
+
+    public Color getColor1() {
+        return this.color1;
+    }
+
+    public void setColor1(Color cl1) {
+        this.color1 = cl1;
+    }
+
+    public Color getColor2() {
+        return this.color2;
+    }
+
+    public void setColor2(Color cl2) {
+        this.color2 = cl2;
+    }
+
+    public void setIconButton(GoogleMaterialDesignIcon icon) {
+        this.setIcon(new GoogleMaterialIcon(icon, GradientType.DIAGONAL_2, getColor1(), getColor2(), 20)
+                .toIcon());
     }
 }
