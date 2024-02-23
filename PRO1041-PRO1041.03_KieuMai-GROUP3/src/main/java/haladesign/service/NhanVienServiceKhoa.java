@@ -6,7 +6,7 @@ package haladesign.service;
 
 import haladesign.config.JDBC_Connect;
 import haladesign.model.HoaDonKhoa;
-import haladesign.model.NhanVienKhoa;
+import haladesign.model.NhanVien;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,17 +23,17 @@ public class NhanVienServiceKhoa {
     private ResultSet rs = null;
     private String sql = "";
     
-    public List<NhanVienKhoa> getNhanVien(){
-        List<NhanVienKhoa> listNV = new ArrayList();
+    public List<NhanVien> getNhanVien(){
+        List<NhanVien> listNV = new ArrayList();
         sql = "select id, ho_ten from NhanVien";
         try {
             con = JDBC_Connect.getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
-                NhanVienKhoa nv = new NhanVienKhoa();
-                nv.setId(rs.getInt(1));
-                nv.setHoTen(rs.getString(2));
+                NhanVien nv = new NhanVien();
+                nv.setId(rs.getString(1));
+                nv.setFullName(rs.getString(2));
                 listNV.add(nv);
             }
             return listNV;

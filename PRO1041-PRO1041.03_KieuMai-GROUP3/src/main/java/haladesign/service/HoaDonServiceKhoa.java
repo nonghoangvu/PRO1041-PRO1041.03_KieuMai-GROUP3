@@ -5,7 +5,7 @@
 package haladesign.service;
 import haladesign.config.JDBC_Connect;
 import haladesign.model.HoaDonKhoa;
-import haladesign.model.NhanVienKhoa;
+import haladesign.model.NhanVien;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +32,8 @@ public class HoaDonServiceKhoa {
             while(rs.next()){
                 HoaDonKhoa hd = new HoaDonKhoa();
                 hd.setId(rs.getInt(1));
-                NhanVienKhoa nv = new NhanVienKhoa();
-                nv.setHoTen(rs.getString(2));
+                NhanVien nv = new NhanVien();
+                nv.setFullName(rs.getString(2));
                 hd.setNv(nv);
                 hd.setNgayTao(rs.getDate(3));
                 hd.setTrangThai(rs.getString(4));

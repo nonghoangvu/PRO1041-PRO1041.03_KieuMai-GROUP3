@@ -6,8 +6,8 @@ package haladesign.form;
 
 import haladesign.model.HoaDonKhoa;
 import haladesign.model.HoaDonChiTietKhoa;
-import haladesign.model.KhachHangKhoa;
-import haladesign.model.NhanVienKhoa;
+import haladesign.model.KhachHang;
+import haladesign.model.NhanVien;
 import haladesign.model.SanPhamBienTheKhoa;
 import haladesign.service.HoaDonChiTietServiceKhoa;
 import haladesign.service.HoaDonServiceKhoa;
@@ -530,7 +530,7 @@ public class BanHang extends javax.swing.JPanel {
                 txt_IDHoaDon.setText(String.valueOf(hd.getId()));
                 txt_NgayTao.setText(String.valueOf(hd.getNgayTao()));
                 txt_TenKhachHang.setText("Khách lẻ");
-                txt_TenNhanVien.setText(hd.getNv().getHoTen());
+                txt_TenNhanVien.setText(hd.getNv().getFullName());
                 double tongTien = 0;
                 for (int i = 0; i < tbl_HoaDonChiTiet.getRowCount(); i++) {
                     double giaTien = Double.parseDouble(tbl_HoaDonChiTiet.getValueAt(i, 5).toString());
@@ -654,21 +654,23 @@ public class BanHang extends javax.swing.JPanel {
             hd.setHinhThuc(cbo_HinhThucThanhToan.getSelectedItem().toString());
             String tenKH = txt_TenKhachHang.getText();
             int cont = 0;
-            for (KhachHangKhoa kh : serKH.getKhachHang()) {
-                if (tenKH.equals(kh.getHoTen())) {
+            for (KhachHang kh : serKH.getKhachHang()) {
+                if (tenKH.equals(kh.getHo_ten())) {
                     cont++;
                 }
             }
             if (cont == 0) {
-                KhachHangKhoa kh = new KhachHangKhoa();
-                kh.setHoTen(tenKH);
+                KhachHang kh = new KhachHang();
+                kh.setHo_ten(tenKH);
                 if (serKH.addKhachHang(kh) > 0) {
                     JOptionPane.showMessageDialog(this, "khách mới");
                 }
             }
-            for (KhachHangKhoa kh : serKH.getKhachHang()) {
-                if (tenKH.equals(kh.getHoTen())) {
-                    hd.setKh(new KhachHangKhoa(kh.getId()));
+            for (KhachHang kh : serKH.getKhachHang()) {
+                if (tenKH.equals(kh.getHo_ten())) {
+                    KhachHang kh0 = new KhachHang();
+                    kh0.setId(kh.getId());
+                    hd.setKh(kh0);
                 }
             }
 

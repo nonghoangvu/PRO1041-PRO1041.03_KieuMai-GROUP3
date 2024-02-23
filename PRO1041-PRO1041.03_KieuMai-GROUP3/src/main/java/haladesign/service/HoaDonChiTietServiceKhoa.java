@@ -8,7 +8,7 @@ import haladesign.config.JDBC_Connect;
 import haladesign.model.Color;
 import haladesign.model.HoaDonKhoa;
 import haladesign.model.HoaDonChiTietKhoa;
-import haladesign.model.NhanVienKhoa;
+import haladesign.model.NhanVien;
 import haladesign.model.SanPhamBienTheKhoa;
 import haladesign.model.Size;
 import java.sql.Connection;

@@ -12,8 +12,8 @@ import java.util.Date;
  */
 public class HoaDonKhoa {
     private int id;
-    private KhachHangKhoa kh;
-    private NhanVienKhoa nv;
+    private KhachHang kh;
+    private NhanVien nv;
     private String trangThai;
     private double thanhTien;
     private String hinhThuc;
@@ -24,7 +24,7 @@ public class HoaDonKhoa {
     public HoaDonKhoa() {
     }
 
-    public HoaDonKhoa(KhachHangKhoa kh, String trangThai, double thanhTien, String hinhThuc, double tienDua, double tienThua) {
+    public HoaDonKhoa(KhachHang kh, String trangThai, double thanhTien, String hinhThuc, double tienDua, double tienThua) {
         this.kh = kh;
         this.trangThai = trangThai;
         this.thanhTien = thanhTien;
@@ -33,7 +33,7 @@ public class HoaDonKhoa {
         this.tienThua = tienThua;
     }
 
-    public HoaDonKhoa(int id, KhachHangKhoa kh, NhanVienKhoa nv, String trangThai, double thanhTien, String hinhThuc, double tienDua, double tienThua, Date ngayTao) {
+    public HoaDonKhoa(int id, KhachHang kh, NhanVien nv, String trangThai, double thanhTien, String hinhThuc, double tienDua, double tienThua, Date ngayTao) {
         this.id = id;
         this.kh = kh;
         this.nv = nv;
@@ -47,12 +47,12 @@ public class HoaDonKhoa {
 
     
 
-    public HoaDonKhoa(NhanVienKhoa nv, String trangThai) {
+    public HoaDonKhoa(NhanVien nv, String trangThai) {
         this.nv = nv;
         this.trangThai = trangThai;
     }
 
-    public HoaDonKhoa(int id, NhanVienKhoa nv, String trangThai, Date ngayTao) {
+    public HoaDonKhoa(int id, NhanVien nv, String trangThai, Date ngayTao) {
         this.id = id;
         this.nv = nv;
         this.trangThai = trangThai;
@@ -80,21 +80,21 @@ public class HoaDonKhoa {
         this.id = id;
     }
 
-    public KhachHangKhoa getKh() {
+    public KhachHang getKh() {
         return kh;
     }
 
-    public void setKh(KhachHangKhoa kh) {
+    public void setKh(KhachHang kh) {
         this.kh = kh;
     }
 
    
 
-    public NhanVienKhoa getNv() {
+    public NhanVien getNv() {
         return nv;
     }
 
-    public void setNv(NhanVienKhoa nv) {
+    public void setNv(NhanVien nv) {
         this.nv = nv;
     }
 
@@ -143,7 +143,7 @@ public class HoaDonKhoa {
     public Object[] dataHoaDon(){
         return new Object[]{
             this.id,
-            this.nv.getHoTen(),
+            this.nv.getFullName(),
             this.ngayTao,
             this.trangThai
         };
