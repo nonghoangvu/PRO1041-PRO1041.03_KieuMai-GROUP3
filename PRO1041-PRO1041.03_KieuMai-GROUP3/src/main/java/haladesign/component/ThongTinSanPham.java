@@ -25,6 +25,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import javaswingdev.GoogleMaterialDesignIcon;
+import javaswingdev.GoogleMaterialIcon;
+import javaswingdev.GradientType;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
@@ -45,6 +48,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
     private List<SanPhamBienThe> bienTheList;
     private String url = null;
     private final String idProduct;
+    private GoogleMaterialDesignIcon icon;
 
     public ThongTinSanPham(Main main, String id, Boolean activity) {
         initComponents();
@@ -54,11 +58,24 @@ public class ThongTinSanPham extends javax.swing.JPanel {
         this.idProduct = id;
         this.bienTheList = this.list.getByIdSanPhamBienThe(id);
         init(id, activity);
+        lbImage.setIcon(new GoogleMaterialIcon(this.icon.IMAGE, GradientType.DIAGONAL_1, java.awt.Color.BLACK, java.awt.Color.BLACK, 32)
+                .toIcon());
     }
 
     private void init(String id, Boolean activity) {
         lbID.setText(id);
         txtTenBienThe.setText("");
+        btnThem.setColor1(java.awt.Color.BLACK);
+        btnThem.setColor2(java.awt.Color.BLACK);
+        btnThem.setIconButton(this.icon.ADD);
+        
+        btnUpdate.setColor1(java.awt.Color.BLACK);
+        btnUpdate.setColor2(java.awt.Color.BLACK);
+        btnUpdate.setIconButton(this.icon.UPDATE);
+        
+        btnHoanThanh.setColor1(java.awt.Color.BLACK);
+        btnHoanThanh.setColor2(java.awt.Color.BLACK);
+        btnHoanThanh.setIconButton(this.icon.DONE);
         fillSize();
         fillColor();
         setForm(id);
@@ -528,7 +545,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(153, 153, 153));
         jLabel2.setText("Hoạt động:");
 
-        btnTrangThai.setBackground(new java.awt.Color(102, 153, 255));
+        btnTrangThai.setBackground(new java.awt.Color(153, 204, 255));
 
         textAreaScroll1.setBackground(new java.awt.Color(255, 255, 255));
         textAreaScroll1.setLabelText("Mô tả");
@@ -543,7 +560,6 @@ public class ThongTinSanPham extends javax.swing.JPanel {
 
         lbImage.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbImage.setText("Image not found");
         lbImage.setToolTipText("");
         lbImage.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -552,8 +568,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
         });
         jPanel1.add(lbImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 190, 210));
 
-        btnThem.setBackground(new java.awt.Color(127, 127, 127));
-        btnThem.setForeground(new java.awt.Color(255, 255, 255));
+        btnThem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(229, 229, 229)));
         btnThem.setText("Thêm");
         btnThem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnThem.addActionListener(new java.awt.event.ActionListener() {
@@ -562,8 +577,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
             }
         });
 
-        btnUpdate.setBackground(new java.awt.Color(127, 127, 127));
-        btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(229, 229, 229)));
         btnUpdate.setText("Cập nhật");
         btnUpdate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -572,8 +586,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
             }
         });
 
-        btnHoanThanh.setBackground(new java.awt.Color(127, 127, 127));
-        btnHoanThanh.setForeground(new java.awt.Color(255, 255, 255));
+        btnHoanThanh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(229, 229, 229)));
         btnHoanThanh.setText("Hoàn thành");
         btnHoanThanh.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnHoanThanh.addActionListener(new java.awt.event.ActionListener() {
@@ -653,17 +666,16 @@ public class ThongTinSanPham extends javax.swing.JPanel {
                             .addComponent(txtTenBienThe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
+                            .addComponent(textAreaScroll1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnTrangThai, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnHoanThanh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnTrangThai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnHoanThanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(textAreaScroll1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(btnUpdate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnThem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addGap(20, 20, 20)
                 .addComponent(jLabel3)
                 .addGap(10, 10, 10)

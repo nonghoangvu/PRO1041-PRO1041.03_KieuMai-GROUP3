@@ -35,6 +35,9 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import haladesign.api.JnaFileChooser;
 import java.util.List;
+import javaswingdev.GoogleMaterialDesignIcon;
+import javaswingdev.GoogleMaterialIcon;
+import javaswingdev.GradientType;
 
 /**
  *
@@ -47,6 +50,7 @@ public class ThemSanPham extends javax.swing.JPanel {
     private final ArrayList<SanPhamBienThe> bienTheList = new ArrayList<>();
     private DefaultTableModel tblModel;
     private String url = null;
+    private GoogleMaterialDesignIcon icon;
 
     public ThemSanPham(Main main, String id) {
         initComponents();
@@ -59,25 +63,38 @@ public class ThemSanPham extends javax.swing.JPanel {
     private void init(String id) {
         lbID.setText(id);
         txtTenBienThe.setText("");
+        btnLuu.setColor1(java.awt.Color.BLACK);
+        btnLuu.setColor2(java.awt.Color.BLACK);
+        btnLuu.setIconButton(this.icon.ADD);
+
+        btnLamMoi.setColor1(java.awt.Color.BLACK);
+        btnLamMoi.setColor2(java.awt.Color.BLACK);
+        btnLamMoi.setIconButton(this.icon.REFRESH);
+
+        btnHoanThanh.setColor1(java.awt.Color.BLACK);
+        btnHoanThanh.setColor2(java.awt.Color.BLACK);
+        btnHoanThanh.setIconButton(this.icon.DONE);
         fillSize();
         fillColor();
         tableFormat();
         updateNameProduct();
+        lbImage.setIcon(new GoogleMaterialIcon(this.icon.IMAGE, GradientType.DIAGONAL_1, java.awt.Color.BLACK, java.awt.Color.BLACK, 32)
+                .toIcon());
     }
 
     /* __________________________Fill Data__________________________ */
     private void fillTable() {
         tblModel = (DefaultTableModel) tblSanPham.getModel();
         tblModel.setRowCount(0);
-        Integer[] count = { 0 };
+        Integer[] count = {0};
         this.bienTheList.forEach((SanPhamBienThe sp) -> {
             Object[] row = {
-                    ++count[0],
-                    sp.getTenBienThe(),
-                    sp.getSoLuong(),
-                    sp.getColor().getLoaiMau(),
-                    sp.getSize().getLoaiSize(),
-                    sp.getGia()
+                ++count[0],
+                sp.getTenBienThe(),
+                sp.getSoLuong(),
+                sp.getColor().getLoaiMau(),
+                sp.getSize().getLoaiSize(),
+                sp.getGia()
             };
             tblModel.addRow(row);
         });
@@ -556,7 +573,7 @@ public class ThemSanPham extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(153, 153, 153));
         jLabel2.setText("Hoạt động:");
 
-        btnTrangThai.setBackground(new java.awt.Color(102, 153, 255));
+        btnTrangThai.setBackground(new java.awt.Color(153, 204, 255));
 
         textAreaScroll1.setBackground(new java.awt.Color(255, 255, 255));
         textAreaScroll1.setLabelText("Mô tả");
@@ -571,7 +588,6 @@ public class ThemSanPham extends javax.swing.JPanel {
 
         lbImage.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbImage.setText("Image not found");
         lbImage.setToolTipText("");
         lbImage.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -580,8 +596,7 @@ public class ThemSanPham extends javax.swing.JPanel {
         });
         jPanel1.add(lbImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 190, 210));
 
-        btnLuu.setBackground(new java.awt.Color(127, 127, 127));
-        btnLuu.setForeground(new java.awt.Color(255, 255, 255));
+        btnLuu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(229, 229, 229)));
         btnLuu.setText("Thêm");
         btnLuu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLuu.addActionListener(new java.awt.event.ActionListener() {
@@ -590,8 +605,7 @@ public class ThemSanPham extends javax.swing.JPanel {
             }
         });
 
-        btnLamMoi.setBackground(new java.awt.Color(127, 127, 127));
-        btnLamMoi.setForeground(new java.awt.Color(255, 255, 255));
+        btnLamMoi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(229, 229, 229)));
         btnLamMoi.setText("Làm mới");
         btnLamMoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
@@ -600,8 +614,7 @@ public class ThemSanPham extends javax.swing.JPanel {
             }
         });
 
-        btnHoanThanh.setBackground(new java.awt.Color(127, 127, 127));
-        btnHoanThanh.setForeground(new java.awt.Color(255, 255, 255));
+        btnHoanThanh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(229, 229, 229)));
         btnHoanThanh.setText("Hoàn thành");
         btnHoanThanh.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnHoanThanh.addActionListener(new java.awt.event.ActionListener() {
@@ -681,17 +694,16 @@ public class ThemSanPham extends javax.swing.JPanel {
                             .addComponent(txtTenBienThe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
+                            .addComponent(textAreaScroll1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnTrangThai, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnHoanThanh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnTrangThai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnHoanThanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(textAreaScroll1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(btnLuu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnLamMoi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addGap(20, 20, 20)
                 .addComponent(jLabel3)
                 .addGap(10, 10, 10)

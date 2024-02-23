@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javaswingdev.GoogleMaterialDesignIcon;
 import haladesign.swing.scroll.ScrollBar;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -65,7 +66,6 @@ public class Menu extends JPanel {
         panel.setOpaque(false);
         menuLayout = new MigLayout("wrap,fillx,inset 0,gapy 0", "[fill]");
         panel.setLayout(menuLayout);
-
         return panel;
     }
 
