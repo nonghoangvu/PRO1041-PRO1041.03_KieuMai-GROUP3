@@ -5,8 +5,8 @@
 package haladesign.service;
 
 import haladesign.config.JDBC_Connect;
-import haladesign.model.KhachHang;
-import haladesign.model.NhanVien;
+import haladesign.model.HoaDonKhoa;
+import haladesign.model.NhanVienKhoa;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,42 +17,29 @@ import java.util.List;
  *
  * @author ADMIN
  */
-public class KhachHangService {
+public class NhanVienServiceKhoa {
     private Connection con = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private String sql = "";
     
-    public List<KhachHang> getKhachHang(){
-        List<KhachHang> listKH = new ArrayList();
-        sql = "select id, ho_ten from KhachHang";
+    public List<NhanVienKhoa> getNhanVien(){
+        List<NhanVienKhoa> listNV = new ArrayList();
+        sql = "select id, ho_ten from NhanVien";
         try {
             con = JDBC_Connect.getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
-                KhachHang kh = new KhachHang();
-                kh.setId(rs.getInt(1));
-                kh.setHoTen(rs.getString(2));
-                listKH.add(kh);
+                NhanVienKhoa nv = new NhanVienKhoa();
+                nv.setId(rs.getInt(1));
+                nv.setHoTen(rs.getString(2));
+                listNV.add(nv);
             }
-            return listKH;
+            return listNV;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
-        }
-    }
-    
-    public int addKhachHang(KhachHang kh){
-        sql = "insert into KhachHang (ho_ten) values(?)";
-        try {
-            con = JDBC_Connect.getConnection();
-            ps = con.prepareStatement(sql);
-            ps.setObject(1, kh.getHoTen());
-            return ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
         }
     }
 }

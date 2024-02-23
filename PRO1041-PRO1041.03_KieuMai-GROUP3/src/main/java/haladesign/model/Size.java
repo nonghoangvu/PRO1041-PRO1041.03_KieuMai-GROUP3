@@ -41,7 +41,7 @@ public class Size {
     private Date ngayTao;
 
     @OneToMany(mappedBy = "size")
-    private List<SanPhamBienThe> sanPhamBienTheList;
+    private List<SanPhamBienTheKhoa> sanPhamBienTheList;
 
     @Override
     public String toString() {
@@ -81,9 +81,6 @@ public class Size {
         return Objects.equals(this.sanPhamBienTheList, other.sanPhamBienTheList);
     }
 
-    public Size(String loaiSize) {
-        this.loaiSize = loaiSize;
-    }
 
     
 }

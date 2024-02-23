@@ -10,21 +10,21 @@ import java.text.DecimalFormat;
  *
  * @author ADMIN
  */
-public class HoaDonChiTiet {
+public class HoaDonChiTietKhoa {
     private int id;
-    private HoaDon hd;
-    private SanPhamBienThe sp;
+    private HoaDonKhoa hd;
+    private SanPhamBienTheKhoa sp;
     private int soLuong;
     private double gia;
 
-    public HoaDonChiTiet() {
+    public HoaDonChiTietKhoa() {
     }
 
-    public HoaDonChiTiet(int soLuong) {
+    public HoaDonChiTietKhoa(int soLuong) {
         this.soLuong = soLuong;
     }
 
-    public HoaDonChiTiet(int id, HoaDon hd, SanPhamBienThe sp, int soLuong, double gia) {
+    public HoaDonChiTietKhoa(int id, HoaDonKhoa hd, SanPhamBienTheKhoa sp, int soLuong, double gia) {
         this.id = id;
         this.hd = hd;
         this.sp = sp;
@@ -32,13 +32,13 @@ public class HoaDonChiTiet {
         this.gia = gia;
     }
 
-    public HoaDonChiTiet(HoaDon hd, SanPhamBienThe sp, int soLuong) {
+    public HoaDonChiTietKhoa(HoaDonKhoa hd, SanPhamBienTheKhoa sp, int soLuong) {
         this.hd = hd;
         this.sp = sp;
         this.soLuong = soLuong;
     }
 
-    public HoaDonChiTiet(HoaDon hd, SanPhamBienThe sp, int soLuong, double gia) {
+    public HoaDonChiTietKhoa(HoaDonKhoa hd, SanPhamBienTheKhoa sp, int soLuong, double gia) {
         this.hd = hd;
         this.sp = sp;
         this.soLuong = soLuong;
@@ -54,19 +54,19 @@ public class HoaDonChiTiet {
         this.id = id;
     }
 
-    public HoaDon getHd() {
+    public HoaDonKhoa getHd() {
         return hd;
     }
 
-    public void setHd(HoaDon hd) {
+    public void setHd(HoaDonKhoa hd) {
         this.hd = hd;
     }
 
-    public SanPhamBienThe getSp() {
+    public SanPhamBienTheKhoa getSp() {
         return sp;
     }
 
-    public void setSp(SanPhamBienThe sp) {
+    public void setSp(SanPhamBienTheKhoa sp) {
         this.sp = sp;
     }
 

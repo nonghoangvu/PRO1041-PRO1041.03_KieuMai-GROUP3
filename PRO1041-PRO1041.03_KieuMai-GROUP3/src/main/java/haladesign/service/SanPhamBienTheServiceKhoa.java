@@ -6,7 +6,7 @@ package haladesign.service;
 
 import haladesign.config.JDBC_Connect;
 import haladesign.model.Color;
-import haladesign.model.SanPhamBienThe;
+import haladesign.model.SanPhamBienTheKhoa;
 import haladesign.model.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +16,13 @@ import java.sql.*;
  *
  * @author ADMIN
  */
-public class SanPhamBienTheService {
+public class SanPhamBienTheServiceKhoa {
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
     String sql = "";
-    public List<SanPhamBienThe> getSanPham(){
-        List<SanPhamBienThe> listBT = new ArrayList<>();
+    public List<SanPhamBienTheKhoa> getSanPham(){
+        List<SanPhamBienTheKhoa> listBT = new ArrayList<>();
         sql = """
               select SanPhamBienThe.id, ten_bien_the, loai_size, loai_mau, so_luong, gia, hinhAnh 
               from SanPhamBienThe
@@ -34,11 +34,15 @@ public class SanPhamBienTheService {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
-                SanPhamBienThe spbt = new SanPhamBienThe();
+                SanPhamBienTheKhoa spbt = new SanPhamBienTheKhoa();
                 spbt.setId(rs.getLong(1));
                 spbt.setTenBienThe(rs.getString(2));
-                spbt.setSize(new Size(rs.getString(3)));
-                spbt.setColor(new Color(rs.getString(4)));
+                Size sz = new Size();
+                sz.setLoaiSize(rs.getString(3));
+                spbt.setSize(sz);
+                Color cor = new Color();
+                cor.setLoaiMau(rs.getString(4));
+                spbt.setColor(cor);
                 spbt.setSoLuong(rs.getInt(5));
                 spbt.setGia(rs.getInt(6));
                 spbt.setHinhAnh(rs.getString(7));
@@ -51,7 +55,7 @@ public class SanPhamBienTheService {
         }
     }
     
-    public int updateSanPham(long id, SanPhamBienThe spbt){
+    public int updateSanPham(long id, SanPhamBienTheKhoa spbt){
         sql = "update SanPhamBienThe set so_luong = ? where id = ?";
         try {
             con = JDBC_Connect.getConnection();
@@ -65,8 +69,8 @@ public class SanPhamBienTheService {
         }
     }
     
-    public List<SanPhamBienThe> findSanPham(String ten){
-        List<SanPhamBienThe> listBT = new ArrayList<>();
+    public List<SanPhamBienTheKhoa> findSanPham(String ten){
+        List<SanPhamBienTheKhoa> listBT = new ArrayList<>();
         sql = """
               select SanPhamBienThe.id, ten_bien_the, loai_size, loai_mau, so_luong, gia, hinhAnh 
               from SanPhamBienThe
@@ -80,11 +84,15 @@ public class SanPhamBienTheService {
             ps.setObject(1, ten);
             rs = ps.executeQuery();
             while(rs.next()){
-                SanPhamBienThe spbt = new SanPhamBienThe();
+                SanPhamBienTheKhoa spbt = new SanPhamBienTheKhoa();
                 spbt.setId(rs.getLong(1));
                 spbt.setTenBienThe(rs.getString(2));
-                spbt.setSize(new Size(rs.getString(3)));
-                spbt.setColor(new Color(rs.getString(4)));
+                Size sz = new Size();
+                sz.setLoaiSize(rs.getString(3));
+                spbt.setSize(sz);
+                Color cor = new Color();
+                cor.setLoaiMau(rs.getString(4));
+                spbt.setColor(cor);
                 spbt.setSoLuong(rs.getInt(5));
                 spbt.setGia(rs.getInt(6));
                 spbt.setHinhAnh(rs.getString(7));

@@ -8,21 +8,20 @@ package haladesign.model;
  *
  * @author ADMIN
  */
-public class KhachHang {
-
+public class NhanVienKhoa {
     private int id;
     private String hoTen;
 
-    public KhachHang() {
+    public NhanVienKhoa() {
     }
 
-    public KhachHang(int id, String hoTen) {
+    public NhanVienKhoa(int id, String hoTen) {
         this.id = id;
         this.hoTen = hoTen;
     }
 
-    public KhachHang(int id) {
-        this.id = id;
+    public NhanVienKhoa(String hoTen) {
+        this.hoTen = hoTen;
     }
 
     public int getId() {
@@ -40,4 +39,5 @@ public class KhachHang {
     public void setHoTen(String hoTen) {
         this.hoTen = hoTen;
     }
+    
 }

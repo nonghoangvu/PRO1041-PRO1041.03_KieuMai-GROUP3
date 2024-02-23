@@ -46,6 +46,6 @@ public class SanPham {
     private Integer id_nhan_vien;
 
     @OneToMany(mappedBy = "id_san_pham", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<SanPhamBienThe> bienTheList = new ArrayList<>();
+    private List<SanPhamBienTheKhoa> bienTheList = new ArrayList<>();
 
 }

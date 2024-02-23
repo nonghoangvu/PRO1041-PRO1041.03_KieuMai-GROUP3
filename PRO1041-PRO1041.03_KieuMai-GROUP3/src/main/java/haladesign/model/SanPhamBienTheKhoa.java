@@ -23,7 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "SanPhamBienThe")
-public class SanPhamBienThe {
+public class SanPhamBienTheKhoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,11 +54,11 @@ public class SanPhamBienThe {
     @Column(name = "hinhAnh")
     private String hinhAnh;
 
-    public SanPhamBienThe(Long id) {
+    public SanPhamBienTheKhoa(Long id) {
         this.id = id;
     }
 
-    public SanPhamBienThe(Long id, String tenBienThe, Size size, Color color, Integer gia, String hinhAnh) {
+    public SanPhamBienTheKhoa(Long id, String tenBienThe, Size size, Color color, Integer gia, String hinhAnh) {
         this.id = id;
         this.tenBienThe = tenBienThe;
         this.size = size;

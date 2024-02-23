@@ -5,7 +5,7 @@ import haladesign.form.ListProductForm;
 import haladesign.mainMenu.Main;
 import haladesign.model.Color;
 import haladesign.model.SanPham;
-import haladesign.model.SanPhamBienThe;
+import haladesign.model.SanPhamBienTheKhoa;
 import haladesign.model.Size;
 import haladesign.service.SanPhamService;
 import haladesign.swing.table.TableActionCellEditor2;
@@ -43,7 +43,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
 
     private final SanPhamService list;
     private final Main main;
-    private final ArrayList<SanPhamBienThe> bienTheList = new ArrayList<>();
+    private final ArrayList<SanPhamBienTheKhoa> bienTheList = new ArrayList<>();
     private DefaultTableModel tblModel;
     private String url = null;
 
@@ -74,7 +74,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
         tblModel.setRowCount(0);
         Integer[] count = {0};
         this.list.getByIdSanPham(id).forEach((SanPham sp) -> {
-            sp.getBienTheList().forEach((SanPhamBienThe s) -> {
+            sp.getBienTheList().forEach((SanPhamBienTheKhoa s) -> {
                 Object[] row = {
                     ++count[0],
                     s.getTenBienThe(),
@@ -162,7 +162,7 @@ public class ThongTinSanPham extends javax.swing.JPanel {
         if (tblSanPham.getSelectedRow() < 0) {
             return;
         }
-        SanPhamBienThe s = this.bienTheList.get(tblSanPham.getSelectedRow());
+        SanPhamBienTheKhoa s = this.bienTheList.get(tblSanPham.getSelectedRow());
         txtTenBienThe.setText(s.getTenBienThe());
         txtSoLuong.setText(String.valueOf(s.getSoLuong()));
         txtGia.setText(String.valueOf(s.getGia()));
@@ -182,8 +182,8 @@ public class ThongTinSanPham extends javax.swing.JPanel {
         return sp;
     }
 
-    private SanPhamBienThe getSanPhamBienThe() {
-        SanPhamBienThe sp = new SanPhamBienThe();
+    private SanPhamBienTheKhoa getSanPhamBienThe() {
+        SanPhamBienTheKhoa sp = new SanPhamBienTheKhoa();
         sp.setId_san_pham(getSanPham());
         sp.setTenBienThe(txtTenBienThe.getText());
         sp.setSize(getSizeForm());

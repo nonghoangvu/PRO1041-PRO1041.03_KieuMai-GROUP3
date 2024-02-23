@@ -10,10 +10,10 @@ import java.util.Date;
  *
  * @author ADMIN
  */
-public class HoaDon {
+public class HoaDonKhoa {
     private int id;
-    private KhachHang kh;
-    private NhanVien nv;
+    private KhachHangKhoa kh;
+    private NhanVienKhoa nv;
     private String trangThai;
     private double thanhTien;
     private String hinhThuc;
@@ -21,10 +21,10 @@ public class HoaDon {
     private double tienThua;
     private Date ngayTao;
 
-    public HoaDon() {
+    public HoaDonKhoa() {
     }
 
-    public HoaDon(KhachHang kh, String trangThai, double thanhTien, String hinhThuc, double tienDua, double tienThua) {
+    public HoaDonKhoa(KhachHangKhoa kh, String trangThai, double thanhTien, String hinhThuc, double tienDua, double tienThua) {
         this.kh = kh;
         this.trangThai = trangThai;
         this.thanhTien = thanhTien;
@@ -33,7 +33,7 @@ public class HoaDon {
         this.tienThua = tienThua;
     }
 
-    public HoaDon(int id, KhachHang kh, NhanVien nv, String trangThai, double thanhTien, String hinhThuc, double tienDua, double tienThua, Date ngayTao) {
+    public HoaDonKhoa(int id, KhachHangKhoa kh, NhanVienKhoa nv, String trangThai, double thanhTien, String hinhThuc, double tienDua, double tienThua, Date ngayTao) {
         this.id = id;
         this.kh = kh;
         this.nv = nv;
@@ -47,12 +47,12 @@ public class HoaDon {
 
     
 
-    public HoaDon(NhanVien nv, String trangThai) {
+    public HoaDonKhoa(NhanVienKhoa nv, String trangThai) {
         this.nv = nv;
         this.trangThai = trangThai;
     }
 
-    public HoaDon(int id, NhanVien nv, String trangThai, Date ngayTao) {
+    public HoaDonKhoa(int id, NhanVienKhoa nv, String trangThai, Date ngayTao) {
         this.id = id;
         this.nv = nv;
         this.trangThai = trangThai;
@@ -68,7 +68,7 @@ public class HoaDon {
     }
     
 
-    public HoaDon(int id) {
+    public HoaDonKhoa(int id) {
         this.id = id;
     }
 
@@ -80,21 +80,21 @@ public class HoaDon {
         this.id = id;
     }
 
-    public KhachHang getKh() {
+    public KhachHangKhoa getKh() {
         return kh;
     }
 
-    public void setKh(KhachHang kh) {
+    public void setKh(KhachHangKhoa kh) {
         this.kh = kh;
     }
 
    
 
-    public NhanVien getNv() {
+    public NhanVienKhoa getNv() {
         return nv;
     }
 
-    public void setNv(NhanVien nv) {
+    public void setNv(NhanVienKhoa nv) {
         this.nv = nv;
     }
 

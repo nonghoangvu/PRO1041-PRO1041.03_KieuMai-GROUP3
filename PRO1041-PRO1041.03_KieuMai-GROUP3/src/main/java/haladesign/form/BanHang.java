@@ -4,15 +4,15 @@
  */
 package haladesign.form;
 
-import haladesign.model.HoaDon;
-import haladesign.model.HoaDonChiTiet;
-import haladesign.model.KhachHang;
-import haladesign.model.NhanVien;
-import haladesign.model.SanPhamBienThe;
-import haladesign.service.HoaDonChiTietService;
-import haladesign.service.HoaDonService;
-import haladesign.service.KhachHangService;
-import haladesign.service.SanPhamBienTheService;
+import haladesign.model.HoaDonKhoa;
+import haladesign.model.HoaDonChiTietKhoa;
+import haladesign.model.KhachHangKhoa;
+import haladesign.model.NhanVienKhoa;
+import haladesign.model.SanPhamBienTheKhoa;
+import haladesign.service.HoaDonChiTietServiceKhoa;
+import haladesign.service.HoaDonServiceKhoa;
+import haladesign.service.KhachHangServiceKhoa;
+import haladesign.service.SanPhamBienTheServiceKhoa;
 import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -25,10 +25,10 @@ import javax.swing.table.DefaultTableModel;
 public class BanHang extends javax.swing.JPanel {
 
     private DefaultTableModel mol = new DefaultTableModel();
-    private HoaDonService serHD = new HoaDonService();
-    private SanPhamBienTheService serBT = new SanPhamBienTheService();
-    private HoaDonChiTietService serHDCT = new HoaDonChiTietService();
-    private KhachHangService serKH = new KhachHangService();
+    private HoaDonServiceKhoa serHD = new HoaDonServiceKhoa();
+    private SanPhamBienTheServiceKhoa serBT = new SanPhamBienTheServiceKhoa();
+    private HoaDonChiTietServiceKhoa serHDCT = new HoaDonChiTietServiceKhoa();
+    private KhachHangServiceKhoa serKH = new KhachHangServiceKhoa();
 
     /**
      * Creates new form BanHang1
@@ -42,26 +42,26 @@ public class BanHang extends javax.swing.JPanel {
         this.fillSanPham(serBT.getSanPham());
     }
 
-    private void fillHoaDon(List<HoaDon> list) {
+    private void fillHoaDon(List<HoaDonKhoa> list) {
         mol = (DefaultTableModel) tbl_HoaDon.getModel();
         mol.setRowCount(0);
-        for (HoaDon hd : list) {
+        for (HoaDonKhoa hd : list) {
             mol.addRow(hd.dataHoaDon());
         }
     }
 
-    private void fillSanPham(List<SanPhamBienThe> list) {
+    private void fillSanPham(List<SanPhamBienTheKhoa> list) {
         mol = (DefaultTableModel) tbl_SanPham.getModel();
         mol.setRowCount(0);
-        for (SanPhamBienThe spbt : list) {
+        for (SanPhamBienTheKhoa spbt : list) {
             mol.addRow(spbt.dataBienThe());
         }
     }
 
-    private void fillHoaDonChiTiet(List<HoaDonChiTiet> list) {
+    private void fillHoaDonChiTiet(List<HoaDonChiTietKhoa> list) {
         mol = (DefaultTableModel) tbl_HoaDonChiTiet.getModel();
         mol.setRowCount(0);
-        for (HoaDonChiTiet hdct : list) {
+        for (HoaDonChiTietKhoa hdct : list) {
             mol.addRow(hdct.dataHoaDonChiTiet());
         }
     }
@@ -481,7 +481,7 @@ public class BanHang extends javax.swing.JPanel {
             long idSP = -1;
             String tenSP = tbl_HoaDonChiTiet.getValueAt(indexHDCT, 0).toString();
             int soLuongSP = 0;
-            for (SanPhamBienThe spbt : serBT.getSanPham()) {
+            for (SanPhamBienTheKhoa spbt : serBT.getSanPham()) {
                 if (tenSP.trim().equals(spbt.getTenBienThe().trim())) {
                     idSP = spbt.getId();
                     soLuongSP = spbt.getSoLuong();
@@ -501,11 +501,11 @@ public class BanHang extends javax.swing.JPanel {
                 check++;
             }
             if (check == 0) {
-                if (serHDCT.updateHoaDonChiTiet(idHD, idSP, new HoaDonChiTiet(soLuongNhap)) > 0) {
+                if (serHDCT.updateHoaDonChiTiet(idHD, idSP, new HoaDonChiTietKhoa(soLuongNhap)) > 0) {
                     this.fillHoaDonChiTiet(serHDCT.getHoaDon(idHD));
                 }
                 soLuongSP = soLuongSP + soLuongHDCT - soLuongNhap;
-                SanPhamBienThe bt = new SanPhamBienThe();
+                SanPhamBienTheKhoa bt = new SanPhamBienTheKhoa();
                 bt.setSoLuong(soLuongSP);
                 if (serBT.updateSanPham(idSP, bt) > 0) {
                     this.fillSanPham(serBT.getSanPham());
@@ -525,7 +525,7 @@ public class BanHang extends javax.swing.JPanel {
     private void tbl_HoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_HoaDonMouseClicked
         // TODO add your handling code here:
         this.fillHoaDonChiTiet(serHDCT.getHoaDon(this.idHD()));
-        for (HoaDon hd : serHD.getHoaDon()) {
+        for (HoaDonKhoa hd : serHD.getHoaDon()) {
             if (this.idHD() == hd.getId()) {
                 txt_IDHoaDon.setText(String.valueOf(hd.getId()));
                 txt_NgayTao.setText(String.valueOf(hd.getNgayTao()));
@@ -561,7 +561,7 @@ public class BanHang extends javax.swing.JPanel {
         long idSP = -1;
         String tenSP = tbl_HoaDonChiTiet.getValueAt(indexHDCT, 0).toString();
         int soLuongSP = 0;
-        for (SanPhamBienThe spbt : serBT.getSanPham()) {
+        for (SanPhamBienTheKhoa spbt : serBT.getSanPham()) {
             if (tenSP.equalsIgnoreCase(spbt.getTenBienThe())) {
                 idSP = spbt.getId();
                 soLuongSP = spbt.getSoLuong();
@@ -571,7 +571,7 @@ public class BanHang extends javax.swing.JPanel {
             this.fillHoaDonChiTiet(serHDCT.getHoaDon(idHD));
         }
         soLuongSP = soLuongSP + soLuongHDCT;
-        SanPhamBienThe bt = new SanPhamBienThe();
+        SanPhamBienTheKhoa bt = new SanPhamBienTheKhoa();
         bt.setSoLuong(soLuongSP);
         if (serBT.updateSanPham(idSP, bt) > 0) {
             this.fillSanPham(serBT.getSanPham());
@@ -587,7 +587,7 @@ public class BanHang extends javax.swing.JPanel {
         int checkSo = 0;
         double gia = 0;
         int soLuongSP = 0;
-        for (SanPhamBienThe bt : serBT.getSanPham()) {
+        for (SanPhamBienTheKhoa bt : serBT.getSanPham()) {
             if (idSP == bt.getId()) {
                 gia = bt.getGia();
                 soLuongSP = bt.getSoLuong();
@@ -610,7 +610,7 @@ public class BanHang extends javax.swing.JPanel {
 
         int soLuongHDCT = 0;
         int check = 0;
-        for (HoaDonChiTiet ct : serHDCT.getHoaDon(idHD)) {
+        for (HoaDonChiTietKhoa ct : serHDCT.getHoaDon(idHD)) {
             if (idSP == ct.getSp().getId()) {
                 soLuongHDCT = ct.getSoLuong();
                 check++;
@@ -620,9 +620,9 @@ public class BanHang extends javax.swing.JPanel {
             soLuongNhap = soLuongNhap + soLuongHDCT;
 
             soLuongSP = soLuongSP + soLuongHDCT - soLuongNhap;
-            HoaDonChiTiet hdct = new HoaDonChiTiet();
-            hdct.setHd(new HoaDon(idHD));
-            hdct.setSp(new SanPhamBienThe(idSP));
+            HoaDonChiTietKhoa hdct = new HoaDonChiTietKhoa();
+            hdct.setHd(new HoaDonKhoa(idHD));
+            hdct.setSp(new SanPhamBienTheKhoa(idSP));
             hdct.setGia(gia);
             hdct.setSoLuong(soLuongNhap);
 
@@ -632,11 +632,11 @@ public class BanHang extends javax.swing.JPanel {
                     this.fillHoaDonChiTiet(serHDCT.getHoaDon(idHD));
                 }
             } else {
-                if (serHDCT.updateHoaDonChiTiet(idHD, idSP, new HoaDonChiTiet(soLuongNhap)) > 0) {
+                if (serHDCT.updateHoaDonChiTiet(idHD, idSP, new HoaDonChiTietKhoa(soLuongNhap)) > 0) {
                     this.fillHoaDonChiTiet(serHDCT.getHoaDon(idHD));
                 }
             }
-            SanPhamBienThe bt = new SanPhamBienThe();
+            SanPhamBienTheKhoa bt = new SanPhamBienTheKhoa();
             bt.setSoLuong(soLuongSP);
 
             if (serBT.updateSanPham(idSP, bt) > 0) {
@@ -650,25 +650,25 @@ public class BanHang extends javax.swing.JPanel {
         if (Double.parseDouble(txt_TienThua.getText()) < 0) {
             JOptionPane.showMessageDialog(this, "Khách hàng chưa trả đủ tiền");
         } else {
-            HoaDon hd = new HoaDon();
+            HoaDonKhoa hd = new HoaDonKhoa();
             hd.setHinhThuc(cbo_HinhThucThanhToan.getSelectedItem().toString());
             String tenKH = txt_TenKhachHang.getText();
             int cont = 0;
-            for (KhachHang kh : serKH.getKhachHang()) {
+            for (KhachHangKhoa kh : serKH.getKhachHang()) {
                 if (tenKH.equals(kh.getHoTen())) {
                     cont++;
                 }
             }
             if (cont == 0) {
-                KhachHang kh = new KhachHang();
+                KhachHangKhoa kh = new KhachHangKhoa();
                 kh.setHoTen(tenKH);
                 if (serKH.addKhachHang(kh) > 0) {
                     JOptionPane.showMessageDialog(this, "khách mới");
                 }
             }
-            for (KhachHang kh : serKH.getKhachHang()) {
+            for (KhachHangKhoa kh : serKH.getKhachHang()) {
                 if (tenKH.equals(kh.getHoTen())) {
-                    hd.setKh(new KhachHang(kh.getId()));
+                    hd.setKh(new KhachHangKhoa(kh.getId()));
                 }
             }
 

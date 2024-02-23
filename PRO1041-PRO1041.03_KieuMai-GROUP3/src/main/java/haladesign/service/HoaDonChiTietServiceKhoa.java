@@ -6,10 +6,10 @@ package haladesign.service;
 
 import haladesign.config.JDBC_Connect;
 import haladesign.model.Color;
-import haladesign.model.HoaDon;
-import haladesign.model.HoaDonChiTiet;
-import haladesign.model.NhanVien;
-import haladesign.model.SanPhamBienThe;
+import haladesign.model.HoaDonKhoa;
+import haladesign.model.HoaDonChiTietKhoa;
+import haladesign.model.NhanVienKhoa;
+import haladesign.model.SanPhamBienTheKhoa;
 import haladesign.model.Size;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,14 +21,14 @@ import java.util.List;
  *
  * @author ADMIN
  */
-public class HoaDonChiTietService {
+public class HoaDonChiTietServiceKhoa {
     private Connection con = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private String sql = "";
     
-    public List<HoaDonChiTiet> getHoaDon(int id){
-        List<HoaDonChiTiet> listHDCT = new ArrayList();
+    public List<HoaDonChiTietKhoa> getHoaDon(int id){
+        List<HoaDonChiTietKhoa> listHDCT = new ArrayList();
         sql = """
               select HoaDonChiTiet.id, id_hoa_don, id_san_pham_chi_tiet, ten_bien_the, loai_mau, loai_size, HoaDonChiTiet.gia, HoaDonChiTiet.so_luong from HoaDonChiTiet 
               join SanPhamBienThe on HoaDonChiTiet.id_san_pham_chi_tiet = SanPhamBienThe.id
@@ -41,14 +41,18 @@ public class HoaDonChiTietService {
             ps.setObject(1, id);
             rs = ps.executeQuery();
             while(rs.next()){
-                HoaDonChiTiet hdct = new HoaDonChiTiet();
+                HoaDonChiTietKhoa hdct = new HoaDonChiTietKhoa();
                 hdct.setId(rs.getInt(1));
-                hdct.setHd(new HoaDon(rs.getInt(2)));
-                SanPhamBienThe spbt = new SanPhamBienThe();
+                hdct.setHd(new HoaDonKhoa(rs.getInt(2)));
+                SanPhamBienTheKhoa spbt = new SanPhamBienTheKhoa();
                 spbt.setId(rs.getLong(3));
                 spbt.setTenBienThe(rs.getString(4));
-                spbt.setColor(new Color(rs.getString(5)));
-                spbt.setSize(new Size(rs.getString(6)));
+                Color cor = new Color();
+                cor.setLoaiMau(rs.getString(5));
+                spbt.setColor(cor);
+                Size sz = new Size();
+                sz.setLoaiSize(rs.getString(6));
+                spbt.setSize(sz);
                 hdct.setGia(rs.getInt(7));
                 hdct.setSp(spbt);
                 hdct.setSoLuong(rs.getInt(8));
@@ -61,7 +65,7 @@ public class HoaDonChiTietService {
         }
     }
     
-    public int addHoaDonChiTiet(HoaDonChiTiet hdct){
+    public int addHoaDonChiTiet(HoaDonChiTietKhoa hdct){
         sql = "insert into HoaDonChiTiet(id_hoa_don,id_san_pham_chi_tiet,so_luong,gia) values(?,?,?,?)";
         try {
             con = JDBC_Connect.getConnection();
@@ -77,7 +81,7 @@ public class HoaDonChiTietService {
         }
     }
     
-    public int updateHoaDonChiTiet(int idHD, long idSP, HoaDonChiTiet hdct){
+    public int updateHoaDonChiTiet(int idHD, long idSP, HoaDonChiTietKhoa hdct){
         sql = "update HoaDonChiTiet set so_luong = ? where id_hoa_don = ? and id_san_pham_chi_tiet = ?";
         try {
             con = JDBC_Connect.getConnection();

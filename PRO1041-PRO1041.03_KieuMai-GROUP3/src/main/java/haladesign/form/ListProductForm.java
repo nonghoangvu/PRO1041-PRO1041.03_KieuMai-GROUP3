@@ -5,7 +5,7 @@ import haladesign.component.ThemSanPham;
 import haladesign.component.ThongTinSanPham;
 import haladesign.mainMenu.Main;
 import haladesign.model.SanPham;
-import haladesign.model.SanPhamBienThe;
+import haladesign.model.SanPhamBienTheKhoa;
 import haladesign.service.SanPhamService;
 import haladesign.swing.table.TableActionCellEditor;
 import haladesign.swing.table.TableActionCellRender;
@@ -44,7 +44,7 @@ public class ListProductForm extends javax.swing.JPanel {
         sanPhamList.forEach(sp -> {
             Integer totalQuantity = sp.getBienTheList().stream()
                     .filter(spbt -> sp.getId().startsWith(spbt.getId_san_pham().getId()))
-                    .mapToInt(SanPhamBienThe::getSoLuong)
+                    .mapToInt(SanPhamBienTheKhoa::getSoLuong)
                     .sum();
             Object[] row = {++count[0], sp.getId(), sp.getTen_san_pham(), totalQuantity, sp.getTrang_thai() ? bcryptHash.decodeBase64("xJBhbmcgYsOhbg==") : bcryptHash.decodeBase64("Tmfhu6tuZyBiw6Fu")};
             this.tblModel.addRow(row);

@@ -1,7 +1,7 @@
 package haladesign.component;
 
 import haladesign.model.SanPham;
-import haladesign.model.SanPhamBienThe;
+import haladesign.model.SanPhamBienTheKhoa;
 import haladesign.model.Size;
 import haladesign.service.SanPhamService;
 import haladesign.swing.table.TableActionCellRender;
@@ -81,7 +81,7 @@ public class UpdateSanPham extends javax.swing.JPanel {
 
     private void tableClickRow() {
         this.listSanPham.forEach(sp -> {
-            SanPhamBienThe s = sp.getBienTheList().get(tblSanPhamBienThe.getSelectedRow());
+            SanPhamBienTheKhoa s = sp.getBienTheList().get(tblSanPhamBienThe.getSelectedRow());
             txtTenBienThe.setText(s.getTenBienThe());
             txtSoLuong.setText(String.valueOf(s.getSoLuong()));
             txtGia.setText(String.valueOf(s.getGia()));

@@ -3,7 +3,7 @@ package haladesign.service;
 import haladesign.model.SanPham;
 import static haladesign.Application.getBean;
 import haladesign.model.Color;
-import haladesign.model.SanPhamBienThe;
+import haladesign.model.SanPhamBienTheKhoa;
 import haladesign.model.Size;
 import haladesign.repository.IColor;
 import haladesign.repository.ISanPham;
@@ -43,7 +43,7 @@ public class SanPhamService {
     }
 
     @Transactional
-    public Boolean insert(SanPham sanPham, List<SanPhamBienThe> bienTheList) {
+    public Boolean insert(SanPham sanPham, List<SanPhamBienTheKhoa> bienTheList) {
         sanPham.setBienTheList(bienTheList);
         bienTheList.forEach(s -> s.setId_san_pham(sanPham));
         return this.iSP.saveAndFlush(sanPham) != null;

@@ -4,8 +4,8 @@
  */
 package haladesign.service;
 import haladesign.config.JDBC_Connect;
-import haladesign.model.HoaDon;
-import haladesign.model.NhanVien;
+import haladesign.model.HoaDonKhoa;
+import haladesign.model.NhanVienKhoa;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +13,14 @@ import java.util.List;
  *
  * @author ADMIN
  */
-public class HoaDonService {
+public class HoaDonServiceKhoa {
     private Connection con = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private String sql = "";
     
-    public List<HoaDon> getHoaDon(){
-        List<HoaDon> listHD = new ArrayList();
+    public List<HoaDonKhoa> getHoaDon(){
+        List<HoaDonKhoa> listHD = new ArrayList();
         sql = """
               select HoaDon.id, ho_ten, HoaDon.ngay_tao, HoaDon.trang_thai 
               from HoaDon join NhanVien on HoaDon.id_nhan_vien = NhanVien.id
@@ -30,9 +30,9 @@ public class HoaDonService {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
-                HoaDon hd = new HoaDon();
+                HoaDonKhoa hd = new HoaDonKhoa();
                 hd.setId(rs.getInt(1));
-                NhanVien nv = new NhanVien();
+                NhanVienKhoa nv = new NhanVienKhoa();
                 nv.setHoTen(rs.getString(2));
                 hd.setNv(nv);
                 hd.setNgayTao(rs.getDate(3));
@@ -60,7 +60,7 @@ public class HoaDonService {
         }
     }
     
-    public int updateHoaDon(HoaDon hd, int id){
+    public int updateHoaDon(HoaDonKhoa hd, int id){
         sql = """
               update HoaDon set id_khach_hang = ?, trang_thai = ?, tong_gia_tri_hoa_don = ?,
               hinh_thuc_thanh_toan = ?, tien_dua = ?, tien_thua = ? where id = ?""";

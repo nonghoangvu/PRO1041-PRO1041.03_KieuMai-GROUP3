@@ -41,7 +41,7 @@ public class Color {
     private Date ngayTao;
 
     @OneToMany(mappedBy = "color")
-    private List<SanPhamBienThe> sanPhamBienTheList;
+    private List<SanPhamBienTheKhoa> sanPhamBienTheList;
 
     @Override
     public String toString() {
@@ -86,8 +86,8 @@ public class Color {
         return Objects.equals(this.sanPhamBienTheList, other.sanPhamBienTheList);
     }
 
-    public Color(String loaiMau) {
-        this.loaiMau = loaiMau;
-    }
+//    public Color(String loaiMau) {
+//        this.loaiMau = loaiMau;
+//    }
 
 }
