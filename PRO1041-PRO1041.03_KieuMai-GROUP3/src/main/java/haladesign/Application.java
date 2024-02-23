@@ -1,5 +1,6 @@
 package haladesign;
 
+import haladesign.loginFeature.Login;
 import haladesign.loginFeature.LoginForm;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -31,6 +32,6 @@ public class Application {
 
     public static void main(String[] args) {
         context = createApplicationContext(args);
-        new LoginForm().setVisible(true);
+        new Login().setVisible(true);
     }
 }
