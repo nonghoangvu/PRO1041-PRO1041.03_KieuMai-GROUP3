@@ -31,10 +31,19 @@ public class SanPhamService {
     public List<SanPham> getList() {
         return this.iSP.findAll();
     }
+    
+    public List<SanPham> getAllList() {
+        return this.iSP.findAllStatus();
+    }
+
+
     public List<SanPham> getListStoped() {
         return this.iSP.findAllStatusIsOff();
     }
-    
+
+    public List<SanPham> getListSearch(String search, Boolean status) {
+        return this.iSP.findByIdAndName(search, status);
+    }
 
     public List<SanPham> getByIdSanPham(String id) {
         return this.iSP.findByIdSanPham(id);
@@ -51,14 +60,16 @@ public class SanPhamService {
     public List<Size> getSize() {
         return this.iSize.findAll();
     }
-    public Size findBySize(String loaiSize){
+
+    public Size findBySize(String loaiSize) {
         return this.iSize.findByLoaiSize(loaiSize);
     }
 
     public List<Color> getCOlor() {
         return this.iColor.findAll();
     }
-    public Color findByColor(String loaiMau){
+
+    public Color findByColor(String loaiMau) {
         return this.iColor.findByLoaiMau(loaiMau);
     }
 

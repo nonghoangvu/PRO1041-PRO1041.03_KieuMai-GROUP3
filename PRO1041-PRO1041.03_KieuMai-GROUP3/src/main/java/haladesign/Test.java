@@ -33,8 +33,5 @@ public class Test {
     public static void main(String[] args) {
         context = createApplicationContext(args);
         ISanPham r = getBean(ISanPham.class);
-//        r.findByIdAndName("HD").forEach(s -> {
-//            System.out.println(s.getTen_san_pham());
-//        });
     }
 }

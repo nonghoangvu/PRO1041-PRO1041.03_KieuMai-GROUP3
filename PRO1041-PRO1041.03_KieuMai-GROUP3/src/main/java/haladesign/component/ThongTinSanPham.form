@@ -289,6 +289,11 @@
       </Properties>
     </Component>
     <Component class="haladesign.swingStyle.SwitchButton" name="btnTrangThai">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="99" red="66" type="rgb"/>
+        </Property>
+      </Properties>
     </Component>
     <Container class="haladesign.swingStyle.TextAreaScroll" name="textAreaScroll1">
       <Properties>
@@ -349,7 +354,7 @@
     <Component class="haladesign.swingStyle.Button" name="btnThem">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="cc" red="66" type="rgb"/>
+          <Color blue="7f" green="7f" red="7f" type="rgb"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -366,7 +371,7 @@
     <Component class="haladesign.swingStyle.Button" name="btnUpdate">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="cc" red="66" type="rgb"/>
+          <Color blue="7f" green="7f" red="7f" type="rgb"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -383,7 +388,7 @@
     <Component class="haladesign.swingStyle.Button" name="btnHoanThanh">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="cc" red="66" type="rgb"/>
+          <Color blue="7f" green="7f" red="7f" type="rgb"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
