@@ -171,9 +171,8 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
 
         textField1.setLabelText("Tìm kiếm");
 
-        btnAdd.setBackground(new java.awt.Color(255, 204, 51));
+        btnAdd.setBackground(new java.awt.Color(127, 127, 127));
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
-        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/haladesign/icon/plus.png"))); // NOI18N
         btnAdd.setText("Thêm size");
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -182,7 +181,7 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
             }
         });
 
-        button1.setBackground(new java.awt.Color(153, 255, 153));
+        button1.setBackground(new java.awt.Color(127, 127, 127));
         button1.setForeground(new java.awt.Color(255, 255, 255));
         button1.setText("Làm mới");
         button1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
