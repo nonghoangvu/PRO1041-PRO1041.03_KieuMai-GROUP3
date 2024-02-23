@@ -16,7 +16,7 @@ public final class DbMetadata {
                 .append(bcryptHash.decodeBase64(config.getServer())).append(":").append(bcryptHash.decodeBase64(config.getPort())).append(";")
                 .append("databaseName=").append(bcryptHash.decodeBase64(config.getDatabase_name())).append(";")
                 .append("user=").append(bcryptHash.decodeBase64(config.getUsername())).append(";")
-                .append("password=").append("123").append(";");
+                .append("password=").append("khoa710a").append(";");
         if (config.getUsing_ssl()) {
             connectStringBuilder.append("encrypt=true;trustServerCertificate=true;");
         }
