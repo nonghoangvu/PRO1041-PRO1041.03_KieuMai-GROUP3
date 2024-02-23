@@ -30,18 +30,15 @@
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="chkActive" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="187" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtProperties" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="btnSave" max="32767" attributes="0"/>
-                              <EmptySpace min="169" pref="169" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <Component id="txtProperties" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="btnSave" alignment="0" max="32767" attributes="0"/>
+                          <Component id="chkActive" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="187" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -58,7 +55,7 @@
               <Component id="chkActive" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnSave" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="37" max="32767" attributes="0"/>
+              <EmptySpace pref="33" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -81,14 +78,14 @@
     <Component class="haladesign.swingStyle.Button" name="btnSave">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="cc" red="66" type="rgb"/>
+          <Color blue="c8" green="54" red="4e" type="rgb"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="L&#x1b0;u"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="12" style="1"/>
+          <Font name="Segoe UI" size="14" style="1"/>
         </Property>
       </Properties>
       <Events>
