@@ -32,6 +32,6 @@ public class Application {
 
     public static void main(String[] args) {
         context = createApplicationContext(args);
-        new Login().setVisible(true);
+        new LoginForm().setVisible(true);
     }
 }
