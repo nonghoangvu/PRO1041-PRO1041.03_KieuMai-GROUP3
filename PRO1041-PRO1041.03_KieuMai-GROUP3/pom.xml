@@ -63,6 +63,46 @@
             <artifactId>jna-5.5.0</artifactId>
             <version>1.1</version>
         </dependency>
+        <dependency>
+            <groupId>commons-codec-1.11</groupId>
+            <artifactId>commons-codec-1.11</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections4-4.2</groupId>
+            <artifactId>commons-collections4-4.2</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-compress-1.18</groupId>
+            <artifactId>commons-compress-1.18</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>poi-4.0.1</groupId>
+            <artifactId>poi-4.0.1</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>poi-ooxml-4.0.1</groupId>
+            <artifactId>poi-ooxml-4.0.1</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>poi-ooxml-schemas-4.0.1</groupId>
+            <artifactId>poi-ooxml-schemas-4.0.1</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>xmlbeans-3.0.2</groupId>
+            <artifactId>xmlbeans-3.0.2</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>jcalendar-1.4</groupId>
+            <artifactId>jcalendar-1.4</artifactId>
+            <version>1.1</version>
+        </dependency>
     </dependencies>
     <name>PRO1041</name>
 </project>
