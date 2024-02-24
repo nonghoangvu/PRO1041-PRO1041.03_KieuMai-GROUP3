@@ -48,8 +48,8 @@ public class JPAHoaDon {
     @Column(name = "hinh_thuc_thanh_toan")
     private String hinhThucThanhToan;
 
-//    @Column(name = "ma_giao_dich")
-//    private String maGiaoDich;
+    @Column(name = "ma_giao_dich")
+    private String maGiaoDich;
 
     @Column(name = "tien_dua")
     private Float tienDua;
