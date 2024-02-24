@@ -82,6 +82,7 @@ CREATE TABLE [HoaDon] (
   [trang_thai] NVARCHAR(100),
   [tong_gia_tri_hoa_don] INT,
   [hinh_thuc_thanh_toan] NVARCHAR(MAX),
+  [ma_giao_dich] NVARCHAR(MAX),
   [tien_dua] INT,
   [tien_thua] INT,
   [ngay_tao] DATETIME DEFAULT (GETDATE()),
@@ -194,3 +195,22 @@ VALUES
 ('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [XXL-Do]', 5, 3, 134, 758000),
 ('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [M-Do]', 2, 3, 143, 758000),
 ('HLD-03', N'Bộ nhung Hàn Quốc cổ sen 03 [L-Do]', 3, 3, 1, 758000);
+
+INSERT INTO HoaDon (id_khach_hang, id_nhan_vien, trang_thai, tong_gia_tri_hoa_don, hinh_thuc_thanh_toan, ma_giao_dich, tien_dua, tien_thua)
+VALUES (1, 1, N'Chờ thanh toán', 758000, N'Chuyển khoản', null, 760000, 2000),
+       (1, 2, N'Đã thanh toán', 1516000, N'Tiền mặt', null, 1516000, 0),
+       (2, 3, N'Đã thanh toán', 1516000, N'Chuyển khoản', null, 1516000, 0),
+	   (3, 2, N'Hủy', 1516000, N'Chuyển khoản', null, 1516000, 0),
+	   (3, 1, N'Đã thanh toán', 1516000, N'Chuyển khoản', null, 1516000, 0)
+GO
+INSERT INTO HoaDon (id_khach_hang, id_nhan_vien, trang_thai, tong_gia_tri_hoa_don, hinh_thuc_thanh_toan, ma_giao_dich, tien_dua, tien_thua)
+VALUES (3, 2, N'Đã thanh toán', 1516000, N'Quẹt thẻ', null, 1516000, 0)
+
+INSERT INTO HoaDonChiTiet (id_hoa_don, id_san_pham_chi_tiet, so_luong, gia, tong_tien)
+VALUES (1, 1, 1, 758000, 758000),
+       (2, 5, 2, 758000, 1516000),
+	   (3, 6, 1, 758000, 758000),
+	   (3, 3, 1, 758000, 758000),
+	   (4, 3, 1, 758000, 758000),
+	   (5, 4, 3, 758000, 2274000 )
+GO
