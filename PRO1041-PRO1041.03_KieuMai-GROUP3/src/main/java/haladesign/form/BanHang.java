@@ -496,6 +496,10 @@ public class BanHang extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Số lượng mua phải lớn hơn 0");
                     check++;
                 }
+                if (soLuongNhap > soLuongSP + soLuongHDCT) {
+                    JOptionPane.showMessageDialog(this, "Số lượng tồn không đủ ");
+                    check++;
+                }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "số lượng phải là số");
                 check++;
@@ -690,12 +694,14 @@ public class BanHang extends javax.swing.JPanel {
 
     private void txt_TienDuaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_TienDuaMouseExited
         // TODO add your handling code here:
-        double tienDua = Double.parseDouble(txt_TienDua.getText());
-        double thanhTien = Double.parseDouble(txt_ThanhTien.getText());
-        double tienThua = tienDua - thanhTien;
-        DecimalFormat decimalFormat = new DecimalFormat("#.0");
-        String decimalString = decimalFormat.format(tienThua);
-        txt_TienThua.setText(decimalString);
+        if (txt_TienDua.getText() != null && txt_ThanhTien.getText() != null) {
+            double tienDua = Double.parseDouble(txt_TienDua.getText());
+            double thanhTien = Double.parseDouble(txt_ThanhTien.getText());
+            double tienThua = tienDua - thanhTien;
+            DecimalFormat decimalFormat = new DecimalFormat("#.0");
+            String decimalString = decimalFormat.format(tienThua);
+            txt_TienThua.setText(decimalString);
+        }
     }//GEN-LAST:event_txt_TienDuaMouseExited
 
 

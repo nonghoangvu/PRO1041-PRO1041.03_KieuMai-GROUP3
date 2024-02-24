@@ -1,6 +1,7 @@
 package haladesign.form;
 
 import haladesign.Utitlity.FormartData;
+import haladesign.config.utility.MsgBox;
 import haladesign.mainMenu.Main;
 import haladesign.model.HoaDonManh;
 import haladesign.model.KeyValuePair_Manh;
@@ -318,46 +319,50 @@ public class JPHoaDon extends javax.swing.JPanel {
             cell.setCellValue("Tổng giá trị hóa đơn");
 
             List<HoaDonManh> listExport = hds.getListInvoiceToExport();
-            for (int i = 0; i < listExport.size(); i++) {
+            if (listExport != null && !listExport.isEmpty()) {
+                for (int i = 0; i < listExport.size(); i++) {
 
-                row = sheet.createRow(4 + i);//Từ dòng thứ 4 ( 3 + 1 tiêu đề ). Nạp từ đâu
+                    row = sheet.createRow(4 + i);//Từ dòng thứ 4 ( 3 + 1 tiêu đề ). Nạp từ đâu
 
-                cell = row.createCell(0, CellType.NUMERIC);//Cột 0
-                cell.setCellValue(i + 1);//dòng thứ 1 
+                    cell = row.createCell(0, CellType.NUMERIC);//Cột 0
+                    cell.setCellValue(i + 1);//dòng thứ 1 
 
-                cell = row.createCell(1, CellType.STRING);
-                cell.setCellValue(listExport.get(i).getId_hoa_don());
+                    cell = row.createCell(1, CellType.STRING);
+                    cell.setCellValue(listExport.get(i).getId_hoa_don());
 
-                cell = row.createCell(2, CellType.NUMERIC);
-                cell.setCellValue(listExport.get(i).getId_nhan_vien());
+                    cell = row.createCell(2, CellType.NUMERIC);
+                    cell.setCellValue(listExport.get(i).getId_nhan_vien());
 
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                cell = row.createCell(3, CellType.STRING);
-                cell.setCellValue(dateFormat.format(listExport.get(i).getNgay_tao_hoa_don()));
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    cell = row.createCell(3, CellType.STRING);
+                    cell.setCellValue(dateFormat.format(listExport.get(i).getNgay_tao_hoa_don()));
 
-                cell = row.createCell(4, CellType.STRING);
-                cell.setCellValue(listExport.get(i).getTenKhachHang());
+                    cell = row.createCell(4, CellType.STRING);
+                    cell.setCellValue(listExport.get(i).getTenKhachHang());
 
-                cell = row.createCell(5, CellType.STRING);
-                cell.setCellValue(listExport.get(i).getTrang_thai_hoa_don());
+                    cell = row.createCell(5, CellType.STRING);
+                    cell.setCellValue(listExport.get(i).getTrang_thai_hoa_don());
 
-                cell = row.createCell(6, CellType.STRING);
-                cell.setCellValue(listExport.get(i).getHinh_thuc_thanh_toan());
+                    cell = row.createCell(6, CellType.STRING);
+                    cell.setCellValue(listExport.get(i).getHinh_thuc_thanh_toan());
 
-                cell = row.createCell(7, CellType.STRING);
-                cell.setCellValue(listExport.get(i).getTong_gia_tri_hoa_don());
+                    cell = row.createCell(7, CellType.STRING);
+                    cell.setCellValue(listExport.get(i).getTong_gia_tri_hoa_don());
 
-            }
-//            File f = new File("C:\\Users\\ASUS\\Desktop\\duan1//HoaDon2.xlsx");
-            File f = new File("D:\\FPT_Leaning\\FPT_Semester_5_Block1\\DA1_lan2\\NHV\\nongHoangVu/HoaDon1.xlsx");
-            try {
-                try (FileOutputStream fis = new FileOutputStream(f)) {
-                    wordkbook.write(fis);
                 }
-            } catch (FileNotFoundException ex) {
-            } catch (IOException ex) {
+//            File f = new File("C:\\Users\\ASUS\\Desktop\\duan1//HoaDon2.xlsx");
+                File f = new File("D:\\FPT_Leaning\\FPT_Semester_5_Block1\\DA1_lan2\\PRO1041-PRO1041 (1).03_KieuMai-GROUP3\\PRO1041-PRO1041.03_KieuMai-GROUP3/HoaDon1.xlsx");
+                try {
+                    try (FileOutputStream fis = new FileOutputStream(f)) {
+                        wordkbook.write(fis);
+                    }
+                } catch (FileNotFoundException ex) {
+                } catch (IOException ex) {
+                }
+                JOptionPane.showMessageDialog(this, "Xuất File thành công");
+            } else {
+                MsgBox.alter(this, "Không thể xuất File do không có danh sách hóa đơn");
             }
-            JOptionPane.showMessageDialog(this, "Xuất File thành công");
         } catch (HeadlessException ex) {
             JOptionPane.showMessageDialog(this, "Loi mo file");
         }
@@ -396,33 +401,35 @@ public class JPHoaDon extends javax.swing.JPanel {
         model_DSHD = (DefaultTableModel) this.tbl_dshd.getModel();
         model_DSHD.setRowCount(0);//xóa bảng
         int i = 1;
-        for (HoaDonManh hd : listHD) {
-            Object[] data = new Object[]{
-                i++,
-                hd.getId_hoa_don(),
-                hd.getTenNhanVien(),
-                new SimpleDateFormat("dd/MM/yyyy").format(hd.getNgay_tao_hoa_don()),
-                hd.getTenKhachHang(),
-                hd.getTrang_thai_hoa_don(),
-                hd.getHinh_thuc_thanh_toan(),
-                new FormartData().moneyFormat(Integer.valueOf(String.format("%.0f", hd.getTong_gia_tri_hoa_don()))) + "VND"
-            };
-            model_DSHD.addRow(data);
-            TableActionEvent1 event = new TableActionEvent1() {
-                @Override
-                public void edit(int id) {//id ở đây là dòng chọn (0)
-                    //Update hóa đơn chi tiết.
-                }
+        if (listHD != null && !listHD.isEmpty()) {
+            for (HoaDonManh hd : listHD) {
+                Object[] data = new Object[]{
+                    i++,
+                    hd.getId_hoa_don(),
+                    hd.getTenNhanVien(),
+                    new SimpleDateFormat("dd/MM/yyyy").format(hd.getNgay_tao_hoa_don()),
+                    hd.getTenKhachHang(),
+                    hd.getTrang_thai_hoa_don(),
+                    hd.getHinh_thuc_thanh_toan(),
+                    new FormartData().moneyFormat(Integer.valueOf(String.format("%.0f", hd.getTong_gia_tri_hoa_don()))) + "VND"
+                };
+                model_DSHD.addRow(data);
+                TableActionEvent1 event = new TableActionEvent1() {
+                    @Override
+                    public void edit(int id) {//id ở đây là dòng chọn (0)
+                        //Update hóa đơn chi tiết.
+                    }
 
-                @Override
-                public void detail(int id) {
-                    String selectedProductId = String.valueOf(tbl_dshd.getValueAt(id, 1));
-                    HoaDonChiTiet hdct = new HoaDonChiTiet(main, selectedProductId);
-                    main.showForm(hdct);
-                }
-            };
-            tbl_dshd.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRender3());
-            tbl_dshd.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditor3(event));
+                    @Override
+                    public void detail(int id) {
+                        String selectedProductId = String.valueOf(tbl_dshd.getValueAt(id, 1));
+                        HoaDonChiTiet hdct = new HoaDonChiTiet(main, selectedProductId);
+                        main.showForm(hdct);
+                    }
+                };
+                tbl_dshd.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRender3());
+                tbl_dshd.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditor3(event));
+            }
         }
     }
 
@@ -430,8 +437,12 @@ public class JPHoaDon extends javax.swing.JPanel {
         dcb_NVPT = (DefaultComboBoxModel) this.cbo_nvPhuTrach.getModel();
         dcb_NVPT.removeAllElements();
         List<HoaDonManh> listEmployee = hds.getListEmployee();
-        for (HoaDonManh hd : listEmployee) {//Duyệt qua listEmployee và thêm từng cặp key:value vào Combobox.
-            dcb_NVPT.addElement(new KeyValuePair_Manh(hd.getId_nhan_vien(), hd.getTenNhanVien()));
+        if (listEmployee != null && !listEmployee.isEmpty()) {
+            for (HoaDonManh hd : listEmployee) {//Duyệt qua listEmployee và thêm từng cặp key:value vào Combobox.
+                dcb_NVPT.addElement(new KeyValuePair_Manh(hd.getId_nhan_vien(), hd.getTenNhanVien()));
+            }
+        } else {
+            MsgBox.alter(this, "Danh sách trống");
         }
     }
 

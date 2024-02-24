@@ -1,4 +1,4 @@
-package utility;
+package haladesign.config.utility;
 
 import java.awt.Component;
 import javax.swing.JOptionPane;
