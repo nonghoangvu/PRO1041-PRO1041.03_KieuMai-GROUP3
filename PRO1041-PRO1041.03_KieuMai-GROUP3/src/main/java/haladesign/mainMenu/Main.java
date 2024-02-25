@@ -3,6 +3,7 @@ package haladesign.mainMenu;
 import haladesign.Utitlity.BcryptHash;
 import haladesign.form.FormQlyNhanVien;
 import haladesign.form.BanHang;
+import haladesign.form.DanhSachChiTietSanPham;
 import haladesign.form.FormQlyVaiTro;
 import haladesign.form.ThongKe;
 import java.awt.Component;
@@ -74,6 +75,8 @@ public class Main extends javax.swing.JFrame {
                             showForm(new DanhSachSanPham(Main.this, this.nhanVien));
                         case 2 ->
                             showForm(new ThuocTinhSanPham(Main.this));
+                        case 3 ->
+                            showForm(new DanhSachChiTietSanPham(Main.this));
                         default ->
                             showForm(new Form_Empty(index + " " + indexSubMenu));
                     }

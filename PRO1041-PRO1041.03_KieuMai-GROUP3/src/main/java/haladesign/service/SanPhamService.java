@@ -63,6 +63,10 @@ public class SanPhamService {
         return iSPBT.findBySizeAndColorAndChatLieu(id, size.getLoaiSize(), color.getLoaiMau(), chatLieu.getLoaiChatLieu());
     }
 
+    public SanPhamChiTiet getSanPhamChiTiet(String id, String targetSize, String targetColor, String targetChatLieu) {
+        return iSPBT.findByThuocTinh(id, targetSize, targetColor, targetChatLieu);
+    }
+
     public List<Size> getSize() {
         return this.iSize.findAll();
     }
@@ -113,7 +117,7 @@ public class SanPhamService {
     public Boolean insertSize(Size size) {
         return this.iSize.save(size) != null;
     }
-    
+
     @Transactional
     public Boolean insertChatLieu(ChatLieu chatLieu) {
         return this.iChatLieu.save(chatLieu) != null;
