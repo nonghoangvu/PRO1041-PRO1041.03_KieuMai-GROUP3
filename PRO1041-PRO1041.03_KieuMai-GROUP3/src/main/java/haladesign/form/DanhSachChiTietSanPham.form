@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
-  <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
-    </Component>
-  </NonVisualComponents>
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -28,15 +24,13 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jLabel1" max="32767" attributes="0"/>
-                  <Group type="102" alignment="1" attributes="0">
+                  <Component id="jScrollPane1" pref="728" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="txtSearch" max="32767" attributes="0"/>
-                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                      <Component id="cbbStatus" min="-2" pref="184" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="btnAdd" min="-2" pref="171" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                      <Component id="btnSearch" min="-2" pref="53" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane1" pref="775" max="32767" attributes="0"/>
+                  <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
           </Group>
@@ -44,53 +38,45 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+              <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtSearch" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="cbbStatus" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-                  <Component id="btnAdd" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="txtSearch" linkSize="1" alignment="3" max="32767" attributes="0"/>
+                  <Component id="btnSearch" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="469" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" pref="433" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="haladesign.swingStyle.TextField" name="txtSearch">
-      <Properties>
-        <Property name="labelText" type="java.lang.String" value="T&#xec;m ki&#x1ebf;m s&#x1ea3;n ph&#x1ea9;m"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="18" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Danh s&#xe1;ch s&#x1ea3;n ph&#x1ea9;m"/>
+        <Property name="text" type="java.lang.String" value="Danh S&#xe1;ch S&#x1ea3;n Ph&#x1ea9;m Chi Ti&#x1ebf;t"/>
       </Properties>
     </Component>
-    <Component class="haladesign.swingStyle.Button" name="btnAdd">
+    <Component class="haladesign.swingStyle.TextField" name="txtSearch">
+      <Properties>
+        <Property name="labelText" type="java.lang.String" value="T&#xec;m ki&#x1ebf;m s&#x1ea3;n ph&#x1ea9;m"/>
+      </Properties>
+    </Component>
+    <Component class="haladesign.swingStyle.Button" name="btnSearch">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-            <LineBorder>
-              <Color PropertyName="color" blue="e5" green="e5" red="e5" type="rgb"/>
-            </LineBorder>
-          </Border>
+          <Border info="null"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Th&#xea;m s&#x1ea3;n ph&#x1ea9;m"/>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="12" style="1"/>
-        </Property>
+        <Property name="text" type="java.lang.String" value=" "/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearchActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -104,15 +90,16 @@
         <Component class="haladesign.swing.table.Table" name="tblProduct">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="9" rowCount="0">
+              <Table columnCount="10" rowCount="0">
                 <Column editable="false" title="#" type="java.lang.Object"/>
                 <Column editable="false" title="M&#xe3; S&#x1ea3;n Ph&#x1ea9;m" type="java.lang.Object"/>
                 <Column editable="false" title="T&#xea;n S&#x1ea3;n Ph&#x1ea9;m" type="java.lang.Object"/>
-                <Column editable="false" title="M&#xf4; t&#x1ea3;" type="java.lang.Object"/>
-                <Column editable="false" title="S&#x1ed1; L&#x1b0;&#x1ee3;ng" type="java.lang.Object"/>
-                <Column editable="false" title="Ng&#x1b0;&#x1edd;i t&#x1ea1;o" type="java.lang.Object"/>
-                <Column editable="false" title="Ng&#xe0;y t&#x1ea1;o" type="java.lang.Object"/>
-                <Column editable="false" title="Tr&#x1ea1;ng Th&#xe1;i" type="java.lang.Object"/>
+                <Column editable="false" title="Size" type="java.lang.Object"/>
+                <Column editable="false" title="Color" type="java.lang.Object"/>
+                <Column editable="false" title="Ch&#x1ea5;t Li&#x1ec7;u" type="java.lang.Object"/>
+                <Column editable="false" title="S&#x1ed1; l&#x1b0;&#x1ee3;ng" type="java.lang.Object"/>
+                <Column editable="false" title="Gi&#xe1;" type="java.lang.Object"/>
+                <Column editable="false" title="Ng&#xe0;y T&#x1ea1;o" type="java.lang.Object"/>
                 <Column editable="true" title="Thao T&#xe1;c" type="java.lang.Object"/>
               </Table>
             </Property>
@@ -128,17 +115,7 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="110" minWidth="60" prefWidth="-1" resizable="true">
+                <Column maxWidth="500" minWidth="300" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -153,7 +130,22 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="120" minWidth="100" prefWidth="-1" resizable="true">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -172,20 +164,5 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="haladesign.swingStyle.Combobox" name="cbbStatus">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
-            <StringItem index="0" value="&#x110;ang b&#xe1;n"/>
-            <StringItem index="1" value="H&#x1ebf;t h&#xe0;ng"/>
-            <StringItem index="2" value="Ng&#x1eeb;ng b&#xe1;n"/>
-          </StringArray>
-        </Property>
-        <Property name="labeText" type="java.lang.String" value=""/>
-      </Properties>
-      <Events>
-        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbbStatusItemStateChanged"/>
-      </Events>
-    </Component>
   </SubComponents>
 </Form>

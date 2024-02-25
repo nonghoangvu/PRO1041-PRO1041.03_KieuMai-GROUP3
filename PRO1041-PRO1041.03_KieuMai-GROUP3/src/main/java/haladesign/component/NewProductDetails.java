@@ -48,7 +48,7 @@ public class NewProductDetails extends javax.swing.JPanel {
         btnAdd.setColor1(Color.BLACK);
         btnAdd.setColor2(Color.BLACK);
         btnAdd.setIconButton(this.icon.ADD);
-        
+
         btnRefresh.setColor1(Color.BLACK);
         btnRefresh.setColor2(Color.BLACK);
         btnRefresh.setIconButton(this.icon.REFRESH);
@@ -138,11 +138,12 @@ public class NewProductDetails extends javax.swing.JPanel {
         cbbChatLieu.setEnabled(true);
     }
 
-    private void lockWhenClick(){
+    private void lockWhenClick() {
         cbbSize.setEnabled(false);
         cbbColor.setEnabled(false);
         cbbChatLieu.setEnabled(false);
     }
+
     private void tableClickRow() {
         if (tblSanPham.getSelectedRow() < 0) {
             return;
