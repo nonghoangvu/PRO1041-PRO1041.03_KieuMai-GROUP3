@@ -11,7 +11,7 @@ package haladesign.model;
 public class HoaDonChiTiet0 {
     private int id;
     private HoaDon0 hd;
-    private SanPhamBienThe sp;
+    private SanPhamChiTiet sp;
     private int soLuong;
     private double gia;
 
@@ -22,7 +22,7 @@ public class HoaDonChiTiet0 {
         this.soLuong = soLuong;
     }
 
-    public HoaDonChiTiet0(int id, HoaDon0 hd, SanPhamBienThe sp, int soLuong, double gia) {
+    public HoaDonChiTiet0(int id, HoaDon0 hd, SanPhamChiTiet sp, int soLuong, double gia) {
         this.id = id;
         this.hd = hd;
         this.sp = sp;
@@ -30,13 +30,13 @@ public class HoaDonChiTiet0 {
         this.gia = gia;
     }
 
-    public HoaDonChiTiet0(HoaDon0 hd, SanPhamBienThe sp, int soLuong) {
+    public HoaDonChiTiet0(HoaDon0 hd, SanPhamChiTiet sp, int soLuong) {
         this.hd = hd;
         this.sp = sp;
         this.soLuong = soLuong;
     }
 
-    public HoaDonChiTiet0(HoaDon0 hd, SanPhamBienThe sp, int soLuong, double gia) {
+    public HoaDonChiTiet0(HoaDon0 hd, SanPhamChiTiet sp, int soLuong, double gia) {
         this.hd = hd;
         this.sp = sp;
         this.soLuong = soLuong;
@@ -60,11 +60,11 @@ public class HoaDonChiTiet0 {
         this.hd = hd;
     }
 
-    public SanPhamBienThe getSp() {
+    public SanPhamChiTiet getSp() {
         return sp;
     }
 
-    public void setSp(SanPhamBienThe sp) {
+    public void setSp(SanPhamChiTiet sp) {
         this.sp = sp;
     }
 
@@ -89,7 +89,7 @@ public class HoaDonChiTiet0 {
     }
     public Object[] dataHoaDonChiTiet(){
         return new Object[]{
-            this.sp.getTenBienThe(),
+//            this.sp.getTenBienThe(),
             this.sp.getSize(),
             this.sp.getColor(),
             this.soLuong,

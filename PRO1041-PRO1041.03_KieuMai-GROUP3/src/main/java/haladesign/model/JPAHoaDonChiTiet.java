@@ -30,8 +30,8 @@ public class JPAHoaDonChiTiet {
     private JPAHoaDon hoaDon;
 
     @ManyToOne
-    @JoinColumn(name = "id_san_pham_chi_tiet")
-    private SanPhamBienThe sanPhamBienThe;
+    @JoinColumn(name = "id_san_pham_chi_tiet", referencedColumnName = "id")
+    private SanPhamChiTiet sanPhamChiTiet;
 
     @Column(name = "so_luong")
     private Integer soLuong;

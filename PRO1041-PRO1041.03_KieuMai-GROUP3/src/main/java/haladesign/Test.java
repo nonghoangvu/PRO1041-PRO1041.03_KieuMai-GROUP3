@@ -1,5 +1,6 @@
 package haladesign;
 
+import haladesign.Utitlity.BcryptHash;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
@@ -30,5 +31,7 @@ public class Test {
 
     public static void main(String[] args) {
 //        context = createApplicationContext(args);
+        BcryptHash b = new BcryptHash();
+        System.out.println(b.encodeBase64("Danh sách sản phẩm chi tiết"));
     }
 }

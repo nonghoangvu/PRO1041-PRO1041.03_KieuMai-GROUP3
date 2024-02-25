@@ -41,7 +41,7 @@ public class Color {
     private Date ngayTao;
 
     @OneToMany(mappedBy = "color")
-    private List<SanPhamBienThe> sanPhamBienTheList;
+    private List<SanPhamChiTiet> sanPhamBienTheList;
 
     @Override
     public String toString() {

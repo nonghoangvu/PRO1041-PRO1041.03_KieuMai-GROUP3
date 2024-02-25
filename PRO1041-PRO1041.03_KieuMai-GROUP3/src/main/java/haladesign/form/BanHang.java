@@ -8,7 +8,7 @@ import haladesign.model.HoaDonKhoa;
 import haladesign.model.HoaDonChiTietKhoa;
 import haladesign.model.KhachHang;
 import haladesign.model.NhanVien;
-import haladesign.model.SanPhamBienThe;
+import haladesign.model.SanPhamChiTiet;
 import haladesign.service.HoaDonChiTietServiceKhoa;
 import haladesign.service.HoaDonServiceKhoa;
 import haladesign.service.KhachHangServiceKhoa;
@@ -50,10 +50,10 @@ public class BanHang extends javax.swing.JPanel {
         }
     }
 
-    private void fillSanPham(List<SanPhamBienThe> list) {
+    private void fillSanPham(List<SanPhamChiTiet> list) {
         mol = (DefaultTableModel) tbl_SanPham.getModel();
         mol.setRowCount(0);
-        for (SanPhamBienThe spbt : list) {
+        for (SanPhamChiTiet spbt : list) {
             mol.addRow(spbt.dataBienThe());
         }
     }
@@ -481,7 +481,7 @@ public class BanHang extends javax.swing.JPanel {
             long idSP = -1;
             String tenSP = tbl_HoaDonChiTiet.getValueAt(indexHDCT, 0).toString();
             int soLuongSP = 0;
-            for (SanPhamBienThe spbt : serBT.getSanPham()) {
+            for (SanPhamChiTiet spbt : serBT.getSanPham()) {
                 if (tenSP.trim().equals(spbt.getTenBienThe().trim())) {
                     idSP = spbt.getId();
                     soLuongSP = spbt.getSoLuong();
@@ -505,7 +505,7 @@ public class BanHang extends javax.swing.JPanel {
                     this.fillHoaDonChiTiet(serHDCT.getHoaDon(idHD));
                 }
                 soLuongSP = soLuongSP + soLuongHDCT - soLuongNhap;
-                SanPhamBienThe bt = new SanPhamBienThe();
+                SanPhamChiTiet bt = new SanPhamChiTiet();
                 bt.setSoLuong(soLuongSP);
                 if (serBT.updateSanPham(idSP, bt) > 0) {
                     this.fillSanPham(serBT.getSanPham());
@@ -561,7 +561,7 @@ public class BanHang extends javax.swing.JPanel {
         long idSP = -1;
         String tenSP = tbl_HoaDonChiTiet.getValueAt(indexHDCT, 0).toString();
         int soLuongSP = 0;
-        for (SanPhamBienThe spbt : serBT.getSanPham()) {
+        for (SanPhamChiTiet spbt : serBT.getSanPham()) {
             if (tenSP.equalsIgnoreCase(spbt.getTenBienThe())) {
                 idSP = spbt.getId();
                 soLuongSP = spbt.getSoLuong();
@@ -571,7 +571,7 @@ public class BanHang extends javax.swing.JPanel {
             this.fillHoaDonChiTiet(serHDCT.getHoaDon(idHD));
         }
         soLuongSP = soLuongSP + soLuongHDCT;
-        SanPhamBienThe bt = new SanPhamBienThe();
+        SanPhamChiTiet bt = new SanPhamChiTiet();
         bt.setSoLuong(soLuongSP);
         if (serBT.updateSanPham(idSP, bt) > 0) {
             this.fillSanPham(serBT.getSanPham());
@@ -587,7 +587,7 @@ public class BanHang extends javax.swing.JPanel {
         int checkSo = 0;
         double gia = 0;
         int soLuongSP = 0;
-        for (SanPhamBienThe bt : serBT.getSanPham()) {
+        for (SanPhamChiTiet bt : serBT.getSanPham()) {
             if (idSP == bt.getId()) {
                 gia = bt.getGia();
                 soLuongSP = bt.getSoLuong();
@@ -622,7 +622,7 @@ public class BanHang extends javax.swing.JPanel {
             soLuongSP = soLuongSP + soLuongHDCT - soLuongNhap;
             HoaDonChiTietKhoa hdct = new HoaDonChiTietKhoa();
             hdct.setHd(new HoaDonKhoa(idHD));
-            hdct.setSp(new SanPhamBienThe(idSP));
+            hdct.setSp(new SanPhamChiTiet(idSP));
             hdct.setGia(gia);
             hdct.setSoLuong(soLuongNhap);
 
@@ -636,7 +636,7 @@ public class BanHang extends javax.swing.JPanel {
                     this.fillHoaDonChiTiet(serHDCT.getHoaDon(idHD));
                 }
             }
-            SanPhamBienThe bt = new SanPhamBienThe();
+            SanPhamChiTiet bt = new SanPhamChiTiet();
             bt.setSoLuong(soLuongSP);
 
             if (serBT.updateSanPham(idSP, bt) > 0) {

@@ -4,7 +4,6 @@
  */
 package haladesign.repository;
 
-import haladesign.model.HoaDon;
 import haladesign.model.JPAHoaDon;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,7 +14,7 @@ import org.springframework.data.repository.query.Param;
  *
  * @author NONG HOANG VU
  */
-public interface IHoaDon extends JpaRepository<HoaDon, Integer>{
+public interface IHoaDon extends JpaRepository<JPAHoaDon, Integer>{
     @Query("SELECT h FROM JPAHoaDon h WHERE h.khachHang.id = :khachHangId")
     public List<JPAHoaDon> findByKhachHangId(@Param("khachHangId") Integer khachHangId);
 }

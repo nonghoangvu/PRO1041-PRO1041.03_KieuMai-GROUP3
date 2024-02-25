@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,8 +25,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "SanPhamBienThe")
-public class SanPhamBienThe {
+@Table(name = "SanPhamChiTiet")
+public class SanPhamChiTiet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,30 +47,34 @@ public class SanPhamBienThe {
     @ManyToOne
     @JoinColumn(name = "id_color")
     private Color color;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_chat_lieu")
+    private ChatLieu chatLieu;
 
     @Column(name = "so_luong", columnDefinition = "INT DEFAULT 0")
     private Integer soLuong = 0;
 
     @Column(name = "gia", nullable = false, columnDefinition = "INT CHECK (gia >= 0)")
     private Integer gia;
+    
+    @Column(name = "ngay_tao")
+    private Date ngay_tao;
 
-    @Column(name = "hinhAnh")
-    private String hinhAnh;
+    @OneToMany(mappedBy = "sanPhamChiTiet")
+    private List<JPAHoaDonChiTiet> hoaDonChiTietList;   
 
-    @OneToMany(mappedBy = "sanPhamBienThe")
-    private List<HoaDonChiTiet> hoaDonChiTietList;
-
-    public SanPhamBienThe(Long id) {
+    public SanPhamChiTiet(Long id) {
         this.id = id;
     }
 
-    public SanPhamBienThe(Long id, String tenBienThe, Size size, Color color, Integer gia, String hinhAnh) {
+    public SanPhamChiTiet(Long id, String tenBienThe, Size size, Color color, Integer gia, String hinhAnh) {
         this.id = id;
         this.tenBienThe = tenBienThe;
         this.size = size;
         this.color = color;
         this.gia = gia;
-        this.hinhAnh = hinhAnh;
+//        this.hinhAnh = hinhAnh;
     }
 
     public Object[] dataBienThe() {
@@ -80,7 +85,7 @@ public class SanPhamBienThe {
             this.color,
             this.soLuong,
             this.gia,
-            this.hinhAnh
+//            this.hinhAnh
         };
     }
 }

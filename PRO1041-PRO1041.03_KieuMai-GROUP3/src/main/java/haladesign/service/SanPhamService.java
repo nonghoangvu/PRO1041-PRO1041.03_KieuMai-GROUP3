@@ -2,16 +2,18 @@ package haladesign.service;
 
 import haladesign.model.SanPham;
 import static haladesign.Application.getBean;
+import haladesign.model.ChatLieu;
 import haladesign.model.Color;
-import haladesign.model.SanPhamBienThe;
+import haladesign.model.SanPhamChiTiet;
 import haladesign.model.Size;
+import haladesign.repository.IChatLieu;
 import haladesign.repository.IColor;
 import haladesign.repository.ISanPham;
-import haladesign.repository.ISanPhamBienThe;
 import haladesign.repository.ISize;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import haladesign.repository.ISanPhamChiTiet;
 
 /**
  *
@@ -20,9 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class SanPhamService {
 
     private final ISanPham iSP = getBean(ISanPham.class);
-    private final ISanPhamBienThe iSPBT = getBean(ISanPhamBienThe.class);
+    private final ISanPhamChiTiet iSPBT = getBean(ISanPhamChiTiet.class);
     private final ISize iSize = getBean(ISize.class);
     private final IColor iColor = getBean(IColor.class);
+    private final IChatLieu iChatLieu = getBean(IChatLieu.class);
 
     @Autowired
     public SanPhamService() {
@@ -31,11 +34,10 @@ public class SanPhamService {
     public List<SanPham> getList() {
         return this.iSP.findAll();
     }
-    
+
     public List<SanPham> getAllList() {
         return this.iSP.findAllStatus();
     }
-
 
     public List<SanPham> getListStoped() {
         return this.iSP.findAllStatusIsOff();
@@ -49,12 +51,16 @@ public class SanPhamService {
         return this.iSP.findByIdSanPham(id);
     }
 
-    public List<SanPhamBienThe> getByIdSanPhamBienThe(String id) {
+    public SanPham getSanPhamInfo(String id) {
+        return this.iSP.findSanPham(id);
+    }
+
+    public List<SanPhamChiTiet> getByIdSanPhamBienThe(String id) {
         return this.iSPBT.findByIdSanPhamBienThe(id);
     }
 
-    public List<SanPhamBienThe> getByColorAndSize(String id, Color color, Size size) {
-        return iSPBT.findBySizeAndColor(id, size.getLoaiSize(), color.getLoaiMau());
+    public List<SanPhamChiTiet> getByColorAndSizeAndChatLieu(String id, Color color, Size size, ChatLieu chatLieu) {
+        return iSPBT.findBySizeAndColorAndChatLieu(id, size.getLoaiSize(), color.getLoaiMau(), chatLieu.getLoaiChatLieu());
     }
 
     public List<Size> getSize() {
@@ -73,8 +79,16 @@ public class SanPhamService {
         return this.iColor.findByLoaiMau(loaiMau);
     }
 
+    public List<ChatLieu> getChatLieu() {
+        return this.iChatLieu.findAll();
+    }
+
+    public ChatLieu findByChatLieu(String chatLieu) {
+        return this.iChatLieu.findByLoaiChatLieu(chatLieu);
+    }
+
     @Transactional
-    public Boolean insert(SanPham sanPham, List<SanPhamBienThe> bienTheList) {
+    public Boolean insert(SanPham sanPham, List<SanPhamChiTiet> bienTheList) {
         sanPham.setBienTheList(bienTheList);
         bienTheList.forEach(s -> s.setId_san_pham(sanPham));
         return this.iSP.saveAndFlush(sanPham) != null;
@@ -86,7 +100,7 @@ public class SanPhamService {
     }
 
     @Transactional
-    public Boolean insertBienThe(SanPhamBienThe sp) {
+    public Boolean insertBienThe(SanPhamChiTiet sp) {
         return this.iSPBT.saveAndFlush(sp) != null;
     }
 
@@ -98,5 +112,10 @@ public class SanPhamService {
     @Transactional
     public Boolean insertSize(Size size) {
         return this.iSize.save(size) != null;
+    }
+    
+    @Transactional
+    public Boolean insertChatLieu(ChatLieu chatLieu) {
+        return this.iChatLieu.save(chatLieu) != null;
     }
 }

@@ -9,21 +9,24 @@ import javax.swing.table.DefaultTableModel;
  * @author Phương Thảo
  */
 public class LichSuMuaHang extends javax.swing.JPanel {
-    
+
     private final KhachHangService service;
     private DefaultTableModel tblModel;
+
     public LichSuMuaHang(Integer id) {
         initComponents();
         this.service = new KhachHangService();
         loadUser(id);
         fillTable(id);
     }
-    private void loadUser(Integer id){
+
+    private void loadUser(Integer id) {
         KhachHang kh = this.service.getKhachHangById(id);
         lbTen.setText(kh.getHo_ten());
         lbSdt.setText(kh.getSo_dien_thoai());
     }
-    private void fillTable(Integer id){
+
+    private void fillTable(Integer id) {
         this.tblModel = (DefaultTableModel) tblSanPham.getModel();
         tblModel.setRowCount(0);
         Integer[] count = {0};
@@ -31,18 +34,20 @@ public class LichSuMuaHang extends javax.swing.JPanel {
             s.getHoaDonChiTiets().forEach(sp -> {
                 Object[] row = {
                     ++count[0],
-                    sp.getSanPhamBienThe().getTenBienThe(),
+                    sp.getSanPhamChiTiet().getId_san_pham().getTen_san_pham() + " " + sp.getSanPhamChiTiet().getTenBienThe(),
                     sp.getSoLuong(),
-                    sp.getSanPhamBienThe().getColor().getLoaiMau(),
-                    sp.getSanPhamBienThe().getSize().getLoaiSize(),
+                    sp.getSanPhamChiTiet().getColor().getLoaiMau(),
+                    sp.getSanPhamChiTiet().getSize().getLoaiSize(),
+                    sp.getSanPhamChiTiet().getChatLieu().getLoaiChatLieu(),
                     s.getNgayTao(),
                     s.getHinhThucThanhToan()
-                    
+
                 };
-            tblModel.addRow(row);
+                tblModel.addRow(row);
             });
         });
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -59,15 +64,23 @@ public class LichSuMuaHang extends javax.swing.JPanel {
 
         tblSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "STT", "Tên sản phẩm", "Số lượng", "Màu", "Size", "Ngày mua", "Hình thức thanh toán"
+                "STT", "Tên sản phẩm", "Số lượng", "Màu", "Size", "Chất liệu", "Ngày mua", "Hình thức thanh toán"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblSanPham);
         if (tblSanPham.getColumnModel().getColumnCount() > 0) {
             tblSanPham.getColumnModel().getColumn(0).setMinWidth(50);

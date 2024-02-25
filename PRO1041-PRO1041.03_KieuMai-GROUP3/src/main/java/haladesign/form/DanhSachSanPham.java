@@ -1,15 +1,17 @@
 package haladesign.form;
 
 import haladesign.Utitlity.BcryptHash;
-import haladesign.component.ThemSanPham;
-import haladesign.component.ThongTinSanPham;
+import haladesign.component.NewProduct;
+import haladesign.component.NewProductDetails;
 import haladesign.mainMenu.Main;
+import haladesign.model.NhanVien;
 import haladesign.model.SanPham;
-import haladesign.model.SanPhamBienThe;
+import haladesign.model.SanPhamChiTiet;
 import haladesign.service.SanPhamService;
 import haladesign.swing.table.TableActionCellEditor;
 import haladesign.swing.table.TableActionCellRender;
 import haladesign.swing.table.TableActionEvent;
+import haladesign.system.GlassPanePopup;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,18 +27,20 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author NONG HOANG VU
  */
-public class ListProductForm extends javax.swing.JPanel {
+public class DanhSachSanPham extends javax.swing.JPanel {
 
     private final SanPhamService list;
     private DefaultTableModel tblModel;
     private final BcryptHash bcryptHash = new BcryptHash();
     private final Main main;
     private GoogleMaterialDesignIcon icon;
+    private final NhanVien nhanVien;
 
-    public ListProductForm(Main main) {
+    public DanhSachSanPham(Main main, NhanVien nhanVien) {
         initComponents();
         this.list = new SanPhamService();
         this.main = main;
+        this.nhanVien = nhanVien;
         fillTable();
         listenSearch();
         btnAdd.setColor1(Color.BLACK);
@@ -44,8 +48,8 @@ public class ListProductForm extends javax.swing.JPanel {
         btnAdd.setIconButton(this.icon.ADD);
     }
 
-    private void fillTable() {
-        List<SanPham> sanPhamList = !(txtSearch.getText().isBlank()) ? this.list.getListSearch(txtSearch.getText(), rdoSelling.isSelected() ? true : rdoOutOfStock.isSelected()) : rdoSelling.isSelected() ? this.list.getList() : rdoStopped.isSelected() ? this.list.getListStoped() : getOutOfStock();
+    public void fillTable() {
+        List<SanPham> sanPhamList = !(txtSearch.getText().isBlank()) ? this.list.getListSearch(txtSearch.getText(), cbbStatus.getSelectedIndex() == 0 ? true : cbbStatus.getSelectedIndex() == 3) : cbbStatus.getSelectedIndex() == 0 ? this.list.getList() : cbbStatus.getSelectedIndex() == 2 ? this.list.getListStoped() : getOutOfStock();
         this.tblModel = (DefaultTableModel) tblProduct.getModel();
         this.tblModel.setRowCount(0);
         Collections.sort(sanPhamList, Comparator.comparing(SanPham::getNgay_tao).reversed());
@@ -53,9 +57,9 @@ public class ListProductForm extends javax.swing.JPanel {
         sanPhamList.forEach(sp -> {
             Integer totalQuantity = sp.getBienTheList().stream()
                     .filter(spbt -> sp.getId().startsWith(spbt.getId_san_pham().getId()))
-                    .mapToInt(SanPhamBienThe::getSoLuong)
+                    .mapToInt(SanPhamChiTiet::getSoLuong)
                     .sum();
-            Object[] row = {++count[0], sp.getId(), sp.getTen_san_pham(), totalQuantity,
+            Object[] row = {++count[0], sp.getId(), sp.getTen_san_pham(), sp.getMo_ta(), totalQuantity, sp.getNhanVien().getFullName(), sp.getNgay_tao(),
                 sp.getTrang_thai() ? bcryptHash.decodeBase64("xJBhbmcgYsOhbg==")
                 : bcryptHash.decodeBase64("Tmfhu6tuZyBiw6Fu")};
             this.tblModel.addRow(row);
@@ -64,13 +68,11 @@ public class ListProductForm extends javax.swing.JPanel {
                     tblProduct.getCellEditor().stopCellEditing();
                 }
                 String selectedProductId = String.valueOf(tblProduct.getValueAt(data, 1));
-                String hashedPassword = bcryptHash.decodeBase64("xJBhbmcgYsOhbg==");
-                Boolean activity = tblProduct.getValueAt(data, 4).equals(hashedPassword);
-                ThongTinSanPham info = new ThongTinSanPham(main, selectedProductId, activity);
-                this.main.showForm(info);
+                NewProductDetails newProductDetails = new NewProductDetails(this.main, selectedProductId, this.nhanVien);
+                this.main.showForm(newProductDetails);
             };
-            tblProduct.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
-            tblProduct.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
+            tblProduct.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRender());
+            tblProduct.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditor(event));
         });
     }
 
@@ -79,7 +81,7 @@ public class ListProductForm extends javax.swing.JPanel {
         this.list.getAllList().forEach(sp -> {
             Integer totalQuantity = sp.getBienTheList().stream()
                     .filter(spbt -> sp.getId().startsWith(spbt.getId_san_pham().getId()))
-                    .mapToInt(SanPhamBienThe::getSoLuong)
+                    .mapToInt(SanPhamChiTiet::getSoLuong)
                     .sum();
             if (totalQuantity == 0) {
                 prdOutOfStock.add(sp);
@@ -123,13 +125,10 @@ public class ListProductForm extends javax.swing.JPanel {
         buttonGroup1 = new javax.swing.ButtonGroup();
         txtSearch = new haladesign.swingStyle.TextField();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        rdoSelling = new javax.swing.JRadioButton();
-        rdoStopped = new javax.swing.JRadioButton();
         btnAdd = new haladesign.swingStyle.Button();
         jScrollPane1 = new haladesign.swing.scroll.ScrollPaneWin11();
         tblProduct = new haladesign.swing.table.Table();
-        rdoOutOfStock = new javax.swing.JRadioButton();
+        cbbStatus = new haladesign.swingStyle.Combobox();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -137,27 +136,6 @@ public class ListProductForm extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Danh sách sản phẩm");
-
-        jLabel2.setText("Trạng thái");
-
-        rdoSelling.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGroup1.add(rdoSelling);
-        rdoSelling.setSelected(true);
-        rdoSelling.setText("Đang bán");
-        rdoSelling.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rdoSellingItemStateChanged(evt);
-            }
-        });
-
-        rdoStopped.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGroup1.add(rdoStopped);
-        rdoStopped.setText("Ngừng bán");
-        rdoStopped.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rdoStoppedItemStateChanged(evt);
-            }
-        });
 
         btnAdd.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(229, 229, 229)));
         btnAdd.setText("Thêm sản phẩm");
@@ -173,11 +151,11 @@ public class ListProductForm extends javax.swing.JPanel {
 
             },
             new String [] {
-                "#", "Mã Sản Phẩm", "Tên Sản Phẩm", "Số Lượng", "Trạng Thái", "Thao Tác"
+                "#", "Mã Sản Phẩm", "Tên Sản Phẩm", "Mô tả", "Số Lượng", "Người tạo", "Ngày tạo", "Trạng Thái", "Thao Tác"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
+                false, false, false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -190,20 +168,19 @@ public class ListProductForm extends javax.swing.JPanel {
             tblProduct.getColumnModel().getColumn(0).setMaxWidth(50);
             tblProduct.getColumnModel().getColumn(1).setMinWidth(110);
             tblProduct.getColumnModel().getColumn(1).setMaxWidth(210);
-            tblProduct.getColumnModel().getColumn(3).setMinWidth(60);
-            tblProduct.getColumnModel().getColumn(3).setMaxWidth(110);
-            tblProduct.getColumnModel().getColumn(4).setMinWidth(100);
-            tblProduct.getColumnModel().getColumn(4).setMaxWidth(120);
-            tblProduct.getColumnModel().getColumn(5).setMinWidth(110);
-            tblProduct.getColumnModel().getColumn(5).setMaxWidth(110);
+            tblProduct.getColumnModel().getColumn(4).setMinWidth(60);
+            tblProduct.getColumnModel().getColumn(4).setMaxWidth(110);
+            tblProduct.getColumnModel().getColumn(7).setMinWidth(100);
+            tblProduct.getColumnModel().getColumn(7).setMaxWidth(120);
+            tblProduct.getColumnModel().getColumn(8).setMinWidth(110);
+            tblProduct.getColumnModel().getColumn(8).setMaxWidth(110);
         }
 
-        rdoOutOfStock.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGroup1.add(rdoOutOfStock);
-        rdoOutOfStock.setText("Hết hàng");
-        rdoOutOfStock.addItemListener(new java.awt.event.ItemListener() {
+        cbbStatus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Đang bán", "Hết hàng", "Ngừng bán" }));
+        cbbStatus.setLabeText("");
+        cbbStatus.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rdoOutOfStockItemStateChanged(evt);
+                cbbStatusItemStateChanged(evt);
             }
         });
 
@@ -213,79 +190,52 @@ public class ListProductForm extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(620, 620, 620))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(121, 121, 121))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(600, 600, 600))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(rdoSelling)
-                                .addGap(20, 20, 20)
-                                .addComponent(rdoStopped, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rdoOutOfStock))
-                            .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(16, 16, 16)
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20))
+                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1))
+                        .addGap(20, 20, 20))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addGap(22, 22, 22)
+                .addGap(3, 3, 3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rdoSelling)
-                    .addComponent(rdoStopped)
-                    .addComponent(rdoOutOfStock))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
                 .addGap(18, 18, 18))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void rdoOutOfStockItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoOutOfStockItemStateChanged
+    private void cbbStatusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbStatusItemStateChanged
         txtSearch.setText("");
         fillTable();
-    }//GEN-LAST:event_rdoOutOfStockItemStateChanged
-
-    private void rdoSellingItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_rdoSellingItemStateChanged
-        txtSearch.setText("");
-        fillTable();
-    }// GEN-LAST:event_rdoSellingItemStateChanged
-
-    private void rdoStoppedItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_rdoStoppedItemStateChanged
-        txtSearch.setText("");
-        fillTable();
-    }// GEN-LAST:event_rdoStoppedItemStateChanged
-
+    }//GEN-LAST:event_cbbStatusItemStateChanged
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAddActionPerformed
-        ThemSanPham themSanPham = new ThemSanPham(this.main, "HLD-" + generateRandomNumber(10000, 10000000));
-        this.main.showForm(themSanPham);
+        NewProduct newProduct = new NewProduct("HLD-" + generateRandomNumber(10000, 10000000), this.nhanVien, this.main, this);
+        GlassPanePopup.showPopup(newProduct);
     }// GEN-LAST:event_btnAddActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private haladesign.swingStyle.Button btnAdd;
     private javax.swing.ButtonGroup buttonGroup1;
+    private haladesign.swingStyle.Combobox cbbStatus;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JRadioButton rdoOutOfStock;
-    private javax.swing.JRadioButton rdoSelling;
-    private javax.swing.JRadioButton rdoStopped;
     private haladesign.swing.table.Table tblProduct;
     private haladesign.swingStyle.TextField txtSearch;
     // End of variables declaration//GEN-END:variables

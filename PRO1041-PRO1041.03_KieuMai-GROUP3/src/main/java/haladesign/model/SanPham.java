@@ -5,6 +5,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
@@ -42,10 +44,15 @@ public class SanPham {
     @Column(name = "ngay_tao")
     private Date ngay_tao;
 
-    @Column(name = "id_nhan_vien")
-    private Integer id_nhan_vien;
+    @ManyToOne
+    @JoinColumn(name = "id_nhan_vien", referencedColumnName = "id")
+    private NhanVien nhanVien;
 
     @OneToMany(mappedBy = "id_san_pham", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<SanPhamBienThe> bienTheList = new ArrayList<>();
+    private List<SanPhamChiTiet> bienTheList = new ArrayList<>();
 
 }
+
+
+//    @OneToMany(mappedBy = "nhanVien", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+//    private List<SanPham> sanPhamList = new ArrayList<>();

@@ -9,7 +9,7 @@ import haladesign.model.Color;
 import haladesign.model.HoaDon0;
 import haladesign.model.HoaDonChiTiet0;
 import haladesign.model.NhanVien;
-import haladesign.model.SanPhamBienThe;
+import haladesign.model.SanPhamChiTiet;
 import haladesign.model.Size;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,7 +44,7 @@ public class HoaDonChiTietService {
                 HoaDonChiTiet0 hdct = new HoaDonChiTiet0();
                 hdct.setId(rs.getInt(1));
                 hdct.setHd(new HoaDon0(rs.getInt(2)));
-                SanPhamBienThe spbt = new SanPhamBienThe();
+                SanPhamChiTiet spbt = new SanPhamChiTiet();
                 spbt.setId(rs.getLong(3));
                 spbt.setTenBienThe(rs.getString(4));
                 spbt.setColor(new Color(rs.getString(5)));

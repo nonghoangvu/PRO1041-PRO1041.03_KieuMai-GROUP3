@@ -13,7 +13,7 @@ import java.text.DecimalFormat;
 public class HoaDonChiTietKhoa {
     private int id;
     private HoaDonKhoa hd;
-    private SanPhamBienThe sp;
+    private SanPhamChiTiet sp;
     private int soLuong;
     private double gia;
 
@@ -24,7 +24,7 @@ public class HoaDonChiTietKhoa {
         this.soLuong = soLuong;
     }
 
-    public HoaDonChiTietKhoa(int id, HoaDonKhoa hd, SanPhamBienThe sp, int soLuong, double gia) {
+    public HoaDonChiTietKhoa(int id, HoaDonKhoa hd, SanPhamChiTiet sp, int soLuong, double gia) {
         this.id = id;
         this.hd = hd;
         this.sp = sp;
@@ -32,13 +32,13 @@ public class HoaDonChiTietKhoa {
         this.gia = gia;
     }
 
-    public HoaDonChiTietKhoa(HoaDonKhoa hd, SanPhamBienThe sp, int soLuong) {
+    public HoaDonChiTietKhoa(HoaDonKhoa hd, SanPhamChiTiet sp, int soLuong) {
         this.hd = hd;
         this.sp = sp;
         this.soLuong = soLuong;
     }
 
-    public HoaDonChiTietKhoa(HoaDonKhoa hd, SanPhamBienThe sp, int soLuong, double gia) {
+    public HoaDonChiTietKhoa(HoaDonKhoa hd, SanPhamChiTiet sp, int soLuong, double gia) {
         this.hd = hd;
         this.sp = sp;
         this.soLuong = soLuong;
@@ -62,11 +62,11 @@ public class HoaDonChiTietKhoa {
         this.hd = hd;
     }
 
-    public SanPhamBienThe getSp() {
+    public SanPhamChiTiet getSp() {
         return sp;
     }
 
-    public void setSp(SanPhamBienThe sp) {
+    public void setSp(SanPhamChiTiet sp) {
         this.sp = sp;
     }
 

@@ -1,6 +1,6 @@
 package modelTest;
 
-import haladesign.model.SanPhamBienThe;
+import haladesign.model.SanPhamChiTiet;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,7 +32,7 @@ public class HoaDonChiTiet {
 
     
     @JoinColumn(name = "id_san_pham_chi_tiet")
-    private SanPhamBienThe sanPhamBienThe;
+    private SanPhamChiTiet sanPhamBienThe;
 
     @Column(name = "so_luong")
     private Integer soLuong;

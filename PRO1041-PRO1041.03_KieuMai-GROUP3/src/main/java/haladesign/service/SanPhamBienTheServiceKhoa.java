@@ -6,7 +6,7 @@ package haladesign.service;
 
 import haladesign.config.JDBC_Connect;
 import haladesign.model.Color;
-import haladesign.model.SanPhamBienThe;
+import haladesign.model.SanPhamChiTiet;
 import haladesign.model.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +21,8 @@ public class SanPhamBienTheServiceKhoa {
     PreparedStatement ps = null;
     ResultSet rs = null;
     String sql = "";
-    public List<SanPhamBienThe> getSanPham(){
-        List<SanPhamBienThe> listBT = new ArrayList<>();
+    public List<SanPhamChiTiet> getSanPham(){
+        List<SanPhamChiTiet> listBT = new ArrayList<>();
         sql = """
               select SanPhamBienThe.id, ten_bien_the, loai_size, loai_mau, so_luong, gia, hinhAnh 
               from SanPhamBienThe
@@ -34,7 +34,7 @@ public class SanPhamBienTheServiceKhoa {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
-                SanPhamBienThe spbt = new SanPhamBienThe();
+                SanPhamChiTiet spbt = new SanPhamChiTiet();
                 spbt.setId(rs.getLong(1));
                 spbt.setTenBienThe(rs.getString(2));
                 Size sz = new Size();
@@ -45,7 +45,7 @@ public class SanPhamBienTheServiceKhoa {
                 spbt.setColor(cor);
                 spbt.setSoLuong(rs.getInt(5));
                 spbt.setGia(rs.getInt(6));
-                spbt.setHinhAnh(rs.getString(7));
+//                spbt.setHinhAnh(rs.getString(7));
                 listBT.add(spbt);
             }
             return listBT;
@@ -55,7 +55,7 @@ public class SanPhamBienTheServiceKhoa {
         }
     }
     
-    public int updateSanPham(long id, SanPhamBienThe spbt){
+    public int updateSanPham(long id, SanPhamChiTiet spbt){
         sql = "update SanPhamBienThe set so_luong = ? where id = ?";
         try {
             con = JDBC_Connect.getConnection();
@@ -69,8 +69,8 @@ public class SanPhamBienTheServiceKhoa {
         }
     }
     
-    public List<SanPhamBienThe> findSanPham(String ten){
-        List<SanPhamBienThe> listBT = new ArrayList<>();
+    public List<SanPhamChiTiet> findSanPham(String ten){
+        List<SanPhamChiTiet> listBT = new ArrayList<>();
         sql = """
               select SanPhamBienThe.id, ten_bien_the, loai_size, loai_mau, so_luong, gia, hinhAnh 
               from SanPhamBienThe
@@ -84,7 +84,7 @@ public class SanPhamBienTheServiceKhoa {
             ps.setObject(1, ten);
             rs = ps.executeQuery();
             while(rs.next()){
-                SanPhamBienThe spbt = new SanPhamBienThe();
+                SanPhamChiTiet spbt = new SanPhamChiTiet();
                 spbt.setId(rs.getLong(1));
                 spbt.setTenBienThe(rs.getString(2));
                 Size sz = new Size();
@@ -95,7 +95,7 @@ public class SanPhamBienTheServiceKhoa {
                 spbt.setColor(cor);
                 spbt.setSoLuong(rs.getInt(5));
                 spbt.setGia(rs.getInt(6));
-                spbt.setHinhAnh(rs.getString(7));
+//                spbt.setHinhAnh(rs.getString(7));
                 listBT.add(spbt);
             }
             return listBT;

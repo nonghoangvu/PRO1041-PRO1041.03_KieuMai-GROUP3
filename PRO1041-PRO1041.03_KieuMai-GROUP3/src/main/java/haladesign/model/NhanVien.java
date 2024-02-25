@@ -1,16 +1,19 @@
-
 package haladesign.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -59,7 +62,7 @@ public class NhanVien {
 
     @Column(name = "trang_thai")
     private String userState;
-    
+
     @Column(name = "ghi_chu")
     private String note;
 
@@ -71,4 +74,5 @@ public class NhanVien {
     public String toString() {
         return "NhanVien{" + "id=" + id + ", fullName=" + fullName + ", phoneNum=" + phoneNum + ", email=" + email + ", gender=" + gender + ", birthdate=" + birthdate + ", address=" + address + ", password=" + password + ", createdDate=" + createdDate + ", userState=" + userState + ", note=" + note + ", role=" + role + '}' + "\n";
     }
+
 }

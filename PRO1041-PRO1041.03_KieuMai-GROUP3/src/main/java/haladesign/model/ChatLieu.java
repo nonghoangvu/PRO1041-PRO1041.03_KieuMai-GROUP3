@@ -20,42 +20,42 @@ import lombok.Setter;
  * @author NONG HOANG VU
  */
 @Entity
-@Table(name = "Size")
+@Table(name = "ChatLieu")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Size {
+public class ChatLieu {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "loai_size", nullable = false)
-    private String loaiSize;
+    @Column(name = "loai_chat_lieu", nullable = false)
+    private String loaiChatLieu;
 
     @Column(name = "trang_thai", columnDefinition = "BIT DEFAULT 1")
     private Boolean trangThai;
 
-    @Column(name = "ngay_tao", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "ngay_tao", columnDefinition = "DATETIME DEFAULT GETDATE()")
     private Date ngayTao;
 
-    @OneToMany(mappedBy = "size")
+    @OneToMany(mappedBy = "chatLieu")
     private List<SanPhamChiTiet> sanPhamBienTheList;
 
     @Override
     public String toString() {
-        return loaiSize;
+        return this.loaiChatLieu;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 17 * hash + Objects.hashCode(this.id);
-        hash = 17 * hash + Objects.hashCode(this.loaiSize);
-        hash = 17 * hash + Objects.hashCode(this.trangThai);
-        hash = 17 * hash + Objects.hashCode(this.ngayTao);
-        hash = 17 * hash + Objects.hashCode(this.sanPhamBienTheList);
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.id);
+        hash = 47 * hash + Objects.hashCode(this.loaiChatLieu);
+        hash = 47 * hash + Objects.hashCode(this.trangThai);
+        hash = 47 * hash + Objects.hashCode(this.ngayTao);
+        hash = 47 * hash + Objects.hashCode(this.sanPhamBienTheList);
         return hash;
     }
 
@@ -70,8 +70,8 @@ public class Size {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Size other = (Size) obj;
-        if (!Objects.equals(this.loaiSize, other.loaiSize)) {
+        final ChatLieu other = (ChatLieu) obj;
+        if (!Objects.equals(this.loaiChatLieu, other.loaiChatLieu)) {
             return false;
         }
         if (!Objects.equals(this.id, other.id)) {
@@ -85,10 +85,4 @@ public class Size {
         }
         return Objects.equals(this.sanPhamBienTheList, other.sanPhamBienTheList);
     }
-
-    public Size(String loaiSize) {
-        this.loaiSize = loaiSize;
-    }
-
-    
 }

@@ -9,7 +9,7 @@ import java.awt.Component;
 import haladesign.form.Form_Empty;
 import haladesign.form.JPHoaDon;
 import haladesign.form.KhachHang_form;
-import haladesign.form.ListProductForm;
+import haladesign.form.DanhSachSanPham;
 import haladesign.form.SuaTaiKhoan;
 import haladesign.form.ThuocTinhSanPham;
 import haladesign.loginFeature.LoginForm;
@@ -71,7 +71,7 @@ public class Main extends javax.swing.JFrame {
                 case 2 -> {
                     switch (indexSubMenu) {
                         case 1 ->
-                            showForm(new ListProductForm(Main.this));
+                            showForm(new DanhSachSanPham(Main.this, this.nhanVien));
                         case 2 ->
                             showForm(new ThuocTinhSanPham(Main.this));
                         default ->
