@@ -13,6 +13,7 @@ import haladesign.system.Message;
 import haladesign.system.Notification;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.util.Date;
 import java.util.List;
 import javaswingdev.GoogleMaterialDesignIcon;
 import javax.swing.AbstractAction;
@@ -183,6 +184,7 @@ public class NewProductDetails extends javax.swing.JPanel {
         sp.setChatLieu(getChatLieuForm());
         sp.setSoLuong(Integer.valueOf(txtSoLuong.getText()));
         sp.setGia(Integer.valueOf(txtGia.getText()));
+        sp.setNgay_tao(new Date());
         return sp;
     }
 

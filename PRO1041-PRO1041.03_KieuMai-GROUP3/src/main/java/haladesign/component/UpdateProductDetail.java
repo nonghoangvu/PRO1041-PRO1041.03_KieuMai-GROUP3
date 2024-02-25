@@ -7,6 +7,7 @@ import haladesign.model.SanPhamChiTiet;
 import haladesign.service.SanPhamService;
 import haladesign.system.GlassPanePopup;
 import haladesign.system.Notification;
+import java.util.Date;
 
 /**
  *
@@ -90,6 +91,7 @@ public class UpdateProductDetail extends javax.swing.JPanel {
         SanPhamChiTiet sp = this.spct;
         sp.setSoLuong(Integer.valueOf(txtSoLuong.getText().trim()));
         sp.setGia(Integer.valueOf(txtGia.getText().trim()));
+        sp.setNgay_tao(sp.getNgay_tao() == null ? (new Date()) : sp.getNgay_tao());
         if (this.list.insertBienThe(sp)) {
             this.danhSachChiTietSanPham.fillTable();
             GlassPanePopup.closePopupLast();
