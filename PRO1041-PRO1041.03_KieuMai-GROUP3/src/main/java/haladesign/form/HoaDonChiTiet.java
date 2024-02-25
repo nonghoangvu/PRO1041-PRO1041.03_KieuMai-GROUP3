@@ -8,7 +8,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import utility.MsgBox;
+import haladesign.config.utility.MsgBox;
 
 public class HoaDonChiTiet extends javax.swing.JPanel {
 
@@ -563,7 +563,7 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
 
     jButton1.setBackground(new java.awt.Color(255, 102, 102));
     jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/haladesign/icon/trash-can.png"))); // NOI18N
-    jButton1.setText("Xóa hóa đơn");
+    jButton1.setText("Hủy Hóa Đơn");
     jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
     jButton1.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -681,7 +681,7 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
         asideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(asideLayout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(pn_thongTinHoaDon1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+            .addComponent(pn_thongTinHoaDon1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, Short.MAX_VALUE)
             .addContainerGap())
     );
     asideLayout.setVerticalGroup(
@@ -861,15 +861,15 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
         //check quyền (Để sau)
         boolean StatusInvoiceHuy = btn_trangThai.getText().equals("Hủy");//TTHĐ Hủy --> True
         System.out.println("checkStatusInvoice " + StatusInvoiceHuy);
-        boolean conf = MsgBox.confirm(this, "Bạn muốn xóa hóa đơn " + idInvoice);
+        boolean conf = MsgBox.confirm(this, "Bạn muốn hủy hóa đơn " + idInvoice);
         if (!StatusInvoiceHuy && conf) {
-            System.out.println("Hóa đơn có thể xóa + đã conf");
+            System.out.println("Hóa đơn có thể hủy + đã conf");
         } else {
-            String message = (!conf) ? "Hủy xóa hóa đơn" : "Hóa đơn đã được hủy";
+            String message = (!conf) ? "xác nhận không hủy hóa đơn" : "Hóa đơn đã được hủy!!";
             MsgBox.alter(this, message);
         }
     }
-
+    
     // Phương thức để thiết lập giá trị cho một button (UI HĐCT)
     private void setButtonValue(JButton button, String value) {
         if (value != null) {
