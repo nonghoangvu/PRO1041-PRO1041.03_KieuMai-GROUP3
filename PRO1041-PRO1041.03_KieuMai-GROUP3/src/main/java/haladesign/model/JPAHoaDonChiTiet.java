@@ -37,8 +37,8 @@ public class JPAHoaDonChiTiet {
     private Integer soLuong;
 
     @Column(name = "gia")
-    private Float gia;
+    private Integer gia;
 
     @Column(name = "tong_tien")
-    private Float tongTien;
+    private Integer tongTien;
 }

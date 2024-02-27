@@ -11,6 +11,7 @@ import haladesign.form.Form_Empty;
 import haladesign.form.JPHoaDon;
 import haladesign.form.KhachHang_form;
 import haladesign.form.DanhSachSanPham;
+import haladesign.form.SellForm;
 import haladesign.form.SuaTaiKhoan;
 import haladesign.form.ThuocTinhSanPham;
 import haladesign.loginFeature.LoginForm;
@@ -62,7 +63,8 @@ public class Main extends javax.swing.JFrame {
                 case 1 -> {
                     switch (indexSubMenu) {
                         case 1 ->
-                            showForm(new BanHang());
+//                            showForm(new BanHang());
+                            showForm(new SellForm(this.nhanVien, this));
                         case 2 ->
                             showForm(new JPHoaDon(this));
                         default ->
