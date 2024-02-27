@@ -15,7 +15,7 @@ public class HoaDonManh {
     private float tien_dua;//Tiền khách hàng đưa. 
     private float tien_thua;//= tiền khác đưa - tổng giá trị hóa đơn.
     private Date ngay_tao_hoa_don;
-    private Date ngay_sua_hoa_don;  
+    private Date ngay_sua_hoa_don;
 
 //      HĐCT
     private int id_hoa_don_chi_tiet;
@@ -30,10 +30,19 @@ public class HoaDonManh {
     private String soDienThoaiKH;
     private float tongTienHang;//Sum(hdct.tong_tien)
     private int tong_so_luong;//Tổng SLSP của 1 HĐ ( SUM(hdct.so_luong )) 
-    
+
 //    Ngoài luồng UI TTSP mua
     private String hinhAnh;
     private String ten_bien_the;
+    private String ten_san_pham;
+
+    public String getTen_san_pham() {
+        return ten_san_pham;
+    }
+
+    public void setTen_san_pham(String ten_san_pham) {
+        this.ten_san_pham = ten_san_pham;
+    }
 
     public String getHinhAnh() {
         return hinhAnh;

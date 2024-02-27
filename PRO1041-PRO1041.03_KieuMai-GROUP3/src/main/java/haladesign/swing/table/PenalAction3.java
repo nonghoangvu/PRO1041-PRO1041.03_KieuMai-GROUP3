@@ -16,12 +16,12 @@ public class PenalAction3 extends javax.swing.JPanel {
         initComponents();
     }
     public void initEvent(TableActionEvent1 event, int row) {
-        cmdEdit.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                event.edit(row);
-            }
-        });
+//        cmdEdit.addActionListener(new ActionListener(){
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                event.edit(row);
+//            }
+//        });
         cmdDetail.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -40,14 +40,10 @@ public class PenalAction3 extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cmdEdit = new haladesign.swing.table.ActionButton();
         cmdDetail = new haladesign.swing.table.ActionButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.GridLayout(1, 0));
-
-        cmdEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/haladesign/icon/trash-can.png"))); // NOI18N
-        add(cmdEdit);
 
         cmdDetail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/haladesign/icon/eye.png"))); // NOI18N
         cmdDetail.addActionListener(new java.awt.event.ActionListener() {
@@ -65,6 +61,5 @@ public class PenalAction3 extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private haladesign.swing.table.ActionButton cmdDetail;
-    private haladesign.swing.table.ActionButton cmdEdit;
     // End of variables declaration//GEN-END:variables
 }

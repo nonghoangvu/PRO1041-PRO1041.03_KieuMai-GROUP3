@@ -18,7 +18,7 @@ public interface ISanPham extends JpaRepository<SanPham, String> {
             + "LEFT JOIN FETCH bienThe.color color "
             + "WHERE sp.id = :productId")
     List<SanPham> findByIdSanPham(@Param("productId") String productId);
-
+    
     @Override
     @Query("SELECT sp FROM SanPham sp WHERE sp.trang_thai = TRUE")
     public List<SanPham> findAll();

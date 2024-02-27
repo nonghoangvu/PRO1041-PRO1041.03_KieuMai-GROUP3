@@ -193,7 +193,13 @@ VALUES (1, 1, N'Chờ thanh toán', 758000, N'Chuyển khoản', null, 760000, 2
 	   (3, 1, N'Đã thanh toán', 1516000, N'Chuyển khoản', null, 1516000, 0)
 GO
 INSERT INTO HoaDon (id_khach_hang, id_nhan_vien, trang_thai, tong_gia_tri_hoa_don, hinh_thuc_thanh_toan, ma_giao_dich, tien_dua, tien_thua)
-VALUES (3, 2, N'Đã thanh toán', 1516000, N'Quẹt thẻ', null, 1516000, 0)
+	VALUES (3, 2, N'Đã thanh toán', 1516000, N'Quẹt thẻ', null, 1516000, 0)
+INSERT INTO HoaDon (id_khach_hang, id_nhan_vien, trang_thai, tong_gia_tri_hoa_don, hinh_thuc_thanh_toan, ma_giao_dich, tien_dua, tien_thua)
+	VALUES (Null, 4, N'Hủy', 1516000, N'Quẹt thẻ', null, 1516000, 0)
+INSERT INTO HoaDon (id_khach_hang, id_nhan_vien, trang_thai, tong_gia_tri_hoa_don, hinh_thuc_thanh_toan, ma_giao_dich, tien_dua, tien_thua)
+	VALUES (Null, 2, N'Đã thanh toán', 1516000, N'Tiền mặt', null, 1516000, 0)
+INSERT INTO HoaDon (id_khach_hang, id_nhan_vien, trang_thai, tong_gia_tri_hoa_don, hinh_thuc_thanh_toan, ma_giao_dich, tien_dua, tien_thua)
+	VALUES (Null, 4, N'Đã thanh toán', 1516000, N'Chuyển khoản', null, 1516000, 0)
 GO
 INSERT INTO HoaDonChiTiet (id_hoa_don, id_san_pham_chi_tiet, so_luong, gia, tong_tien)
 VALUES (1, 1, 1, 758000, 758000),
@@ -203,3 +209,159 @@ VALUES (1, 1, 1, 758000, 758000),
 	   (4, 3, 1, 758000, 758000),
 	   (5, 4, 3, 758000, 2274000 )
 GO
+
+INSERT INTO HoaDonChiTiet (id_hoa_don, id_san_pham_chi_tiet, so_luong, gia, tong_tien)
+VALUES 
+(8, 2, 1, 758000, 758000),
+(8, 4, 3, 758000, 758000)
+
+INSERT INTO HoaDonChiTiet (id_hoa_don, id_san_pham_chi_tiet, so_luong, gia, tong_tien)
+VALUES 
+(9, 2, 1, 758000, 758000),
+(10, 4, 3, 758000, 758000)
+
+
+
+
+
+
+
+-----TRUY VẤN CỦA MẠNH-------------------------------------------------------------------------
+-- Query --
+SELECT * FROM NhanVien
+SELECT * FROM KhachHang
+SELECT * FROM Size
+SELECT * FROM COLOR
+SELECT * FROM SanPham
+SELECT * FROM [SanPhamChiTiet]
+SELECT * FROM HoaDon
+SELECT * FROM HoaDonChiTiet
+
+
+--1. Thực hiện truy vấn danh sách hóa đơn ( MãHĐ + Ngày tạo hóa đơn + Tên KH ( truy từ ID bên java ) + Trạng thái hóa đơn + Phương thức thanh toán + Khách phải trả ) 
+--getInvoiceList()
+select hd.id as id_hoa_don , nv.ho_ten as ho_ten_nhan_vien , hd.ngay_tao , kh.ho_ten As ho_ten_khach_hang , hd.trang_thai , hd.hinh_thuc_thanh_toan ,SUM(hdct.tong_tien) AS tong_gia_tri_hoa_don  	
+from HoaDon hd 
+left join KhachHang kh on hd.id_khach_hang = kh.id 
+inner join NhanVien nv on nv.id = hd.id_nhan_vien
+inner join HoaDonChiTiet hdct on hdct.id_hoa_don = hd.id
+where hd.trang_thai <> N'Chờ thanh toán'
+GROUP BY hd.id, nv.ho_ten ,  hd.ngay_tao, kh.ho_ten, hd.trang_thai, hd.hinh_thuc_thanh_toan ;
+
+--1. Truy vấn theo nhân viên phụ trách với hóa đơn đó.
+select hd.id as id_hoa_don , nv.ho_ten as ho_ten_nhan_vien , hd.ngay_tao , kh.ho_ten As ho_ten_khach_hang , hd.trang_thai , hd.hinh_thuc_thanh_toan ,SUM(hdct.tong_tien) AS tong_gia_tri_hoa_don  	
+from HoaDon hd 
+left join KhachHang kh on  kh.id  = hd.id_khach_hang 
+inner join HoaDonChiTiet hdct on hdct.id_hoa_don = hd.id
+inner join NhanVien nv	on nv.id = hd.id_nhan_vien
+where nv.id = 4 AND hd.trang_thai <> N'Chờ thanh toán'
+GROUP BY hd.id, nv.ho_ten ,  hd.ngay_tao, kh.ho_ten, hd.trang_thai, hd.hinh_thuc_thanh_toan ;
+
+--2. Truy vấn ListEmployee có tham gia tạo ít nhất 1 hđ.
+select  nv.id As id_nhan_vien , nv.ho_ten As ho_ten_nhan_vien 
+from NhanVien nv 
+right join HoaDon hd on hd.id_nhan_vien = nv.id
+where hd.trang_thai <> N'Chờ thanh toán'
+Group by nv.id , nv.ho_ten
+
+--1. Truy vấn hóa đơn theo trạng thái hóa đơn	 getInvoiceListByStatus
+select hd.id as id_hoa_don , nv.ho_ten as ho_ten_nhan_vien , hd.ngay_tao , kh.ho_ten As ho_ten_khach_hang , hd.trang_thai , hd.hinh_thuc_thanh_toan ,SUM(hdct.tong_tien) AS tong_gia_tri_hoa_don  	
+from HoaDon hd 
+left join KhachHang kh on hd.id_khach_hang = kh.id 
+inner join HoaDonChiTiet hdct on hdct.id_hoa_don = hd.id
+inner join NhanVien nv	on nv.id = hd.id_nhan_vien
+where hd.trang_thai = N'Hủy'
+GROUP BY hd.id, nv.ho_ten ,  hd.ngay_tao, kh.ho_ten, hd.trang_thai, hd.hinh_thuc_thanh_toan;
+
+--Truy vấn theo ngày tạo với format  
+ SELECT hd.id AS id_hoa_don, nv.ho_ten as ho_ten_nhan_vien , CONVERT(VARCHAR(10), hd.ngay_tao, 120) AS ngay_tao,
+kh.ho_ten AS ho_ten_khach_hang, hd.trang_thai, hd.hinh_thuc_thanh_toan,
+SUM(hdct.tong_tien) AS tong_gia_tri_hoa_don
+FROM HoaDon hd
+left JOIN KhachHang kh ON hd.id_khach_hang = kh.id
+INNER JOIN HoaDonChiTiet hdct ON hdct.id_hoa_don = hd.id
+inner join NhanVien nv	on nv.id = hd.id_nhan_vien
+WHERE CONVERT(VARCHAR(10), hd.ngay_tao, 120)   = '2024-02-26' AND hd.trang_thai <> N'Chờ thanh toán'
+GROUP BY
+hd.id,  nv.ho_ten ,  CONVERT(VARCHAR(10), hd.ngay_tao, 120), kh.ho_ten, hd.trang_thai, 
+hd.hinh_thuc_thanh_toan  ;
+
+
+--Truy vấn UI HĐCT
+
+--1. Truy vấn formHD dựa vào id
+select hd.id as id_hoa_don , hd.hinh_thuc_thanh_toan ,
+hd.trang_thai , kh.ho_ten as ho_ten_khach_hang , kh.so_dien_thoai , 
+nv.ho_ten as ho_ten_nhan_vien  , hd.ngay_tao
+from HoaDon hd
+inner join HoaDonChiTiet hdct on hdct.id_hoa_don = hd.id
+LEFT join KhachHang kh on kh.id = hd.id_khach_hang 
+inner join NhanVien nv on nv.id = hd.id_nhan_vien
+where hd.id = 7
+Group by hd.id , hd.hinh_thuc_thanh_toan , hd.trang_thai , kh.ho_ten, kh.so_dien_thoai , nv.ho_ten,
+hd.ngay_tao 
+
+--1. Truy vấn TTHD
+--- Khách cần trả = tổng tiền - giảm giá(0đ) , tiền thừa = tiền khách đưa -  khách cần trả
+select hd.id , SUM (hdct.so_luong) as tong_so_luong , SUM( hdct.tong_tien) as tong_tien_hang , hd.tien_dua, hd.tien_thua , hd.hinh_thuc_thanh_toan
+from HoaDon hd 
+inner join HoaDonChiTiet hdct on hdct.id_hoa_don = hd.id
+where hd.id = 5
+GROUP by hd.id , hdct.so_luong , hdct.tong_tien , hd.tien_dua , hd.tien_thua  , hd.hinh_thuc_thanh_toan
+--Tông tiền hàng  = Sum(hdct.tong_tien)
+
+--- 1. Truy vấn thông tin sản phẩm mua trong hóa đơn
+-- tên ảnh/ID sp / tên sp / giá gốc / số lượng SP  ,  tổng_tiền
+select hd.id as id_hoa_don , spbt.id as id_san_pham_chi_tiet  , sp.ten_san_pham  , spbt.ten_bien_the , hdct.gia  , hdct.so_luong  , hdct.tong_tien
+from HoaDon hd
+inner join HoaDonChiTiet hdct on hdct.id_hoa_don = hd.id
+inner join SanPhamChiTiet spbt on spbt.id = hdct.id_san_pham_chi_tiet
+inner join SanPham sp on sp.id = spbt.id_san_pham
+where hd.id  = 5
+group by hd.id , sp.ten_san_pham  , spbt.ten_bien_the, hdct.gia, hdct.so_luong
+, spbt.id  , hdct.tong_tien;
+
+
+--1. Truy vấn thông tin đầy đủ cho xuất File
+-- Mã Hóa Đơn , ngày tạo , tên khách hàng , id_nhân viên , Tên NV , TTHĐ , HTTT 
+select hd.id as id_hoa_don , hd.id_nhan_vien ,  hd.ngay_tao , 
+kh.ho_ten As ho_ten_khach_hang , hd.trang_thai , hd.hinh_thuc_thanh_toan ,
+SUM(hdct.tong_tien) AS tong_gia_tri_hoa_don  	
+from HoaDon hd 
+inner join KhachHang kh on hd.id_khach_hang = kh.id 
+inner join HoaDonChiTiet hdct on hdct.id_hoa_don = hd.id
+where trang_thai <> N'Chờ thanh toán'
+GROUP BY hd.id, hd.ngay_tao, kh.ho_ten, hd.trang_thai,
+hd.hinh_thuc_thanh_toan,hd.id_nhan_vien 
+
+SELECT * FROM HoaDon
+SELECT * FROM HoaDonChiTiet
+SELECT * FROM SanPham
+SELECT * FROM SanPhamChiTiet
+
+--Truy vấn ID_spct , SL của nó dựa vào ID_HĐCT (getDS_Product_update_SL)
+select hdct.id_san_pham_chi_tiet , hdct.so_luong
+from HoaDon hd
+inner join HoaDonChiTiet hdct on hdct.id_hoa_don = hd.id
+where hd.id = 3
+---Hoàn lại SL spct có trog hóa đơn vào số lượng kho.(update_Prod_Quantity_By_IDPro)
+update SanPhamChiTiet 
+set so_luong = so_luong  +   1
+where id = 5
+
+update HoaDon
+set trang_thai = N'Đã thanh toán'
+where id = 2
+--Cập nhật lại trạng thái hóa đơn. (update_Status_Invoice) 
+SELECT * FROM NhanVien
+
+SELECT spct.so_luong  FROM SanPhamChiTiet spct
+where id = 5
+select * from HoaDonChiTiet
+where id = 3
+
+--Case : Xóa hóa đơn 
+-- Dùng để trog TH.
+--Case1: KH chọn hàng mua + nv thêm nhầm spbt (size/color...) và in ra hóa đơn. --> cần xóa hóa đơn đó đi
+--Case2: KH mua hàng + đã thanh toán : Nhưng quay lại khi biết mua nhầm spct (size/color...) --> cần xóa đơn đó đi vào tạo ra đơn mới. 
+-----END TRUY VẤN CỦA MẠNH-------------------------------------------------------------------------

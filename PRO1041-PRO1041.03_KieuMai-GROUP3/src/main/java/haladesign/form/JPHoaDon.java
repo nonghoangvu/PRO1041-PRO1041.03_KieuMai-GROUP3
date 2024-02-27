@@ -404,11 +404,11 @@ public class JPHoaDon extends javax.swing.JPanel {
         if (listHD != null && !listHD.isEmpty()) {
             for (HoaDonManh hd : listHD) {
                 Object[] data = new Object[]{
-                    i++,
+                    "#0" + i++,
                     hd.getId_hoa_don(),
                     hd.getTenNhanVien(),
                     new SimpleDateFormat("dd/MM/yyyy").format(hd.getNgay_tao_hoa_don()),
-                    hd.getTenKhachHang(),
+                    (hd.getTenKhachHang() == null) ? "Khách hàng vãng lại" : hd.getTenKhachHang(),
                     hd.getTrang_thai_hoa_don(),
                     hd.getHinh_thuc_thanh_toan(),
                     new FormartData().moneyFormat(Integer.valueOf(String.format("%.0f", hd.getTong_gia_tri_hoa_don()))) + "VND"
@@ -416,12 +416,11 @@ public class JPHoaDon extends javax.swing.JPanel {
                 model_DSHD.addRow(data);
                 TableActionEvent1 event = new TableActionEvent1() {
                     @Override
-                    public void edit(int id) {//id ở đây là dòng chọn (0)
-                        //Update hóa đơn chi tiết.
+                    public void edit(int id) {
                     }
 
                     @Override
-                    public void detail(int id) {
+                    public void detail(int id) {//id ở đây là dòng chọn (0)
                         String selectedProductId = String.valueOf(tbl_dshd.getValueAt(id, 1));
                         HoaDonChiTiet hdct = new HoaDonChiTiet(main, selectedProductId);
                         main.showForm(hdct);

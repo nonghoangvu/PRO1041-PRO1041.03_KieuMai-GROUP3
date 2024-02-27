@@ -19,7 +19,7 @@ public class Application {
     public static ApplicationContext getContext() {
         return context;
     }
-
+    
     public static <T extends Object> T getBean(Class<T> requiredType) {
         return context.getBean(requiredType);
     }

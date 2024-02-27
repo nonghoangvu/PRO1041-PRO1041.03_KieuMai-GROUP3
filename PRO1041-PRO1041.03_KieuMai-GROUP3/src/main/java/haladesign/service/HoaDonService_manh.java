@@ -1,5 +1,6 @@
 package haladesign.service;
 
+import haladesign.config.utility.JDBCHelper;
 import haladesign.config.utility.XDate;
 import haladesign.model.HoaDonManh;
 import java.sql.ResultSet;
@@ -11,7 +12,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import utility.JDBCHelper;
 
 public class HoaDonService_manh {
 
@@ -19,7 +19,7 @@ public class HoaDonService_manh {
         String sql = """
                 select hd.id as id_hoa_don , nv.ho_ten as ho_ten_nhan_vien , hd.ngay_tao , kh.ho_ten As ho_ten_khach_hang , hd.trang_thai , hd.hinh_thuc_thanh_toan ,SUM(hdct.tong_tien) AS tong_gia_tri_hoa_don  	
                 from HoaDon hd 
-                inner join KhachHang kh on hd.id_khach_hang = kh.id 
+                left join KhachHang kh on hd.id_khach_hang = kh.id 
                 inner join NhanVien nv on nv.id = hd.id_nhan_vien
                 inner join HoaDonChiTiet hdct on hdct.id_hoa_don = hd.id
                 where hd.trang_thai <> N'Chờ thanh toán'
@@ -31,13 +31,13 @@ public class HoaDonService_manh {
 
     public List<HoaDonManh> getInvoiceListByStatus(String invoiceStatus) {
         String sql = """
-                 select hd.id as id_hoa_don , nv.ho_ten as ho_ten_nhan_vien , hd.ngay_tao , kh.ho_ten As ho_ten_khach_hang , hd.trang_thai , hd.hinh_thuc_thanh_toan ,SUM(hdct.tong_tien) AS tong_gia_tri_hoa_don  	
+               select hd.id as id_hoa_don , nv.ho_ten as ho_ten_nhan_vien , hd.ngay_tao , kh.ho_ten As ho_ten_khach_hang , hd.trang_thai , hd.hinh_thuc_thanh_toan ,SUM(hdct.tong_tien) AS tong_gia_tri_hoa_don  	
                  from HoaDon hd 
-                 inner join KhachHang kh on hd.id_khach_hang = kh.id 
+                 left join KhachHang kh on hd.id_khach_hang = kh.id 
                  inner join HoaDonChiTiet hdct on hdct.id_hoa_don = hd.id
                  inner join NhanVien nv	on nv.id = hd.id_nhan_vien
-                 where hd.trang_thai = ? 
-                 GROUP BY hd.id, nv.ho_ten ,  hd.ngay_tao, kh.ho_ten, hd.trang_thai, hd.hinh_thuc_thanh_toan ;
+                 where hd.trang_thai = ?
+                 GROUP BY hd.id, nv.ho_ten ,  hd.ngay_tao, kh.ho_ten, hd.trang_thai, hd.hinh_thuc_thanh_toan;
                      """;
         List<HoaDonManh> listHD = selectBySQL(sql, invoiceStatus);
         return (!listHD.isEmpty() && listHD != null) ? listHD : null;
@@ -45,7 +45,7 @@ public class HoaDonService_manh {
 
     public List<HoaDonManh> getListEmployee() {//Lấy listEmployee vs đk có quản lý 1 hóa đơn. 
         String sql = """
-                    select  nv.id As id_nhan_vien , nv.ho_ten As ho_ten_nhan_vien 
+                     select  nv.id As id_nhan_vien , nv.ho_ten As ho_ten_nhan_vien 
                      from NhanVien nv 
                      right join HoaDon hd on hd.id_nhan_vien = nv.id
                      where hd.trang_thai <> N'Chờ thanh toán'
@@ -59,7 +59,7 @@ public class HoaDonService_manh {
         String sql = """
                     select hd.id as id_hoa_don , nv.ho_ten as ho_ten_nhan_vien , hd.ngay_tao , kh.ho_ten As ho_ten_khach_hang , hd.trang_thai , hd.hinh_thuc_thanh_toan ,SUM(hdct.tong_tien) AS tong_gia_tri_hoa_don  	
                      from HoaDon hd 
-                     inner join KhachHang kh on  kh.id  = hd.id_khach_hang 
+                     left join KhachHang kh on  kh.id  = hd.id_khach_hang 
                      inner join HoaDonChiTiet hdct on hdct.id_hoa_don = hd.id
                      inner join NhanVien nv	on nv.id = hd.id_nhan_vien
                      where nv.id = ? AND hd.trang_thai <> N'Chờ thanh toán'
@@ -72,11 +72,11 @@ public class HoaDonService_manh {
 
     public List<HoaDonManh> getInvoiceListByCreationDate(String date) throws ParseException {//4h để fix =)) đcm cđ
         String sql = """
-       SELECT hd.id AS id_hoa_don, nv.ho_ten as ho_ten_nhan_vien , CONVERT(VARCHAR(10), hd.ngay_tao, 120) AS ngay_tao,
+      SELECT hd.id AS id_hoa_don, nv.ho_ten as ho_ten_nhan_vien , CONVERT(VARCHAR(10), hd.ngay_tao, 120) AS ngay_tao,
        kh.ho_ten AS ho_ten_khach_hang, hd.trang_thai, hd.hinh_thuc_thanh_toan,
        SUM(hdct.tong_tien) AS tong_gia_tri_hoa_don
        FROM HoaDon hd
-       INNER JOIN KhachHang kh ON hd.id_khach_hang = kh.id
+       left JOIN KhachHang kh ON hd.id_khach_hang = kh.id
        INNER JOIN HoaDonChiTiet hdct ON hdct.id_hoa_don = hd.id
        inner join NhanVien nv	on nv.id = hd.id_nhan_vien
        WHERE CONVERT(VARCHAR(10), hd.ngay_tao, 120)   = ? AND hd.trang_thai <> N'Chờ thanh toán'
@@ -98,16 +98,16 @@ public class HoaDonService_manh {
 //    Truy vấn cho UI HĐCT
     public HoaDonManh getFormInvoice(String idInvoice) {
         String sql = """
-                    select hd.id as id_hoa_don , hd.hinh_thuc_thanh_toan ,
+                     select hd.id as id_hoa_don , hd.hinh_thuc_thanh_toan ,
                      hd.trang_thai , kh.ho_ten as ho_ten_khach_hang , kh.so_dien_thoai , 
                      nv.ho_ten as ho_ten_nhan_vien  , hd.ngay_tao
                      from HoaDon hd
                      inner join HoaDonChiTiet hdct on hdct.id_hoa_don = hd.id
-                     inner join KhachHang kh on kh.id = hd.id_khach_hang 
+                     LEFT join KhachHang kh on kh.id = hd.id_khach_hang 
                      inner join NhanVien nv on nv.id = hd.id_nhan_vien
-                     where hd.id = ? 
+                     where hd.id = ?
                      Group by hd.id , hd.hinh_thuc_thanh_toan , hd.trang_thai , kh.ho_ten, kh.so_dien_thoai , nv.ho_ten,
-                     hd.ngay_tao  
+                     hd.ngay_tao 
                   """;
         List<HoaDonManh> listHDForm = selectBySQL(sql, idInvoice);
         HoaDonManh hd = listHDForm.get(0);
@@ -127,12 +127,13 @@ public class HoaDonService_manh {
 
     public List<HoaDonManh> getTTSPInInvoice(String idInvoice) {//Lấy in4 dssp trog hóa đơn.
         String sql = """
-                   select hd.id as id_hoa_don , spbt.id as id_san_pham_chi_tiet  , spbt.hinhAnh , spbt.ten_bien_the , hdct.gia  , hdct.so_luong  , hdct.tong_tien
+                  select hd.id as id_hoa_don , spbt.id as id_san_pham_chi_tiet  , sp.ten_san_pham  , spbt.ten_bien_the , hdct.gia  , hdct.so_luong  , hdct.tong_tien
                    from HoaDon hd
                    inner join HoaDonChiTiet hdct on hdct.id_hoa_don = hd.id
-                   inner join SanPhamBienThe spbt on spbt.id = hdct.id_san_pham_chi_tiet
+                   inner join SanPhamChiTiet spbt on spbt.id = hdct.id_san_pham_chi_tiet
+                   inner join SanPham sp on sp.id = spbt.id_san_pham
                    where hd.id  = ?
-                   group by hd.id , spbt.hinhAnh, spbt.ten_bien_the, hdct.gia, hdct.so_luong
+                   group by hd.id , sp.ten_san_pham  , spbt.ten_bien_the, hdct.gia, hdct.so_luong
                    , spbt.id  , hdct.tong_tien;
                      """;
         List<HoaDonManh> dsspbtInInvoice = selectBySQL(sql, idInvoice);
@@ -154,6 +155,41 @@ public class HoaDonService_manh {
         return (!listInvoiceToExport.isEmpty() && listInvoiceToExport != null) ? listInvoiceToExport : null;
     }
 
+    public List<HoaDonManh> getDS_Product_update_SL(String invoiceID) {
+        String sql = """
+                     select hdct.id_san_pham_chi_tiet , hdct.so_luong
+                     from HoaDon hd
+                     inner join HoaDonChiTiet hdct on hdct.id_hoa_don = hd.id
+                     where hd.id = ?""";
+        List<HoaDonManh> list = selectBySQL(sql, invoiceID);
+        return (!list.isEmpty() && list != null) ? list : null;
+    }
+
+    public int update_Prod_Quantity_By_IDPro(int idSPCT, int SLHoan) {
+        String sql = """
+                   update SanPhamChiTiet 
+                     set so_luong =  ?
+                     where id = ? """;
+        return JDBCHelper.update(sql, SLHoan, idSPCT);
+    }
+
+    public void update_Status_Invoice(String invoiceID) {
+        String sql = """
+                     update HoaDon 
+                     set trang_thai = ?
+                     where id = ?""";
+        JDBCHelper.update(sql, "Hủy", invoiceID);
+    }
+
+    public int getQuantity_Pro_InTabel_SPCT(int idSPCT) {
+        String sql = """
+                     SELECT spct.so_luong  FROM SanPhamChiTiet spct
+                     where id = ?""";
+        int slPro_InProDetail = selectBySQL(sql, idSPCT).get(0).getSo_luong();
+        System.out.println("SL SPCT trong bảng SPCT " + slPro_InProDetail);
+        return slPro_InProDetail;
+    }
+
     public List<HoaDonManh> selectBySQL(String sql, Object... args) {
         List<HoaDonManh> listHD = new ArrayList<>();
         ResultSet rs = null;
@@ -167,7 +203,7 @@ public class HoaDonService_manh {
                 HoaDonManh hd = new HoaDonManh();
                 for (int i = 1; i <= columnCount; i++) {
                     String columnName = rsmd.getColumnName(i);
-                    switch (columnName) {// Gán giá trị cho các thuộc tính của HoaDon dựa trên tên cột
+                    switch (columnName) {//Gán giá trị cho các thuộc tính của HoaDon dựa trên tên cột
                         case "id_hoa_don" ->
                             hd.setId_hoa_don(rs.getInt(i));
                         case "id_khach_hang" ->
@@ -216,6 +252,8 @@ public class HoaDonService_manh {
                             hd.setHinhAnh(rs.getString(i));
                         case "ten_bien_the" ->//Tên SP biến thể
                             hd.setTen_bien_the(rs.getString(i));
+                        case "ten_san_pham" ->//Tên sản phẩm
+                            hd.setTen_san_pham(rs.getString(i));
                     }
                     // Gán giá trị cho các thuộc tính của HoaDon dựa trên tên cột
                 }

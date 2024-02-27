@@ -8,7 +8,10 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import haladesign.config.utility.MsgBox;
+import haladesign.system.GlassPanePopup;
+import haladesign.system.Message;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 
 public class HoaDonChiTiet extends javax.swing.JPanel {
 
@@ -84,7 +87,7 @@ public class HoaDonChiTiet extends javax.swing.JPanel {
         jLabel22 = new javax.swing.JLabel();
         txt_khachCanTra = new javax.swing.JTextField();
         txt_tienThua = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btn_cancelInvoice = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -169,7 +172,7 @@ public class HoaDonChiTiet extends javax.swing.JPanel {
         HTTT.setBackground(new java.awt.Color(255, 255, 255));
 
         txt_maKH2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        txt_maKH2.setText("HTTT");
+        txt_maKH2.setText("Hình Thức TT");
         txt_maKH2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(153, 153, 255)));
         txt_maKH2.setDoubleBuffered(true);
         txt_maKH2.setEnabled(false);
@@ -444,12 +447,13 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
 
         },
         new String [] {
-            "STT", "Ảnh sản phẩm", "ID Sản Phẩm", "Tên Sản Phẩm", "Giá Bán", "Số Lượng", "Thành Tiền"
+            "STT", "ID Sản Phẩm", "Tên Sản Phẩm", "Tên SP Chi Tiết", "Giá Bán", "Số Lượng", "Thành Tiền"
         }
     ));
     jScrollPane1.setViewportView(tbl_dssp);
     if (tbl_dssp.getColumnModel().getColumnCount() > 0) {
         tbl_dssp.getColumnModel().getColumn(0).setMaxWidth(50);
+        tbl_dssp.getColumnModel().getColumn(1).setMaxWidth(150);
         tbl_dssp.getColumnModel().getColumn(3).setMinWidth(100);
     }
 
@@ -479,7 +483,7 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
     pn_thongTinHoaDon1.setBackground(new java.awt.Color(255, 255, 255));
     pn_thongTinHoaDon1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Thông tin hóa đơn"));
 
-    jLabel14.setText("Tổng số lượng");
+    jLabel14.setText("Tổng SL SP");
     jLabel14.setPreferredSize(new java.awt.Dimension(100, 20));
 
     txt_tongSoLuong.setBackground(new java.awt.Color(242, 242, 242));
@@ -561,13 +565,13 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
     txt_tienThua.setEnabled(false);
     txt_tienThua.setPreferredSize(new java.awt.Dimension(160, 25));
 
-    jButton1.setBackground(new java.awt.Color(255, 102, 102));
-    jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/haladesign/icon/trash-can.png"))); // NOI18N
-    jButton1.setText("Hủy Hóa Đơn");
-    jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-    jButton1.addActionListener(new java.awt.event.ActionListener() {
+    btn_cancelInvoice.setBackground(new java.awt.Color(255, 102, 102));
+    btn_cancelInvoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/haladesign/icon/trash-can.png"))); // NOI18N
+    btn_cancelInvoice.setText("Hủy Hóa Đơn");
+    btn_cancelInvoice.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+    btn_cancelInvoice.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jButton1ActionPerformed(evt);
+            btn_cancelInvoiceActionPerformed(evt);
         }
     });
 
@@ -616,7 +620,7 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
                                 .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(pn_thongTinHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_cancelInvoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txt_tienKhachCK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txt_maGiaoDich, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txt_tienThua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -669,7 +673,7 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
                             .addGap(129, 129, 129)
                             .addComponent(jLabel34)))
                     .addGap(18, 18, 18)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_cancelInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(28, 28, 28)
                     .addComponent(jLabel35)))
             .addContainerGap(26, Short.MAX_VALUE))
@@ -722,9 +726,9 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
         this.main.showForm(uiHD);
     }//GEN-LAST:event_btn_arrowActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_cancelInvoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelInvoiceActionPerformed
         deleteInvoice(idInvoice);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_cancelInvoiceActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -734,6 +738,7 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JPanel TTHD1;
     private javax.swing.JPanel aside;
     private haladesign.swingStyle.Button btn_arrow;
+    private javax.swing.JButton btn_cancelInvoice;
     private haladesign.swingStyle.Button btn_httt;
     private haladesign.swingStyle.Button btn_loaiHoaDon;
     private haladesign.swingStyle.Button btn_maHD;
@@ -746,7 +751,6 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JPanel header;
     private javax.swing.JPanel in4_hd;
     private javax.swing.JPanel in4_user;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel21;
@@ -792,8 +796,14 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
         setButtonValue(btn_loaiHoaDon, "Tại Quầy");
         setButtonValue(btn_httt, FormHD.getHinh_thuc_thanh_toan());
         setButtonValue(btn_trangThai, FormHD.getTrang_thai_hoa_don());
-        setButtonValue(btn_tenNguoiMua, FormHD.getTenKhachHang());
-        setButtonValue(btn_soDienThoai, FormHD.getSoDienThoaiKH());
+
+        if (FormHD.getTenKhachHang() == null) {//TH khách vãng lai
+            btn_tenNguoiMua.setText(("Khách hàng vãng lai"));
+            btn_soDienThoai.setText(("Không có thông tin"));
+        } else {
+            setButtonValue(btn_tenNguoiMua, FormHD.getTenKhachHang());
+            setButtonValue(btn_soDienThoai, FormHD.getSoDienThoaiKH());
+        }
         setButtonValue(btn_nvTaoDon, FormHD.getTenNhanVien());
         setButtonValue(btn_ngayTao, FormHD.getNgay_tao_hoa_don().toString());
 
@@ -815,13 +825,14 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
         fillIn4Invoice(txt_tienThua, hdIn4.getTien_thua());
 
         fill_Invoice_ProductList_ByIDInvoice(idInvoice);//Fill dữ liệu dssp lên bảng.
+        //Dựa vào TTHĐ --> upda enabled của btn "Hủy hóa đơn" 
+        btn_cancelInvoice.setEnabled(!btn_trangThai.getText().endsWith("Hủy"));
     }
-
+    
     public void fillIn4Invoice(JTextField txt, Object value, String... hinhThucThanhToan) {
-        if (value instanceof Float) {
-//            txt.setText(String.format("%.0f", value));
-//              new FormartData().moneyFormat(s.getGia()) + "VND"
-            Float floatValue = (Float) value;// Ép kiểu value thành Float
+        if (value instanceof Float floatValue) {//            txt.setText(String.format("%.0f", value));
+//            new FormartData().moneyFormat(s.getGia()) + "VND"
+            // Ép kiểu value thành Float
             Integer integerValue = floatValue.intValue();// Chuyển đổi giá trị Float thành Integer
             txt.setText(String.valueOf(new FormartData().moneyFormat(integerValue) + "VND"));
             if (hinhThucThanhToan != null && hinhThucThanhToan.length > 0) {
@@ -845,9 +856,9 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
         int i = 1;
         for (HoaDonManh hd : listHD) {
             Object[] data = new Object[]{
-                i++,
-                hd.getHinhAnh(),
+                "#0" + i++,
                 hd.getId_san_pham_chi_tiet(),//ID spct trog giỏ hàng
+                hd.getTen_san_pham(),
                 hd.getTen_bien_the(),//Tên SP biến thể có trog giỏ hàng
                 new FormartData().moneyFormat(Integer.valueOf(String.format("%.0f", hd.getGia()))) + "VND",//Giá gốc spbt
                 hd.getSo_luong(),//SL spct trog hđct
@@ -858,18 +869,27 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
     }
 
     public void deleteInvoice(String idInvoice) {
-        //check quyền (Để sau)
-        boolean StatusInvoiceHuy = btn_trangThai.getText().equals("Hủy");//TTHĐ Hủy --> True
-        System.out.println("checkStatusInvoice " + StatusInvoiceHuy);
-        boolean conf = MsgBox.confirm(this, "Bạn muốn hủy hóa đơn " + idInvoice);
-        if (!StatusInvoiceHuy && conf) {
-            System.out.println("Hóa đơn có thể hủy + đã conf");
-        } else {
-            String message = (!conf) ? "xác nhận không hủy hóa đơn" : "Hóa đơn đã được hủy!!";
-            MsgBox.alter(this, message);
-        }
+        Message ms = new Message();
+        ms.setTitle("Thông báo");
+        ms.setMessage("Bạn có muốn xóa hóa đơn " + idInvoice);
+        ms.eventOK(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {//Sự kiện khi nhấn oke
+                List<HoaDonManh> listPro_InInvoiceDetail = hds.getDS_Product_update_SL(idInvoice);
+                for (HoaDonManh hd : listPro_InInvoiceDetail) {//upda SL SL tương ứng vs ID_SPCT
+                    int SL_SPCT_inTable_SPCT = hds.getQuantity_Pro_InTabel_SPCT(hd.getId_san_pham_chi_tiet());//Lấy ra sl trog bảng SPCT.
+                    int SL_upda_SPCT = SL_SPCT_inTable_SPCT + hd.getSo_luong();
+                    hds.update_Prod_Quantity_By_IDPro(hd.getId_san_pham_chi_tiet(), SL_upda_SPCT);
+                }
+                hds.update_Status_Invoice(idInvoice);//Cập nhật trạng thái hóa đơn. 
+                main.showForm(new JPHoaDon(main));
+                GlassPanePopup.closePopupLast();//Nhấn oke tắt form
+            }
+        });
+        GlassPanePopup.showPopup(ms);
+
     }
-    
+
     // Phương thức để thiết lập giá trị cho một button (UI HĐCT)
     private void setButtonValue(JButton button, String value) {
         if (value != null) {
