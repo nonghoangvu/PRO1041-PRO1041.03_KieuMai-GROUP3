@@ -1,6 +1,9 @@
 package haladesign.Utitlity;
 
+import haladesign.config.JDBC_Connect;
 import java.nio.charset.StandardCharsets;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Base64;
 import org.mindrot.jbcrypt.BCrypt;
 

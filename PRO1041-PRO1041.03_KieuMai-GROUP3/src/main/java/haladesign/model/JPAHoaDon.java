@@ -43,7 +43,7 @@ public class JPAHoaDon {
     private String trangThai;
 
     @Column(name = "tong_gia_tri_hoa_don")
-    private Float tongGiaTriHoaDon;
+    private Long tongGiaTriHoaDon;
 
     @Column(name = "hinh_thuc_thanh_toan")
     private String hinhThucThanhToan;
@@ -52,10 +52,10 @@ public class JPAHoaDon {
     private String maGiaoDich;
 
     @Column(name = "tien_dua")
-    private Float tienDua;
+    private Long tienDua;
 
     @Column(name = "tien_thua")
-    private Float tienThua;
+    private Long tienThua;
 
     @Column(name = "ngay_tao")
     private Date ngayTao;
