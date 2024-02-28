@@ -67,14 +67,14 @@ public class UpdateProductDetail extends javax.swing.JPanel {
                 return false;
             } else {
                 Integer soLuong = Integer.valueOf(txtSoLuong.getText().trim());
-                Integer gia = Integer.valueOf(txtGia.getText().trim());
+                Long gia = Long.valueOf(txtGia.getText().trim());
                 if (soLuong < 0) {
                     notification = new Notification(this.main, Notification.Type.WARNING,
                             Notification.Location.TOP_RIGHT, "Số lượng không hợp lệ!");
                     notification.showNotification();
                     txtSoLuong.requestFocus();
                     return false;
-                } else if (gia < 1000) {
+                } else if (gia < 10000) {
                     notification = new Notification(this.main, Notification.Type.WARNING,
                             Notification.Location.TOP_RIGHT, "Giá không hợp lệ!");
                     notification.showNotification();
@@ -199,7 +199,11 @@ public class UpdateProductDetail extends javax.swing.JPanel {
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         if (isValidate()) {
-            update();
+            try {
+                update();
+            } catch (Exception e) {
+                new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng không nhập dữ liệu quá lớn!").showNotification();
+            }
         }
     }//GEN-LAST:event_button1ActionPerformed
 

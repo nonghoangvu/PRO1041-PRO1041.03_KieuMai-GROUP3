@@ -11,7 +11,7 @@ public class ValidateNumber {
 
     public Boolean isNumber(String number) {
         try {
-            Integer.valueOf(number);
+            Long.valueOf(number);
             return true;
         } catch (NumberFormatException e) {
             return false;

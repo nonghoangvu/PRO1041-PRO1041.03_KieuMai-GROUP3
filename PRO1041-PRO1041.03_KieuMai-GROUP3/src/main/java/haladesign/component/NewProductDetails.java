@@ -235,7 +235,7 @@ public class NewProductDetails extends javax.swing.JPanel {
                 return false;
             } else {
                 Integer soLuong = Integer.valueOf(txtSoLuong.getText().trim());
-                Integer gia = Integer.valueOf(txtGia.getText().trim());
+                Long gia = Long.valueOf(txtGia.getText().trim());
                 if (soLuong < 0) {
                     notification = new Notification(this.main, Notification.Type.WARNING,
                             Notification.Location.TOP_RIGHT, "Số lượng không hợp lệ!");
@@ -294,6 +294,7 @@ public class NewProductDetails extends javax.swing.JPanel {
                 this.bienTheList = this.list.getByIdSanPhamBienThe(this.idProduct);
                 new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT,
                         "Thêm thành công!").showNotification();
+                clear();
                 fillTable();
             } else {
                 new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT,

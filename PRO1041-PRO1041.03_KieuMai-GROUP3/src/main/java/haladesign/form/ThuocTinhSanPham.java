@@ -302,7 +302,15 @@ public class ThuocTinhSanPham extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        save();
+        if (txtTenThuocTinh.getText().trim().isBlank()) {
+            new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng không bỏ trống tên thuộc tính!").showNotification();
+            txtTenThuocTinh.requestFocus();
+        } else if (txtTenThuocTinh.getText().trim().length() > 20) {
+            new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Tên thuộc tính không hợp lệ!").showNotification();
+            txtTenThuocTinh.requestFocus();
+        } else {
+            save();
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed

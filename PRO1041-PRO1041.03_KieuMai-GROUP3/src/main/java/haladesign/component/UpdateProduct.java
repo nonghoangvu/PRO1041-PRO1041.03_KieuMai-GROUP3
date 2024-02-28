@@ -6,20 +6,19 @@ import haladesign.model.SanPham;
 import haladesign.service.SanPhamService;
 import haladesign.system.GlassPanePopup;
 import haladesign.system.Notification;
-import java.util.Date;
 
 /**
  *
  * @author NONG HOANG VU
  */
 public class UpdateProduct extends javax.swing.JPanel {
-    
+
     private final Main main;
     private final SanPhamService list;
     private final BcryptHash bcryptHash = new BcryptHash();
     private final SanPham sp;
     private final NewProductDetails details;
-    
+
     public UpdateProduct(SanPham sp, Main main, NewProductDetails details) {
         initComponents();
         this.main = main;
@@ -28,14 +27,14 @@ public class UpdateProduct extends javax.swing.JPanel {
         this.details = details;
         setData(sp);
     }
-    
+
     private void setData(SanPham sp) {
         lbID.setText(sp.getId());
         txtSanPham.setText(sp.getTen_san_pham());
         txtMoTa.setText(sp.getMo_ta() == null ? "" : sp.getMo_ta());
         chkTrangThai.setSelected(sp.getTrang_thai());
     }
-    
+
     private SanPham getProduct() {
         SanPham sanPhamUpdate = this.sp;
         sanPhamUpdate.setId(lbID.getText());
@@ -44,7 +43,7 @@ public class UpdateProduct extends javax.swing.JPanel {
         sanPhamUpdate.setTrang_thai(chkTrangThai.isSelected());
         return sanPhamUpdate;
     }
-    
+
     private Boolean validateData() {
         Notification notification;
         if (txtSanPham.getText().trim().isBlank()) {
@@ -53,10 +52,14 @@ public class UpdateProduct extends javax.swing.JPanel {
             notification.showNotification();
             txtSanPham.requestFocus();
             return false;
+        } else if (txtSanPham.getText().trim().length() > 30) {
+            new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Tên không được quá 30 ký tự!").showNotification();
+            txtSanPham.requestFocus();
+            return false;
         }
         return true;
     }
-    
+
     private void save() {
         if (validateData()) {
             if (this.list.insertSanPham(getProduct())) {
@@ -65,11 +68,11 @@ public class UpdateProduct extends javax.swing.JPanel {
                 this.details.setProduct(this.sp.getId());
             } else {
                 new Notification(this.main, Notification.Type.INFO, Notification.Location.TOP_RIGHT, this.bcryptHash.decodeBase64("VnVpIGzDsm5nIHRo4butIGzhuqFpIQ==")).showNotification();
-                
+
             }
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

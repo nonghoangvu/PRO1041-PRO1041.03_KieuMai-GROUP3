@@ -172,16 +172,18 @@ public class SellForm extends javax.swing.JPanel {
         tblModel.setRowCount(0);
         sanPhamList.forEach(data -> {
             data.getBienTheList().forEach(sp -> {
-                Object[] row
-                        = {
-                            sp.getId(),
-                            data.getTen_san_pham() + " " + sp.getTenBienThe(),
-                            sp.getSize().getLoaiSize(),
-                            sp.getColor().getLoaiMau(),
-                            sp.getChatLieu().getLoaiChatLieu(),
-                            sp.getSoLuong(),
-                            new FormartData().moneyFormatLong(sp.getGia()) + "VND",};
-                tblModel.addRow(row);
+                if (sp.getSoLuong() > 0) {
+                    Object[] row
+                            = {
+                                sp.getId(),
+                                data.getTen_san_pham() + " " + sp.getTenBienThe(),
+                                sp.getSize().getLoaiSize(),
+                                sp.getColor().getLoaiMau(),
+                                sp.getChatLieu().getLoaiChatLieu(),
+                                sp.getSoLuong(),
+                                new FormartData().moneyFormatLong(sp.getGia()) + "VND",};
+                    tblModel.addRow(row);
+                }
             });
         });
     }
@@ -257,12 +259,18 @@ public class SellForm extends javax.swing.JPanel {
                 KhachHang kh = !txtSoDienThoai.getText().trim().isBlank() ? this.billService.searchKhachHang(txtSoDienThoai.getText().trim()) : null;
                 if (kh == null && !txtSoDienThoai.getText().isBlank()) {
                     kh = new KhachHang();
-                    if (!txtSoDienThoai.getText().matches("^0[0-9]{9,10}$") || txtTenKhachHang.getText().length() > 20) {
+                    if (!txtSoDienThoai.getText().matches("^0[0-9]{9,10}$") || txtTenKhachHang.getText().length() > 20 || txtTenKhachHang.getText().length() < 5) {
                         new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Số điện thoại hoặc tên khách hàng không hợp lệ!").showNotification();
                         return;
                     }
                     kh.setSo_dien_thoai(txtSoDienThoai.getText().trim());
                     kh.setHo_ten(txtTenKhachHang.getText().trim());
+                    kh.setNgay_tao(new Date());
+                    this.billService.createCustomer(kh);
+                }
+                if (kh != null) {
+                    kh.setHo_ten(txtTenKhachHang.getText().trim());
+                    kh.setNgay_sua(new Date());
                     this.billService.createCustomer(kh);
                 }
                 hd.setTongGiaTriHoaDon(this.totalMoney);
@@ -643,7 +651,11 @@ public class SellForm extends javax.swing.JPanel {
             new Notification(this.main, Notification.Type.INFO, Notification.Location.TOP_RIGHT, "Hóa đơn phải có ít nhất một sản phẩm!").showNotification();
             return;
         }
-        pay();
+        try {
+            pay();
+        } catch (Exception e) {
+            new Notification(this.main, Notification.Type.INFO, Notification.Location.TOP_RIGHT, "Thanh toán thất bại do số tiền quá lớn hệ thống không thể xử lý!").showNotification();
+        }
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void btnTaoHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTaoHoaDonMouseClicked

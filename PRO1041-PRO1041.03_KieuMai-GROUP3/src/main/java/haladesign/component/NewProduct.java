@@ -51,6 +51,10 @@ public class NewProduct extends javax.swing.JPanel {
             notification.showNotification();
             txtSanPham.requestFocus();
             return false;
+        } else if (txtSanPham.getText().trim().length() > 30) {
+            new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Tên không được quá 30 ký tự").showNotification();
+            txtSanPham.requestFocus();
+            return false;
         }
         return true;
     }
