@@ -813,7 +813,7 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
         fillIn4Invoice(txt_tongTienHang, hdIn4.getTongTienHang(), hdIn4.getHinh_thuc_thanh_toan());
 
         fillIn4Invoice(txt_giamGia, "0đ");
-
+        
         fillIn4Invoice(txt_khachCanTra, txt_tongTienHang.getText());
 
         fillIn4Invoice(txt_tienKhachDua, hdIn4.getTien_dua(), hdIn4.getHinh_thuc_thanh_toan());
@@ -828,7 +828,7 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
         //Dựa vào TTHĐ --> upda enabled của btn "Hủy hóa đơn" 
         btn_cancelInvoice.setEnabled(!btn_trangThai.getText().endsWith("Hủy"));
     }
-    
+
     public void fillIn4Invoice(JTextField txt, Object value, String... hinhThucThanhToan) {
         if (value instanceof Float floatValue) {//            txt.setText(String.format("%.0f", value));
 //            new FormartData().moneyFormat(s.getGia()) + "VND"
