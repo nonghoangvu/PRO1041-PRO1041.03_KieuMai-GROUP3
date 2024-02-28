@@ -10,7 +10,6 @@ import haladesign.system.Notification;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -35,6 +34,9 @@ public class KhachHang_form extends javax.swing.JPanel {
         this.model = (DefaultTableModel) tblKhachHang.getModel();
         this.model.setRowCount(0);
         for (KhachHang x : this.listKhachHang) {
+            if(x.getGioi_tinh() == null){
+                x.setGioi_tinh(true);
+            }
             Object[] row = {
                 x.getHo_ten(), x.getSo_dien_thoai(), x.getGioi_tinh() ? "Nam" : "Nữ", x.getDiaChi(), x.getNgay_tao()
             };

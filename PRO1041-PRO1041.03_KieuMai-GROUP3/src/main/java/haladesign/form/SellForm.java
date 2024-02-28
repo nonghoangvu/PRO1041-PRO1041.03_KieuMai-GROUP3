@@ -28,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
  * @author NONG HOANG VU
  */
 public class SellForm extends javax.swing.JPanel {
-    
+
     private final SanPhamService sanPhamService;
     private final BillService billService;
     private DefaultTableModel tblModel;
@@ -36,7 +36,8 @@ public class SellForm extends javax.swing.JPanel {
     private final Main main;
     private Integer totalMoney = 0;
     private Integer tienThua = 0;
-    
+    private final Boolean statusCustomer = true;
+
     public SellForm(NhanVien nhanVien, Main main) {
         initComponents();
         this.sanPhamService = new SanPhamService();
@@ -45,14 +46,14 @@ public class SellForm extends javax.swing.JPanel {
         this.main = main;
         init();
     }
-    
+
     private void init() {
         fillCombo();
         fillTableHoaDon();
         fillTableSanPham();
         change();
     }
-    
+
     private void setChange() {
         if (!txtTienKhachDua.getText().trim().isBlank()) {
             try {
@@ -76,9 +77,33 @@ public class SellForm extends javax.swing.JPanel {
             lbChange.setText("0VND");
         }
     }
-    
+
+    private void createKhachHang() {
+        KhachHang kh = this.billService.searchKhachHang(txtSoDienThoai.getText());
+        KhachHang newKh = new KhachHang();
+        if (kh == null) {
+            newKh.setSo_dien_thoai(txtSoDienThoai.getText().trim());
+            newKh.setHo_ten(txtTenKhachHang.getText().trim());
+            if (SellForm.this.billService.createCustomer(newKh)) {
+                String idHoaDon = String.valueOf(tblDanhSachHoaDon.getValueAt(tblDanhSachHoaDon.getSelectedRow(), 1));
+                new Notification(SellForm.this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Đã tạo thành công khách hàng!").showNotification();
+                this.billService.insertKhachHangToBill(idHoaDon, newKh);
+            } else {
+                new Notification(SellForm.this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Lỗi vui lòng thử lại!").showNotification();
+            }
+        } else {
+            if (SellForm.this.billService.createCustomer(kh)) {
+                String idHoaDon = String.valueOf(tblDanhSachHoaDon.getValueAt(tblDanhSachHoaDon.getSelectedRow(), 1));
+                new Notification(SellForm.this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Đã cập nhật thành công khách hàng!").showNotification();
+                this.billService.insertKhachHangToBill(idHoaDon, newKh);
+            } else {
+                new Notification(SellForm.this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Lỗi vui lòng thử lại!").showNotification();
+            }
+        }
+    }
+
     private void setCustomer() {
-        if (txtSoDienThoai.getText().trim().length() > 9 && txtSoDienThoai.getText().trim().length() < 13) {
+        if (txtSoDienThoai.getText().trim().length() > 9 && txtSoDienThoai.getText().trim().length() < 11) {
             KhachHang kh = this.billService.searchKhachHang(txtSoDienThoai.getText());
             if (kh != null) {
                 txtTenKhachHang.setText(kh.getHo_ten());
@@ -86,26 +111,24 @@ public class SellForm extends javax.swing.JPanel {
                 if (tblDanhSachHoaDon.getSelectedRow() > 0) {
                     this.billService.insertKhachHangToBill(idHoaDon, kh);
                 }
-            } else {
-                txtTenKhachHang.setText("");
             }
         } else {
             txtTenKhachHang.setText("");
         }
     }
-    
+
     private void change() {
         txtTienKhachDua.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 setChange();
             }
-            
+
             @Override
             public void removeUpdate(DocumentEvent e) {
                 setChange();
             }
-            
+
             @Override
             public void changedUpdate(DocumentEvent e) {
                 setChange();
@@ -116,19 +139,19 @@ public class SellForm extends javax.swing.JPanel {
             public void insertUpdate(DocumentEvent e) {
                 setCustomer();
             }
-            
+
             @Override
             public void removeUpdate(DocumentEvent e) {
                 setCustomer();
             }
-            
+
             @Override
             public void changedUpdate(DocumentEvent e) {
                 setCustomer();
             }
         });
     }
-    
+
     private void fillCombo() {
         List<String> model = new ArrayList<>();
         model.add("Tiền mặt");
@@ -137,9 +160,9 @@ public class SellForm extends javax.swing.JPanel {
         model.forEach(item -> {
             cbbTypePay.addItem(item);
         });
-        
+
     }
-    
+
     public void fillTableHoaDon() {
         this.tblModel = (DefaultTableModel) tblDanhSachHoaDon.getModel();
         tblModel.setRowCount(0);
@@ -154,7 +177,7 @@ public class SellForm extends javax.swing.JPanel {
             tblDanhSachHoaDon.addRow(row);
         });
     }
-    
+
     public void fillTableSanPham() {
         List<SanPham> sanPhamList = txtSearch.getText().isBlank() ? this.sanPhamService.getList() : this.sanPhamService.getListSearch(txtSearch.getText(), true);
         this.tblModel = (DefaultTableModel) tblSanPham.getModel();
@@ -174,7 +197,7 @@ public class SellForm extends javax.swing.JPanel {
             });
         });
     }
-    
+
     public void fillTableSlectBill() {
         lbHoaDon.setText(String.valueOf(tblDanhSachHoaDon.getSelectedRow() + 1));
         this.tblModel = (DefaultTableModel) tblGioHang.getModel();
@@ -205,7 +228,7 @@ public class SellForm extends javax.swing.JPanel {
         lbTongTienHang.setText(new FormartData().moneyFormat(this.totalMoney) + "VND");
         setChange();
     }
-    
+
     private void createHoaDon() {
         JPAHoaDon hd = new JPAHoaDon();
         hd.setNhanVien(this.nhanVien);
@@ -218,7 +241,7 @@ public class SellForm extends javax.swing.JPanel {
             tblModel.setRowCount(0);
         }
     }
-    
+
     private void cancelBill() {
         if (this.billService.cancellingBill(String.valueOf(tblDanhSachHoaDon.getValueAt(tblDanhSachHoaDon.getSelectedRow(), 1)))) {
             new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Đã hủy thành công một hóa đơn").showNotification();
@@ -231,7 +254,7 @@ public class SellForm extends javax.swing.JPanel {
             txtTenKhachHang.setText("");
         }
     }
-    
+
     private void pay() {
         try {
             if (txtTienKhachDua.getText().trim().isBlank()) {
@@ -265,9 +288,9 @@ public class SellForm extends javax.swing.JPanel {
             txtTienKhachDua.requestFocus();
             new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng nhập đúng định dạng giá tiền!").showNotification();
         }
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

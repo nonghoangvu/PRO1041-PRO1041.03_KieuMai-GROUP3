@@ -129,4 +129,8 @@ public class BillService {
         hd.setKhachHang(kh);
         this.iHoaDon.save(hd);
     }
+    
+    public Boolean createCustomer(KhachHang kh){
+        return this.iKhachHang.save(kh) != null;
+    }
 }

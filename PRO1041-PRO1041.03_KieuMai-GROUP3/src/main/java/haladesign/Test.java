@@ -31,10 +31,6 @@ public class Test {
     }
 
     public static void main(String[] args) {
-        context = createApplicationContext(args);
-        IHoaDonChiTiet r = getBean(IHoaDonChiTiet.class);
-        r.findById("14").forEach(s -> {
-            System.out.println("ID: " + s.getId() + " - " + s.getSanPhamChiTiet().getSoLuong() + " - " + s.getSoLuong());
-        });
+//        context = createApplicationContext(args);
     }
 }
