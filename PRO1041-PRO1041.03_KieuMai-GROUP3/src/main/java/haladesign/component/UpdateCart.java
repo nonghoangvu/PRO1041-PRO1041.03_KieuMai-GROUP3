@@ -8,6 +8,8 @@ import haladesign.model.SanPhamChiTiet;
 import haladesign.service.BillService;
 import haladesign.system.GlassPanePopup;
 import haladesign.system.Notification;
+import java.awt.Color;
+import javaswingdev.GoogleMaterialDesignIcon;
 
 /**
  *
@@ -20,6 +22,7 @@ public class UpdateCart extends javax.swing.JPanel {
     private final BillService billService;
     private final Main main;
     private final String idHoaDon;
+    private GoogleMaterialDesignIcon icon;
 
     public UpdateCart(Main main, SellForm sellForm, String idHoaDon, String soHoaDon, String idSanPham, String soLuongHienTai) {
         initComponents();
@@ -29,7 +32,22 @@ public class UpdateCart extends javax.swing.JPanel {
         this.main = main;
         this.idHoaDon = idHoaDon;
         setLable(idSanPham);
+        setIconButton();
         lbSoLuongHienTai.setText(soLuongHienTai);
+    }
+
+    private void setIconButton() {
+        btnAdd.setColor1(Color.BLACK);
+        btnAdd.setColor2(Color.BLACK);
+        btnAdd.setIconButton(this.icon.ADD_SHOPPING_CART);
+        
+        btnUpdate.setColor1(Color.BLACK);
+        btnUpdate.setColor2(Color.BLACK);
+        btnUpdate.setIconButton(this.icon.UPDATE);
+        
+        btnRemove.setColor1(Color.BLACK);
+        btnRemove.setColor2(Color.BLACK);
+        btnRemove.setIconButton(this.icon.DELETE);
     }
 
     private void setLable(String idSanPham) {
@@ -38,7 +56,7 @@ public class UpdateCart extends javax.swing.JPanel {
         lbSize.setText(this.sanPhamChiTiet.getSize().getLoaiSize());
         lbColor.setText(this.sanPhamChiTiet.getColor().getLoaiMau());
         lbChatLieu.setText(this.sanPhamChiTiet.getChatLieu().getLoaiChatLieu());
-        lbGia.setText(String.valueOf(new FormartData().moneyFormat(this.sanPhamChiTiet.getGia())) + "VND");
+        lbGia.setText(String.valueOf(new FormartData().moneyFormatLong(this.sanPhamChiTiet.getGia())) + "VND");
         lbSoLuong.setText(String.valueOf(this.sanPhamChiTiet.getSoLuong()));
     }
 

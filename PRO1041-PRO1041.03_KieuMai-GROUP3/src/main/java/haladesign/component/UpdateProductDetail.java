@@ -90,7 +90,7 @@ public class UpdateProductDetail extends javax.swing.JPanel {
     private void update() {
         SanPhamChiTiet sp = this.spct;
         sp.setSoLuong(Integer.valueOf(txtSoLuong.getText().trim()));
-        sp.setGia(Integer.valueOf(txtGia.getText().trim()));
+        sp.setGia(Long.valueOf(txtGia.getText().trim()));
         sp.setNgay_tao(sp.getNgay_tao() == null ? (new Date()) : sp.getNgay_tao());
         if (this.list.insertBienThe(sp)) {
             this.danhSachChiTietSanPham.fillTable();

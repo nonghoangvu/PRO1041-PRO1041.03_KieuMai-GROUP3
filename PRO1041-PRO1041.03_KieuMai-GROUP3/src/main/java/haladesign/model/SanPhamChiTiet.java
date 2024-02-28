@@ -56,36 +56,11 @@ public class SanPhamChiTiet {
     private Integer soLuong = 0;
 
     @Column(name = "gia", nullable = false, columnDefinition = "INT CHECK (gia >= 0)")
-    private Integer gia;
+    private Long gia;
     
     @Column(name = "ngay_tao")
     private Date ngay_tao;
 
     @OneToMany(mappedBy = "sanPhamChiTiet")
     private List<JPAHoaDonChiTiet> hoaDonChiTietList;   
-
-    public SanPhamChiTiet(Long id) {
-        this.id = id;
-    }
-
-    public SanPhamChiTiet(Long id, String tenBienThe, Size size, Color color, Integer gia, String hinhAnh) {
-        this.id = id;
-        this.tenBienThe = tenBienThe;
-        this.size = size;
-        this.color = color;
-        this.gia = gia;
-//        this.hinhAnh = hinhAnh;
-    }
-
-    public Object[] dataBienThe() {
-        return new Object[]{
-            this.id,
-            this.tenBienThe,
-            this.size,
-            this.color,
-            this.soLuong,
-            this.gia,
-//            this.hinhAnh
-        };
-    }
 }

@@ -44,7 +44,7 @@ public class SanPhamBienTheServiceKhoa {
                 cor.setLoaiMau(rs.getString(4));
                 spbt.setColor(cor);
                 spbt.setSoLuong(rs.getInt(5));
-                spbt.setGia(rs.getInt(6));
+//                spbt.setGia(rs.getInt(6));
 //                spbt.setHinhAnh(rs.getString(7));
                 listBT.add(spbt);
             }
@@ -94,7 +94,7 @@ public class SanPhamBienTheServiceKhoa {
                 cor.setLoaiMau(rs.getString(4));
                 spbt.setColor(cor);
                 spbt.setSoLuong(rs.getInt(5));
-                spbt.setGia(rs.getInt(6));
+//                spbt.setGia(rs.getInt(6));
 //                spbt.setHinhAnh(rs.getString(7));
                 listBT.add(spbt);
             }

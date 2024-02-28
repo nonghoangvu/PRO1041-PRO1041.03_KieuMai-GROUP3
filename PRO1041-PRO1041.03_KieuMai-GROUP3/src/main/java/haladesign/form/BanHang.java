@@ -54,7 +54,7 @@ public class BanHang extends javax.swing.JPanel {
         mol = (DefaultTableModel) tbl_SanPham.getModel();
         mol.setRowCount(0);
         for (SanPhamChiTiet spbt : list) {
-            mol.addRow(spbt.dataBienThe());
+//            mol.addRow(spbt.dataBienThe());
         }
     }
 
@@ -626,7 +626,7 @@ public class BanHang extends javax.swing.JPanel {
             soLuongSP = soLuongSP + soLuongHDCT - soLuongNhap;
             HoaDonChiTietKhoa hdct = new HoaDonChiTietKhoa();
             hdct.setHd(new HoaDonKhoa(idHD));
-            hdct.setSp(new SanPhamChiTiet(idSP));
+//            hdct.setSp(new SanPhamChiTiet(idSP));
             hdct.setGia(gia);
             hdct.setSoLuong(soLuongNhap);
 

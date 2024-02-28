@@ -52,7 +52,7 @@ public class DanhSachChiTietSanPham extends javax.swing.JPanel {
                             sp.getColor().getLoaiMau(),
                             sp.getChatLieu().getLoaiChatLieu(),
                             sp.getSoLuong(),
-                            new FormartData().moneyFormat(sp.getGia()) + "VND",
+                            new FormartData().moneyFormatLong(sp.getGia()) + "VND",
                             sp.getNgay_tao()
                         };
                 tblModel.addRow(row);

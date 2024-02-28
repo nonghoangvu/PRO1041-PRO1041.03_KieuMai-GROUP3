@@ -119,7 +119,7 @@ public class NewProductDetails extends javax.swing.JPanel {
                 s.getColor().getLoaiMau(),
                 s.getChatLieu().getLoaiChatLieu(),
                 s.getSoLuong(),
-                new FormartData().moneyFormat(s.getGia()) + "VND",
+                new FormartData().moneyFormatLong(s.getGia()) + "VND",
                 s.getNgay_tao()
             };
             tblModel.addRow(row);
@@ -183,7 +183,7 @@ public class NewProductDetails extends javax.swing.JPanel {
         sp.setColor(getColorForm());
         sp.setChatLieu(getChatLieuForm());
         sp.setSoLuong(Integer.valueOf(txtSoLuong.getText()));
-        sp.setGia(Integer.valueOf(txtGia.getText()));
+        sp.setGia(Long.valueOf(txtGia.getText()));
         sp.setNgay_tao(new Date());
         return sp;
     }
@@ -272,7 +272,7 @@ public class NewProductDetails extends javax.swing.JPanel {
                     SanPhamChiTiet sp = NewProductDetails.this.list
                             .getByColorAndSizeAndChatLieu(NewProductDetails.this.idProduct, getColorForm(), getSizeForm(), getChatLieuForm()).get(0);
                     sp.setSoLuong(sp.getSoLuong() + Integer.valueOf(txtSoLuong.getText()));
-                    sp.setGia(Integer.valueOf(txtGia.getText()));
+                    sp.setGia(Long.valueOf(txtGia.getText()));
                     if (NewProductDetails.this.list.insertBienThe(sp)) {
                         NewProductDetails.this.bienTheList = NewProductDetails.this.list
                                 .getByIdSanPhamBienThe(NewProductDetails.this.idProduct);
@@ -306,7 +306,7 @@ public class NewProductDetails extends javax.swing.JPanel {
         SanPhamChiTiet sp = NewProductDetails.this.list
                 .getByColorAndSizeAndChatLieu(NewProductDetails.this.idProduct, getColorForm(), getSizeForm(), getChatLieuForm()).get(0);
         sp.setSoLuong(Integer.valueOf(txtSoLuong.getText()));
-        sp.setGia(Integer.valueOf(txtGia.getText()));
+        sp.setGia(Long.valueOf(txtGia.getText()));
         if (NewProductDetails.this.list.insertBienThe(sp)) {
             NewProductDetails.this.bienTheList = NewProductDetails.this.list
                     .getByIdSanPhamBienThe(NewProductDetails.this.idProduct);

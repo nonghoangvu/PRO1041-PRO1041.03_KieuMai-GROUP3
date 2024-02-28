@@ -14,10 +14,12 @@ import haladesign.service.SanPhamService;
 import haladesign.system.GlassPanePopup;
 import haladesign.system.Message;
 import haladesign.system.Notification;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javaswingdev.GoogleMaterialDesignIcon;
 import javax.swing.AbstractAction;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -34,9 +36,9 @@ public class SellForm extends javax.swing.JPanel {
     private DefaultTableModel tblModel;
     private final NhanVien nhanVien;
     private final Main main;
-    private Integer totalMoney = 0;
-    private Integer tienThua = 0;
-    private final Boolean statusCustomer = true;
+    private Long totalMoney = 0L;
+    private Long tienThua = 0L;
+    private GoogleMaterialDesignIcon icon;
 
     public SellForm(NhanVien nhanVien, Main main) {
         initComponents();
@@ -52,6 +54,8 @@ public class SellForm extends javax.swing.JPanel {
         fillTableHoaDon();
         fillTableSanPham();
         change();
+        clear();
+        setIconButton();
     }
 
     private void setChange() {
@@ -65,7 +69,7 @@ public class SellForm extends javax.swing.JPanel {
                     lbChange.setText((new FormartData().moneyFormatLong(SellForm.this.totalMoney - Long.valueOf(txtTienKhachDua.getText().trim()))) + "VND");
                 } else {
                     lbTrangThaiTien.setText("Tiền thừa:");
-                    this.tienThua = Integer.valueOf(txtTienKhachDua.getText().trim()) - SellForm.this.totalMoney;
+                    this.tienThua = Long.valueOf(txtTienKhachDua.getText().trim()) - SellForm.this.totalMoney;
                     lbChange.setText(new FormartData().moneyFormatLong(Long.valueOf(txtTienKhachDua.getText().trim()) - SellForm.this.totalMoney) + "VND");
                 }
             } catch (NumberFormatException e) {
@@ -78,39 +82,11 @@ public class SellForm extends javax.swing.JPanel {
         }
     }
 
-    private void createKhachHang() {
-        KhachHang kh = this.billService.searchKhachHang(txtSoDienThoai.getText());
-        KhachHang newKh = new KhachHang();
-        if (kh == null) {
-            newKh.setSo_dien_thoai(txtSoDienThoai.getText().trim());
-            newKh.setHo_ten(txtTenKhachHang.getText().trim());
-            if (SellForm.this.billService.createCustomer(newKh)) {
-                String idHoaDon = String.valueOf(tblDanhSachHoaDon.getValueAt(tblDanhSachHoaDon.getSelectedRow(), 1));
-                new Notification(SellForm.this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Đã tạo thành công khách hàng!").showNotification();
-                this.billService.insertKhachHangToBill(idHoaDon, newKh);
-            } else {
-                new Notification(SellForm.this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Lỗi vui lòng thử lại!").showNotification();
-            }
-        } else {
-            if (SellForm.this.billService.createCustomer(kh)) {
-                String idHoaDon = String.valueOf(tblDanhSachHoaDon.getValueAt(tblDanhSachHoaDon.getSelectedRow(), 1));
-                new Notification(SellForm.this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Đã cập nhật thành công khách hàng!").showNotification();
-                this.billService.insertKhachHangToBill(idHoaDon, newKh);
-            } else {
-                new Notification(SellForm.this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Lỗi vui lòng thử lại!").showNotification();
-            }
-        }
-    }
-
     private void setCustomer() {
         if (txtSoDienThoai.getText().trim().length() > 9 && txtSoDienThoai.getText().trim().length() < 11) {
             KhachHang kh = this.billService.searchKhachHang(txtSoDienThoai.getText());
             if (kh != null) {
                 txtTenKhachHang.setText(kh.getHo_ten());
-                String idHoaDon = String.valueOf(tblDanhSachHoaDon.getValueAt(tblDanhSachHoaDon.getSelectedRow(), 1));
-                if (tblDanhSachHoaDon.getSelectedRow() > 0) {
-                    this.billService.insertKhachHangToBill(idHoaDon, kh);
-                }
             }
         } else {
             txtTenKhachHang.setText("");
@@ -163,6 +139,18 @@ public class SellForm extends javax.swing.JPanel {
 
     }
 
+    private void setIconButton() {
+        btnThanhToan.setColor1(Color.BLACK);
+        btnThanhToan.setColor2(Color.BLACK);
+        btnThanhToan.setIconButton(this.icon.PAYMENT);
+        btnTaoHoaDon.setColor1(Color.BLACK);
+        btnTaoHoaDon.setColor2(Color.BLACK);
+        btnTaoHoaDon.setIconButton(this.icon.CREATE);
+        btnHuy.setColor1(Color.BLACK);
+        btnHuy.setColor2(Color.BLACK);
+        btnHuy.setIconButton(this.icon.CANCEL);
+    }
+
     public void fillTableHoaDon() {
         this.tblModel = (DefaultTableModel) tblDanhSachHoaDon.getModel();
         tblModel.setRowCount(0);
@@ -192,7 +180,7 @@ public class SellForm extends javax.swing.JPanel {
                             sp.getColor().getLoaiMau(),
                             sp.getChatLieu().getLoaiChatLieu(),
                             sp.getSoLuong(),
-                            new FormartData().moneyFormat(sp.getGia()) + "VND",};
+                            new FormartData().moneyFormatLong(sp.getGia()) + "VND",};
                 tblModel.addRow(row);
             });
         });
@@ -202,7 +190,7 @@ public class SellForm extends javax.swing.JPanel {
         lbHoaDon.setText(String.valueOf(tblDanhSachHoaDon.getSelectedRow() + 1));
         this.tblModel = (DefaultTableModel) tblGioHang.getModel();
         tblModel.setRowCount(0);
-        this.totalMoney = 0;
+        this.totalMoney = 0L;
         txtSoDienThoai.setEnabled(true);
         txtTenKhachHang.setEnabled(true);
         txtSoDienThoai.setText("");
@@ -221,11 +209,11 @@ public class SellForm extends javax.swing.JPanel {
                 hd.getSanPhamChiTiet().getColor().getLoaiMau(),
                 hd.getSanPhamChiTiet().getChatLieu().getLoaiChatLieu(),
                 hd.getSoLuong(),
-                new FormartData().moneyFormat(hd.getSanPhamChiTiet().getGia()) + "VND",
-                new FormartData().moneyFormat(hd.getSanPhamChiTiet().getGia() * hd.getSoLuong()) + "VND",};
+                new FormartData().moneyFormatLong(hd.getSanPhamChiTiet().getGia()) + "VND",
+                new FormartData().moneyFormatLong(hd.getSanPhamChiTiet().getGia() * hd.getSoLuong()) + "VND",};
             tblGioHang.addRow(row);
         });
-        lbTongTienHang.setText(new FormartData().moneyFormat(this.totalMoney) + "VND");
+        lbTongTienHang.setText(new FormartData().moneyFormatLong(this.totalMoney) + "VND");
         setChange();
     }
 
@@ -260,27 +248,31 @@ public class SellForm extends javax.swing.JPanel {
             if (txtTienKhachDua.getText().trim().isBlank()) {
                 txtTienKhachDua.requestFocus();
                 new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng nhập tiền khách đưa!").showNotification();
-            } else if (Integer.valueOf(txtTienKhachDua.getText().trim()) < this.totalMoney) {
+            } else if (Long.valueOf(txtTienKhachDua.getText().trim()) < this.totalMoney) {
                 txtTienKhachDua.requestFocus();
                 new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Tiền khách đưa không đủ!").showNotification();
             } else {
                 String idHoaDon = String.valueOf(tblDanhSachHoaDon.getValueAt(tblDanhSachHoaDon.getSelectedRow(), 1));
                 JPAHoaDon hd = this.billService.getJPAHoaDonById(idHoaDon);
-                hd.setTongGiaTriHoaDon(Long.valueOf(this.totalMoney));
+                KhachHang kh = !txtSoDienThoai.getText().trim().isBlank() ? this.billService.searchKhachHang(txtSoDienThoai.getText().trim()) : null;
+                if (kh == null && !txtSoDienThoai.getText().isBlank()) {
+                    kh = new KhachHang();
+                    if (!txtSoDienThoai.getText().matches("^0[0-9]{9,10}$") || txtTenKhachHang.getText().length() > 20) {
+                        new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Số điện thoại hoặc tên khách hàng không hợp lệ!").showNotification();
+                        return;
+                    }
+                    kh.setSo_dien_thoai(txtSoDienThoai.getText().trim());
+                    kh.setHo_ten(txtTenKhachHang.getText().trim());
+                    this.billService.createCustomer(kh);
+                }
+                hd.setTongGiaTriHoaDon(this.totalMoney);
                 hd.setHinhThucThanhToan((String) cbbTypePay.getSelectedItem());
                 hd.setTienDua(Long.valueOf(txtTienKhachDua.getText().trim()));
-                hd.setTienThua(Long.valueOf(this.tienThua));
+                hd.setTienThua(this.tienThua);
+                hd.setKhachHang(kh);
                 if (this.billService.payBill(hd)) {
                     fillTableHoaDon();
-                    this.tblModel = (DefaultTableModel) tblGioHang.getModel();
-                    tblModel.setRowCount(0);
-                    lbTongTienHang.setText("0VND");
-                    cbbTypePay.setSelectedIndex(0);
-                    txtTienKhachDua.setText("");
-                    lbChange.setText("0VND");
-                    lbHoaDon.setText("Chưa có hóa đơn được chọn");
-                    txtSoDienThoai.setText("");
-                    txtTenKhachHang.setText("");
+                    clear();
                     new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Thanh toán thành công").showNotification();
                 }
             }
@@ -289,6 +281,27 @@ public class SellForm extends javax.swing.JPanel {
             new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng nhập đúng định dạng giá tiền!").showNotification();
         }
 
+    }
+
+    private void clear() {
+        lbHoaDon.setText("Chưa có hóa đơn được chọn");
+        tblModel = (DefaultTableModel) tblGioHang.getModel();
+        tblModel.setRowCount(0);
+        this.totalMoney = 0L;
+        txtSoDienThoai.setEnabled(false);
+        txtTenKhachHang.setEnabled(false);
+        txtSoDienThoai.setText("");
+        txtTenKhachHang.setText("");
+        lbTongTienHang.setText("0VND");
+        lbChange.setText("0VND");
+        txtTienKhachDua.setText("");
+        txtTienKhachDua.setEditable(false);
+    }
+
+    private void unlockClear() {
+        txtSoDienThoai.setEnabled(true);
+        txtTenKhachHang.setEnabled(true);
+        txtTienKhachDua.setEditable(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -318,7 +331,6 @@ public class SellForm extends javax.swing.JPanel {
         btnThanhToan = new haladesign.swingStyle.Button();
         btnTaoHoaDon = new haladesign.swingStyle.Button();
         btnHuy = new haladesign.swingStyle.Button();
-        btnAddCustomer = new haladesign.swingStyle.Button();
         jLabel4 = new javax.swing.JLabel();
         txtSearch = new haladesign.swingStyle.TextField();
         jScrollPane3 = new haladesign.swing.scroll.ScrollPaneWin11();
@@ -443,11 +455,6 @@ public class SellForm extends javax.swing.JPanel {
             }
         });
 
-        btnAddCustomer.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(229, 229, 229)));
-        btnAddCustomer.setText("Thêm");
-        btnAddCustomer.setEnabled(false);
-        btnAddCustomer.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -482,10 +489,7 @@ public class SellForm extends javax.swing.JPanel {
                             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtTenKhachHang, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jSeparator2)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtSoDienThoai, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAddCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(txtSoDienThoai, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(55, 55, 55))))
         );
 
@@ -499,9 +503,7 @@ public class SellForm extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtSoDienThoai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAddCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(txtSoDienThoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(txtTenKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
@@ -625,15 +627,20 @@ public class SellForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblDanhSachHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDanhSachHoaDonMouseClicked
-        this.totalMoney = 0;
+        this.totalMoney = 0L;
         txtTienKhachDua.setText("");
         lbTrangThaiTien.setText("Tiền thừa:");
         fillTableSlectBill();
+        unlockClear();
     }//GEN-LAST:event_tblDanhSachHoaDonMouseClicked
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         if (tblDanhSachHoaDon.getSelectedRow() < 0) {
             new Notification(this.main, Notification.Type.INFO, Notification.Location.TOP_RIGHT, "Chưa có hóa đơn nào được chọn!").showNotification();
+            return;
+        }
+        if (this.totalMoney < 500) {
+            new Notification(this.main, Notification.Type.INFO, Notification.Location.TOP_RIGHT, "Hóa đơn phải có ít nhất một sản phẩm!").showNotification();
             return;
         }
         pay();
@@ -650,6 +657,7 @@ public class SellForm extends javax.swing.JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     createHoaDon();
+                    clear();
                     GlassPanePopup.closePopupLast();
                 }
             });
@@ -672,6 +680,7 @@ public class SellForm extends javax.swing.JPanel {
                         txtSoDienThoai.setEnabled(false);
                         txtTenKhachHang.setEnabled(false);
                     }
+                    clear();
                     GlassPanePopup.closePopupLast();
                 }
             });
@@ -706,7 +715,6 @@ public class SellForm extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private haladesign.swingStyle.Button btnAddCustomer;
     private haladesign.swingStyle.Button btnHuy;
     private haladesign.swingStyle.Button btnTaoHoaDon;
     private haladesign.swingStyle.Button btnThanhToan;
