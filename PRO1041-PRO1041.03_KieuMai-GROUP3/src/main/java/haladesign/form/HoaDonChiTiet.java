@@ -580,54 +580,47 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
     pn_thongTinHoaDon1Layout.setHorizontalGroup(
         pn_thongTinHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pn_thongTinHoaDon1Layout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(pn_thongTinHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(pn_thongTinHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(pn_thongTinHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txt_giamGia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_tongTienHang, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_tongSoLuong, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_khachCanTra, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(txt_tienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_tienKhachCK, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_maGiaoDich, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_tienThua, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(pn_thongTinHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel36)
+                .addComponent(jLabel37)))
+        .addGroup(pn_thongTinHoaDon1Layout.createSequentialGroup()
+            .addGap(112, 112, 112)
             .addGroup(pn_thongTinHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pn_thongTinHoaDon1Layout.createSequentialGroup()
-                    .addGap(322, 322, 322)
+                    .addGap(173, 173, 173)
                     .addComponent(jLabel34))
-                .addGroup(pn_thongTinHoaDon1Layout.createSequentialGroup()
-                    .addGap(112, 112, 112)
-                    .addComponent(jLabel35))
-                .addGroup(pn_thongTinHoaDon1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(pn_thongTinHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pn_thongTinHoaDon1Layout.createSequentialGroup()
-                            .addGroup(pn_thongTinHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(pn_thongTinHoaDon1Layout.createSequentialGroup()
-                                    .addGroup(pn_thongTinHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(pn_thongTinHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(txt_giamGia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txt_tongTienHang, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txt_tongSoLuong, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txt_khachCanTra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                .addGroup(pn_thongTinHoaDon1Layout.createSequentialGroup()
-                                    .addGap(106, 106, 106)
-                                    .addComponent(txt_tienKhachDua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGap(6, 6, 6)))
-                            .addGroup(pn_thongTinHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel36)
-                                .addComponent(jLabel37)))
-                        .addGroup(pn_thongTinHoaDon1Layout.createSequentialGroup()
-                            .addGroup(pn_thongTinHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(pn_thongTinHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btn_cancelInvoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txt_tienKhachCK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txt_maGiaoDich, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txt_tienThua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(6, 6, 6)))
-                    .addGap(44, 44, 44)))
+                .addComponent(jLabel35))
+            .addGap(0, 0, Short.MAX_VALUE))
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_thongTinHoaDon1Layout.createSequentialGroup()
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btn_cancelInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap())
     );
+
+    pn_thongTinHoaDon1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txt_giamGia, txt_tongSoLuong, txt_tongTienHang});
+
     pn_thongTinHoaDon1Layout.setVerticalGroup(
         pn_thongTinHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pn_thongTinHoaDon1Layout.createSequentialGroup()
@@ -670,13 +663,13 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
                         .addGroup(pn_thongTinHoaDon1Layout.createSequentialGroup()
                             .addGap(43, 43, 43)
                             .addComponent(jLabel36)
-                            .addGap(129, 129, 129)
+                            .addGap(0, 0, 0)
                             .addComponent(jLabel34)))
-                    .addGap(18, 18, 18)
-                    .addComponent(btn_cancelInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(28, 28, 28)
+                    .addGap(0, 0, 0)
                     .addComponent(jLabel35)))
-            .addContainerGap(26, Short.MAX_VALUE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(btn_cancelInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(78, Short.MAX_VALUE))
     );
 
     javax.swing.GroupLayout asideLayout = new javax.swing.GroupLayout(aside);
@@ -685,15 +678,15 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
         asideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(asideLayout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(pn_thongTinHoaDon1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, Short.MAX_VALUE)
+            .addComponent(pn_thongTinHoaDon1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addContainerGap())
     );
     asideLayout.setVerticalGroup(
         asideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(asideLayout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(pn_thongTinHoaDon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(152, Short.MAX_VALUE))
+            .addComponent(pn_thongTinHoaDon1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(240, 240, 240))
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -707,15 +700,15 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
                     .addComponent(footer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(aside, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(aside, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addContainerGap())
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
             .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(footer, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE))
+            .addComponent(footer, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE))
         .addComponent(aside, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
     }// </editor-fold>//GEN-END:initComponents
@@ -813,7 +806,7 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
         fillIn4Invoice(txt_tongTienHang, hdIn4.getTongTienHang(), hdIn4.getHinh_thuc_thanh_toan());
 
         fillIn4Invoice(txt_giamGia, "0đ");
-        
+
         fillIn4Invoice(txt_khachCanTra, txt_tongTienHang.getText());
 
         fillIn4Invoice(txt_tienKhachDua, hdIn4.getTien_dua(), hdIn4.getHinh_thuc_thanh_toan());
@@ -830,18 +823,21 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
     }
 
     public void fillIn4Invoice(JTextField txt, Object value, String... hinhThucThanhToan) {
-        if (value instanceof Float floatValue) {//            txt.setText(String.format("%.0f", value));
-//            new FormartData().moneyFormat(s.getGia()) + "VND"
+        if (value instanceof Long longValue) {//         
             // Ép kiểu value thành Float
-            Integer integerValue = floatValue.intValue();// Chuyển đổi giá trị Float thành Integer
+            Integer integerValue = longValue.intValue();// Chuyển đổi giá trị Float thành Integer
             txt.setText(String.valueOf(new FormartData().moneyFormat(integerValue) + "VND"));
             if (hinhThucThanhToan != null && hinhThucThanhToan.length > 0) {
+                System.out.println("httt " + hinhThucThanhToan[0]);
                 if ("Tiền mặt".equals(hinhThucThanhToan[0])) {
                     this.txt_tienKhachDua.setText(String.valueOf(new FormartData().moneyFormat(integerValue) + "VND"));
                     this.txt_tienKhachCK.setText("0đ");
-                } else if ("Chuyển khoản".equals(hinhThucThanhToan[0]) || "Quẹt thẻ".equals(hinhThucThanhToan[0])) {
+                } else if (hinhThucThanhToan[0].equals("Chuyển khoản") || "Quẹt thẻ".equals(hinhThucThanhToan[0])) {
                     this.txt_tienKhachCK.setText(String.valueOf(new FormartData().moneyFormat(integerValue) + "VND"));
-                    this.txt_tienKhachCK.setText("0đ");
+                    this.txt_tienKhachDua.setText("0đ");
+                } else {
+                    System.out.println("kq " + hinhThucThanhToan[0].equals("Chuyển khoản"));
+                    System.out.println("Hình thức thanh toán không hợp lệ" + hinhThucThanhToan[0]);
                 }
             }
         } else if (value != null) {
@@ -860,9 +856,9 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
                 hd.getId_san_pham_chi_tiet(),//ID spct trog giỏ hàng
                 hd.getTen_san_pham(),
                 hd.getTen_bien_the(),//Tên SP biến thể có trog giỏ hàng
-                new FormartData().moneyFormat(Integer.valueOf(String.format("%.0f", hd.getGia()))) + "VND",//Giá gốc spbt
+                new FormartData().moneyFormatLong(hd.getGia()) + "VND",//Giá gốc spbt
                 hd.getSo_luong(),//SL spct trog hđct
-                new FormartData().moneyFormat(Integer.valueOf(String.format("%.0f", hd.getTong_tien()))) + "VND",//= SL * giá gốc
+                new FormartData().moneyFormatLong(hd.getTong_tien()) + "VND",//= SL * giá gốc
             };
             model_dssp.addRow(data);
         }

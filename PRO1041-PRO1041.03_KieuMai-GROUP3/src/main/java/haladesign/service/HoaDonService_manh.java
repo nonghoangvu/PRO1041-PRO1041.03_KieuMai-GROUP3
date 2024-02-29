@@ -116,11 +116,11 @@ public class HoaDonService_manh {
 
     public HoaDonManh getHoaDonIn4(String idInvoice) {//Lấy tt in4 Invoice
         String sql = """
-                     select hd.id , SUM (hdct.so_luong) as tong_so_luong , SUM( hdct.tong_tien) as tong_tien_hang , hd.tien_dua, hd.tien_thua , hd.hinh_thuc_thanh_toan
+                    select hd.id , SUM (hdct.so_luong) as tong_so_luong , SUM( hdct.tong_tien) as tong_tien_hang , hd.tien_dua, hd.tien_thua , hd.hinh_thuc_thanh_toan
                      from HoaDon hd 
                      inner join HoaDonChiTiet hdct on hdct.id_hoa_don = hd.id
                      where hd.id = ?
-                     GROUP by hd.id , hdct.so_luong , hdct.tong_tien , hd.tien_dua , hd.tien_thua  , hd.hinh_thuc_thanh_toan """;
+                     GROUP by hd.id , hd.tien_dua , hd.tien_thua  , hd.hinh_thuc_thanh_toan""";
         HoaDonManh hd = selectBySQL(sql, idInvoice).get(0);
         return hd;
     }
@@ -213,15 +213,15 @@ public class HoaDonService_manh {
                         case "trang_thai" ->
                             hd.setTrang_thai_hoa_don(rs.getString(i));
                         case "tong_gia_tri_hoa_don" ->
-                            hd.setTong_gia_tri_hoa_don(rs.getFloat(i));
+                            hd.setTong_gia_tri_hoa_don(rs.getLong(i));
                         case "hinh_thuc_thanh_toan" ->
                             hd.setHinh_thuc_thanh_toan(rs.getString(i));
                         case "ma_giao_dich" ->
                             hd.setMa_giao_dich(rs.getString(i));
                         case "tien_dua" ->
-                            hd.setTien_dua(rs.getFloat(i));
+                            hd.setTien_dua(rs.getLong(i));
                         case "tien_thua" ->
-                            hd.setTien_thua(rs.getFloat(i));
+                            hd.setTien_thua(rs.getLong(i));
                         case "ngay_tao" ->
                             hd.setNgay_tao_hoa_don(rs.getDate(i));
                         case "ngay_sua_hoa_don" ->
@@ -233,9 +233,9 @@ public class HoaDonService_manh {
                         case "so_luong" ->//SL spct mua trog HĐCT 
                             hd.setSo_luong(rs.getInt(i));
                         case "gia" ->//Giá spbt
-                            hd.setGia(rs.getFloat(i));
+                            hd.setGia(rs.getLong(i));
                         case "tong_tien" ->
-                            hd.setTong_tien(rs.getFloat(i));
+                            hd.setTong_tien(rs.getLong(i));
                         //Ngoài luồng
                         case "ho_ten_khach_hang" ->
                             hd.setTenKhachHang(rs.getString(i));
@@ -244,7 +244,7 @@ public class HoaDonService_manh {
                         case "so_dien_thoai" ->
                             hd.setSoDienThoaiKH(rs.getString(i));
                         case "tong_tien_hang" ->
-                            hd.setTongTienHang(rs.getFloat(i));
+                            hd.setTongTienHang(rs.getLong(i));
                         case "tong_so_luong" ->
                             hd.setTong_so_luong(rs.getInt(i));
                         //UI dssp trog spbt

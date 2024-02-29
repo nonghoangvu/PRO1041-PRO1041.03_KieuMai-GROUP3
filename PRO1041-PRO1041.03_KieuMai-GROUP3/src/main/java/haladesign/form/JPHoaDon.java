@@ -411,7 +411,7 @@ public class JPHoaDon extends javax.swing.JPanel {
                     (hd.getTenKhachHang() == null) ? "Khách hàng vãng lại" : hd.getTenKhachHang(),
                     hd.getTrang_thai_hoa_don(),
                     hd.getHinh_thuc_thanh_toan(),
-                    new FormartData().moneyFormat(Integer.valueOf(String.format("%.0f", hd.getTong_gia_tri_hoa_don()))) + "VND"
+                    new FormartData().moneyFormatLong(hd.getTong_gia_tri_hoa_don()) + "VND"
                 };
                 model_DSHD.addRow(data);
                 TableActionEvent1 event = new TableActionEvent1() {
