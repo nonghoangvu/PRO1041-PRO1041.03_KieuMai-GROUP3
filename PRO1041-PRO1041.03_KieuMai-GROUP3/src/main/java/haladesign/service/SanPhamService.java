@@ -46,6 +46,10 @@ public class SanPhamService {
     public List<SanPham> getListSearch(String search, Boolean status) {
         return this.iSP.findByIdAndName(search, status);
     }
+    
+    public List<SanPham> getListSearchMaster(String name, String size, String color, String chatLieu) {
+        return this.iSP.findMasterProduct(name, size, color, chatLieu);
+    }
 
     public List<SanPham> getByIdSanPham(String id) {
         return this.iSP.findByIdSanPham(id);

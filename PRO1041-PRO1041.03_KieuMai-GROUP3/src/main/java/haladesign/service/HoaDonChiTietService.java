@@ -47,7 +47,7 @@ public class HoaDonChiTietService {
                 SanPhamChiTiet spbt = new SanPhamChiTiet();
                 spbt.setId(rs.getLong(3));
                 spbt.setTenBienThe(rs.getString(4));
-                spbt.setColor(new Color(rs.getString(5)));
+//                spbt.setColor(new Color(rs.getString(5)));
                 spbt.setSize(new Size(rs.getString(6)));
                 hdct.setGia(rs.getInt(7));
                 hdct.setSp(spbt);

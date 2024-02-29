@@ -86,8 +86,4 @@ public class Color {
         return Objects.equals(this.sanPhamBienTheList, other.sanPhamBienTheList);
     }
 
-    public Color(String loaiMau) {
-        this.loaiMau = loaiMau;
-    }
-
 }

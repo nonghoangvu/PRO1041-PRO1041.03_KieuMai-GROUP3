@@ -38,4 +38,23 @@ public interface ISanPham extends JpaRepository<SanPham, String> {
             + "LEFT JOIN FETCH bienThe.color color "
             + "WHERE sp.id = :productId")
     SanPham findSanPham(@Param("productId") String productId);
+    
+    @Query("SELECT sp FROM SanPham sp "
+            + "LEFT JOIN FETCH sp.bienTheList bienThe "
+            + "LEFT JOIN FETCH bienThe.size size "
+            + "LEFT JOIN FETCH bienThe.color color "
+            + "LEFT JOIN FETCH bienThe.chatLieu chatLieu "
+            + "WHERE sp.trang_thai = true "
+            + "AND (sp.ten_san_pham LIKE %:name% OR :name IS NULL) "
+            + "AND (size.loaiSize = :size OR :size IS NULL) "
+            + "AND (color.loaiMau = :color OR :color IS NULL) "
+            + "AND (chatLieu.loaiChatLieu = :chatLieu OR :chatLieu IS NULL) "
+            + "AND bienThe.soLuong > 0"
+    )
+    public List<SanPham> findMasterProduct(
+            @Param("name") String name, 
+            @Param("size") String size,
+            @Param("color") String color,
+            @Param("chatLieu") String chatLieu
+    );
 }

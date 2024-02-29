@@ -38,7 +38,7 @@ public class SanPhamBienTheService {
                 spbt.setId(rs.getLong(1));
                 spbt.setTenBienThe(rs.getString(2));
                 spbt.setSize(new Size(rs.getString(3)));
-                spbt.setColor(new Color(rs.getString(4)));
+//                spbt.setColor(new Color(rs.getString(4)));
                 spbt.setSoLuong(rs.getInt(5));
 //                spbt.setGia(rs.getInt(6));
 //                spbt.setHinhAnh(rs.getString(7));
@@ -84,7 +84,7 @@ public class SanPhamBienTheService {
                 spbt.setId(rs.getLong(1));
                 spbt.setTenBienThe(rs.getString(2));
                 spbt.setSize(new Size(rs.getString(3)));
-                spbt.setColor(new Color(rs.getString(4)));
+//                spbt.setColor(new Color(rs.getString(4)));
                 spbt.setSoLuong(rs.getInt(5));
 //                spbt.setGia(rs.getInt(6));
 //                spbt.setHinhAnh(rs.getString(7));

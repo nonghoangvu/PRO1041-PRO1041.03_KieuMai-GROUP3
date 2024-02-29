@@ -16,14 +16,14 @@ import javaswingdev.GoogleMaterialDesignIcon;
  * @author NONG HOANG VU
  */
 public class UpdateCart extends javax.swing.JPanel {
-
+    
     private final SellForm sellForm;
     private SanPhamChiTiet sanPhamChiTiet;
     private final BillService billService;
     private final Main main;
     private final String idHoaDon;
     private GoogleMaterialDesignIcon icon;
-
+    
     public UpdateCart(Main main, SellForm sellForm, String idHoaDon, String soHoaDon, String idSanPham, String soLuongHienTai) {
         initComponents();
         this.sellForm = sellForm;
@@ -35,7 +35,7 @@ public class UpdateCart extends javax.swing.JPanel {
         setIconButton();
         lbSoLuongHienTai.setText(soLuongHienTai);
     }
-
+    
     private void setIconButton() {
         btnAdd.setColor1(Color.BLACK);
         btnAdd.setColor2(Color.BLACK);
@@ -49,7 +49,7 @@ public class UpdateCart extends javax.swing.JPanel {
         btnRemove.setColor2(Color.BLACK);
         btnRemove.setIconButton(this.icon.DELETE);
     }
-
+    
     private void setLable(String idSanPham) {
         this.sanPhamChiTiet = this.billService.getSanPhamChiTiet(idSanPham);
         lbTen.setText(this.sanPhamChiTiet.getId_san_pham().getTen_san_pham());
@@ -59,7 +59,7 @@ public class UpdateCart extends javax.swing.JPanel {
         lbGia.setText(String.valueOf(new FormartData().moneyFormatLong(this.sanPhamChiTiet.getGia())) + "VND");
         lbSoLuong.setText(String.valueOf(this.sanPhamChiTiet.getSoLuong()));
     }
-
+    
     private Boolean isValidate() {
         try {
             if (Integer.parseInt(txtSoLuong.getText().trim()) < 1) {
@@ -78,18 +78,19 @@ public class UpdateCart extends javax.swing.JPanel {
         }
         return true;
     }
-
+    
     private Boolean isValidateUpdate() {
         try {
             if ((Integer.parseInt(txtSoLuong.getText().trim())) <= 0) {
                 new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Phải có ít nhất 1 sản phẩm trong giỏ hàng!").showNotification();
                 txtSoLuong.requestFocus();
                 return false;
-            } else if (Integer.valueOf(txtSoLuong.getText().trim()) > this.sanPhamChiTiet.getSoLuong()) {
+            } else if ((Integer.valueOf(lbSoLuongHienTai.getText().trim()) + this.sanPhamChiTiet.getSoLuong()) - Integer.parseInt(txtSoLuong.getText().trim()) < 0) {
                 new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Số lượng không đủ!").showNotification();
                 txtSoLuong.requestFocus();
                 return false;
             }
+//            Integer.valueOf(txtSoLuong.getText().trim()) > this.sanPhamChiTiet.getSoLuong()
         } catch (NumberFormatException e) {
             new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Số lượng phải là số!").showNotification();
             txtSoLuong.requestFocus();
@@ -97,7 +98,7 @@ public class UpdateCart extends javax.swing.JPanel {
         }
         return true;
     }
-
+    
     private void addToCard() {
         JPAHoaDonChiTiet hoaDonChiTiet = new JPAHoaDonChiTiet();
         hoaDonChiTiet.setHoaDon(this.billService.getJPAHoaDonById(this.idHoaDon));
@@ -107,12 +108,13 @@ public class UpdateCart extends javax.swing.JPanel {
         hoaDonChiTiet.setTongTien(this.sanPhamChiTiet.getGia() * Integer.valueOf(txtSoLuong.getText().trim()));
         if (this.billService.addToCart(hoaDonChiTiet)) {
             new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Đã thêm thành công vào giỏ hàng").showNotification();;
+            this.sellForm.clear();
             this.sellForm.fillTableSanPham();
             this.sellForm.fillTableSlectBill();
             GlassPanePopup.closePopupLast();
         }
     }
-
+    
     private void updateCart() {
         JPAHoaDonChiTiet hoaDonChiTiet = new JPAHoaDonChiTiet();
         hoaDonChiTiet.setHoaDon(this.billService.getJPAHoaDonById(this.idHoaDon));
@@ -122,24 +124,26 @@ public class UpdateCart extends javax.swing.JPanel {
         hoaDonChiTiet.setTongTien(this.sanPhamChiTiet.getGia() * Integer.valueOf(txtSoLuong.getText().trim()));
         if (this.billService.updateCartItem(hoaDonChiTiet)) {
             new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Sửa thành công").showNotification();;
+            this.sellForm.clear();
             this.sellForm.fillTableSanPham();
             this.sellForm.fillTableSlectBill();
             GlassPanePopup.closePopupLast();
         }
     }
-
+    
     private void deleteCart() {
         JPAHoaDonChiTiet hoaDonChiTiet = new JPAHoaDonChiTiet();
         hoaDonChiTiet.setHoaDon(this.billService.getJPAHoaDonById(this.idHoaDon));
         hoaDonChiTiet.setSanPhamChiTiet(this.sanPhamChiTiet);
         if (this.billService.deleteCartItem(hoaDonChiTiet)) {
             new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Xóa thành công").showNotification();;
+            this.sellForm.clear();
             this.sellForm.fillTableSanPham();
             this.sellForm.fillTableSlectBill();
             GlassPanePopup.closePopupLast();
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

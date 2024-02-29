@@ -78,6 +78,7 @@ public class AddToCart extends javax.swing.JPanel {
         hoaDonChiTiet.setTongTien(this.sanPhamChiTiet.getGia() * Integer.valueOf(txtSoLuong.getText().trim()));
         if (this.billService.addToCart(hoaDonChiTiet)) {
             new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Đã thêm thành công vào giỏ hàng").showNotification();;
+            this.sellForm.clear();
             this.sellForm.fillTableSanPham();
             this.sellForm.fillTableSlectBill();
             GlassPanePopup.closePopupLast();

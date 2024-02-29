@@ -9,6 +9,7 @@ import haladesign.model.JPAHoaDonChiTiet;
 import haladesign.model.KhachHang;
 import haladesign.model.NhanVien;
 import haladesign.model.SanPham;
+import haladesign.model.Size;
 import haladesign.service.BillService;
 import haladesign.service.SanPhamService;
 import haladesign.system.GlassPanePopup;
@@ -21,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import javaswingdev.GoogleMaterialDesignIcon;
 import javax.swing.AbstractAction;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -53,6 +55,9 @@ public class SellForm extends javax.swing.JPanel {
         fillCombo();
         fillTableHoaDon();
         fillTableSanPham();
+        fillSize();
+        fillColor();
+        fillChatLieu();
         change();
         clear();
         setIconButton();
@@ -149,6 +154,67 @@ public class SellForm extends javax.swing.JPanel {
         btnHuy.setColor1(Color.BLACK);
         btnHuy.setColor2(Color.BLACK);
         btnHuy.setIconButton(this.icon.CANCEL);
+
+        btnSearch.setColor1(Color.BLACK);
+        btnSearch.setColor2(Color.BLACK);
+        btnSearch.setIconButton(this.icon.SEARCH);
+    }
+
+    private void fillSize() {
+        DefaultComboBoxModel<Size> cbbModel = new DefaultComboBoxModel<>();
+        Size sizeNull = new Size();
+        sizeNull.setLoaiSize("Chọn");
+        cbbSize.removeAll();
+        cbbSize.setModel(cbbModel);
+        cbbModel.addElement(sizeNull);
+        this.sanPhamService.getSize().forEach(size -> {
+            if (size.getTrangThai()) {
+                cbbModel.addElement(size);
+            }
+        });
+    }
+
+    private void fillColor() {
+        DefaultComboBoxModel<haladesign.model.Color> cbbModel = new DefaultComboBoxModel<>();
+        haladesign.model.Color colorNull = new haladesign.model.Color();
+        colorNull.setLoaiMau("Chọn");
+        cbbColor.removeAll();
+        cbbColor.setModel(cbbModel);
+        cbbModel.addElement(colorNull);
+        this.sanPhamService.getCOlor().forEach(color -> {
+            if (color.getTrangThai()) {
+                cbbModel.addElement(color);
+            }
+        });
+    }
+
+    private void fillChatLieu() {
+        DefaultComboBoxModel<haladesign.model.ChatLieu> cbbModel = new DefaultComboBoxModel<>();
+        haladesign.model.ChatLieu chatLieuNull = new haladesign.model.ChatLieu();
+        chatLieuNull.setLoaiChatLieu("Chọn");
+        cbbChatLieu.removeAll();
+        cbbChatLieu.setModel(cbbModel);
+        cbbModel.addElement(chatLieuNull);
+        this.sanPhamService.getChatLieu().forEach(chatLieu -> {
+            if (chatLieu.getTrangThai()) {
+                cbbModel.addElement(chatLieu);
+            }
+        });
+    }
+
+    private Size getSizeForm() {
+        Size size = (Size) cbbSize.getSelectedItem();
+        return size;
+    }
+
+    private haladesign.model.Color getColorForm() {
+        haladesign.model.Color color = (haladesign.model.Color) cbbColor.getSelectedItem();
+        return color;
+    }
+
+    private haladesign.model.ChatLieu getChatLieuForm() {
+        haladesign.model.ChatLieu chatLieu = (haladesign.model.ChatLieu) cbbChatLieu.getSelectedItem();
+        return chatLieu;
     }
 
     public void fillTableHoaDon() {
@@ -167,7 +233,11 @@ public class SellForm extends javax.swing.JPanel {
     }
 
     public void fillTableSanPham() {
-        List<SanPham> sanPhamList = txtSearch.getText().isBlank() ? this.sanPhamService.getList() : this.sanPhamService.getListSearch(txtSearch.getText(), true);
+        String name = txtSearch.getText().isBlank() ? null : txtSearch.getText().trim();
+        String size = cbbSize.getSelectedIndex() <= 0 ? null : getSizeForm().getLoaiSize();
+        String color = cbbColor.getSelectedIndex() <= 0 ? null : getColorForm().getLoaiMau();
+        String chatLieu = cbbChatLieu.getSelectedIndex() <= 0 ? null : getChatLieuForm().getLoaiChatLieu();
+        List<SanPham> sanPhamList = this.sanPhamService.getListSearchMaster(name, size, color, chatLieu);
         this.tblModel = (DefaultTableModel) tblSanPham.getModel();
         tblModel.setRowCount(0);
         sanPhamList.forEach(data -> {
@@ -235,6 +305,7 @@ public class SellForm extends javax.swing.JPanel {
     private void cancelBill() {
         if (this.billService.cancellingBill(String.valueOf(tblDanhSachHoaDon.getValueAt(tblDanhSachHoaDon.getSelectedRow(), 1)))) {
             new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Đã hủy thành công một hóa đơn").showNotification();
+            clear();
             fillTableHoaDon();
             fillTableSanPham();
             lbHoaDon.setText("Chưa có hóa đơn được chọn");
@@ -291,7 +362,7 @@ public class SellForm extends javax.swing.JPanel {
 
     }
 
-    private void clear() {
+    public void clear() {
         lbHoaDon.setText("Chưa có hóa đơn được chọn");
         tblModel = (DefaultTableModel) tblGioHang.getModel();
         tblModel.setRowCount(0);
@@ -304,6 +375,10 @@ public class SellForm extends javax.swing.JPanel {
         lbChange.setText("0VND");
         txtTienKhachDua.setText("");
         txtTienKhachDua.setEditable(false);
+        txtSearch.setText("");
+        cbbSize.setSelectedIndex(0);
+        cbbColor.setSelectedIndex(0);
+        cbbChatLieu.setSelectedIndex(0);
     }
 
     private void unlockClear() {
@@ -344,6 +419,10 @@ public class SellForm extends javax.swing.JPanel {
         jScrollPane3 = new haladesign.swing.scroll.ScrollPaneWin11();
         tblSanPham = new haladesign.swing.table.Table();
         lbHoaDon = new javax.swing.JLabel();
+        btnSearch = new haladesign.swingStyle.Button();
+        cbbSize = new haladesign.swingStyle.Combobox();
+        cbbColor = new haladesign.swingStyle.Combobox();
+        cbbChatLieu = new haladesign.swingStyle.Combobox();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -576,6 +655,34 @@ public class SellForm extends javax.swing.JPanel {
         lbHoaDon.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbHoaDon.setText("Chưa có hóa đơn được chọn");
 
+        btnSearch.setBorder(null);
+        btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSearchMouseClicked(evt);
+            }
+        });
+
+        cbbSize.setLabeText("Size");
+        cbbSize.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbSizeItemStateChanged(evt);
+            }
+        });
+
+        cbbColor.setLabeText("Color");
+        cbbColor.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbColorItemStateChanged(evt);
+            }
+        });
+
+        cbbChatLieu.setLabeText("Chất liệu");
+        cbbChatLieu.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbChatLieuItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -586,7 +693,6 @@ public class SellForm extends javax.swing.JPanel {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1055, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -601,11 +707,24 @@ public class SellForm extends javax.swing.JPanel {
                             .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(2, 2, 2)
-                                .addComponent(jScrollPane2)))
+                                .addComponent(jScrollPane2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(5, 5, 5)
+                                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbbSize, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbbColor, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbbChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cbbChatLieu, cbbColor, cbbSize});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -625,9 +744,20 @@ public class SellForm extends javax.swing.JPanel {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
                         .addComponent(jLabel4)
-                        .addGap(10, 10, 10)
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(7, 7, 7))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(cbbSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cbbColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cbbChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(30, 30, 30))
@@ -639,6 +769,7 @@ public class SellForm extends javax.swing.JPanel {
         txtTienKhachDua.setText("");
         lbTrangThaiTien.setText("Tiền thừa:");
         fillTableSlectBill();
+        txtSearch.setText("");
         unlockClear();
     }//GEN-LAST:event_tblDanhSachHoaDonMouseClicked
 
@@ -670,6 +801,7 @@ public class SellForm extends javax.swing.JPanel {
                 public void actionPerformed(ActionEvent e) {
                     createHoaDon();
                     clear();
+                    fillTableSanPham();
                     GlassPanePopup.closePopupLast();
                 }
             });
@@ -725,11 +857,31 @@ public class SellForm extends javax.swing.JPanel {
         GlassPanePopup.showPopup(cart);
     }//GEN-LAST:event_tblGioHangMouseClicked
 
+    private void btnSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseClicked
+        fillTableSanPham();
+    }//GEN-LAST:event_btnSearchMouseClicked
+
+    private void cbbSizeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbSizeItemStateChanged
+        fillTableSanPham();
+    }//GEN-LAST:event_cbbSizeItemStateChanged
+
+    private void cbbColorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbColorItemStateChanged
+        fillTableSanPham();
+    }//GEN-LAST:event_cbbColorItemStateChanged
+
+    private void cbbChatLieuItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbChatLieuItemStateChanged
+        fillTableSanPham();
+    }//GEN-LAST:event_cbbChatLieuItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private haladesign.swingStyle.Button btnHuy;
+    private haladesign.swingStyle.Button btnSearch;
     private haladesign.swingStyle.Button btnTaoHoaDon;
     private haladesign.swingStyle.Button btnThanhToan;
+    private haladesign.swingStyle.Combobox cbbChatLieu;
+    private haladesign.swingStyle.Combobox cbbColor;
+    private haladesign.swingStyle.Combobox cbbSize;
     private haladesign.swingStyle.Combobox cbbTypePay;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
