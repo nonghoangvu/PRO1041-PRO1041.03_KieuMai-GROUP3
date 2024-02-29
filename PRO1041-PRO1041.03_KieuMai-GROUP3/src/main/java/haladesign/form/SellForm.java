@@ -1,6 +1,7 @@
 package haladesign.form;
 
 import haladesign.Utitlity.FormartData;
+import haladesign.Utitlity.GeneratePdf_Modified;
 import haladesign.component.AddToCart;
 import haladesign.component.UpdateCart;
 import haladesign.mainMenu.Main;
@@ -15,6 +16,7 @@ import haladesign.service.SanPhamService;
 import haladesign.system.GlassPanePopup;
 import haladesign.system.Message;
 import haladesign.system.Notification;
+import haladesign.system.SystemColor;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -154,7 +156,7 @@ public class SellForm extends javax.swing.JPanel {
         btnHuy.setColor1(Color.BLACK);
         btnHuy.setColor2(Color.BLACK);
         btnHuy.setIconButton(this.icon.CANCEL);
-
+        lbFake.setText(SystemColor.COPYRIGHT);
         btnSearch.setColor1(Color.BLACK);
         btnSearch.setColor2(Color.BLACK);
         btnSearch.setIconButton(this.icon.SEARCH);
@@ -234,6 +236,7 @@ public class SellForm extends javax.swing.JPanel {
 
     public void fillTableSanPham() {
         String name = txtSearch.getText().isBlank() ? null : txtSearch.getText().trim();
+        lbFake.setText(SystemColor.COPYRIGHT);
         String size = cbbSize.getSelectedIndex() <= 0 ? null : getSizeForm().getLoaiSize();
         String color = cbbColor.getSelectedIndex() <= 0 ? null : getColorForm().getLoaiMau();
         String chatLieu = cbbChatLieu.getSelectedIndex() <= 0 ? null : getChatLieuForm().getLoaiChatLieu();
@@ -261,6 +264,7 @@ public class SellForm extends javax.swing.JPanel {
     public void fillTableSlectBill() {
         lbHoaDon.setText(String.valueOf(tblDanhSachHoaDon.getSelectedRow() + 1));
         this.tblModel = (DefaultTableModel) tblGioHang.getModel();
+        lbFake.setText(SystemColor.COPYRIGHT);
         tblModel.setRowCount(0);
         this.totalMoney = 0L;
         txtSoDienThoai.setEnabled(true);
@@ -296,6 +300,7 @@ public class SellForm extends javax.swing.JPanel {
         hd.setNgayTao(new Date());
         if (this.billService.createBill(hd)) {
             new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Đã tạo mới một hóa đơn").showNotification();
+            lbFake.setText(SystemColor.COPYRIGHT);
             fillTableHoaDon();
             tblModel = (DefaultTableModel) tblGioHang.getModel();
             tblModel.setRowCount(0);
@@ -304,6 +309,7 @@ public class SellForm extends javax.swing.JPanel {
 
     private void cancelBill() {
         if (this.billService.cancellingBill(String.valueOf(tblDanhSachHoaDon.getValueAt(tblDanhSachHoaDon.getSelectedRow(), 1)))) {
+            lbFake.setText(SystemColor.COPYRIGHT);
             new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Đã hủy thành công một hóa đơn").showNotification();
             clear();
             fillTableHoaDon();
@@ -318,9 +324,11 @@ public class SellForm extends javax.swing.JPanel {
 
     private void pay() {
         try {
+            lbFake.setText(SystemColor.COPYRIGHT);
             if (txtTienKhachDua.getText().trim().isBlank()) {
                 txtTienKhachDua.requestFocus();
                 new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng nhập tiền khách đưa!").showNotification();
+                lbFake.setText(SystemColor.COPYRIGHT);
             } else if (Long.valueOf(txtTienKhachDua.getText().trim()) < this.totalMoney) {
                 txtTienKhachDua.requestFocus();
                 new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Tiền khách đưa không đủ!").showNotification();
@@ -336,6 +344,7 @@ public class SellForm extends javax.swing.JPanel {
                     }
                     kh.setSo_dien_thoai(txtSoDienThoai.getText().trim());
                     kh.setHo_ten(txtTenKhachHang.getText().trim());
+                    lbFake.setText(SystemColor.COPYRIGHT);
                     kh.setNgay_tao(new Date());
                     this.billService.createCustomer(kh);
                 }
@@ -351,7 +360,9 @@ public class SellForm extends javax.swing.JPanel {
                 hd.setKhachHang(kh);
                 if (this.billService.payBill(hd)) {
                     fillTableHoaDon();
+                    new GeneratePdf_Modified().printBill(idHoaDon);
                     clear();
+                    lbFake.setText(SystemColor.COPYRIGHT);
                     new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Thanh toán thành công").showNotification();
                 }
             }
@@ -369,6 +380,7 @@ public class SellForm extends javax.swing.JPanel {
         this.totalMoney = 0L;
         txtSoDienThoai.setEnabled(false);
         txtTenKhachHang.setEnabled(false);
+        lbFake.setText(SystemColor.COPYRIGHT);
         txtSoDienThoai.setText("");
         txtTenKhachHang.setText("");
         lbTongTienHang.setText("0VND");
@@ -383,6 +395,7 @@ public class SellForm extends javax.swing.JPanel {
 
     private void unlockClear() {
         txtSoDienThoai.setEnabled(true);
+        lbFake.setText(SystemColor.COPYRIGHT);
         txtTenKhachHang.setEnabled(true);
         txtTienKhachDua.setEditable(true);
     }
@@ -423,6 +436,7 @@ public class SellForm extends javax.swing.JPanel {
         cbbSize = new haladesign.swingStyle.Combobox();
         cbbColor = new haladesign.swingStyle.Combobox();
         cbbChatLieu = new haladesign.swingStyle.Combobox();
+        lbFake = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -683,44 +697,53 @@ public class SellForm extends javax.swing.JPanel {
             }
         });
 
+        lbFake.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbFake.setForeground(new java.awt.Color(229, 229, 229));
+        lbFake.setText(" ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1055, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(lbFake, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1055, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(2, 2, 2)
+                                                .addComponent(jLabel3)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(lbHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(103, 103, 103))
+                                    .addComponent(jScrollPane1)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(2, 2, 2)
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lbHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(103, 103, 103))
-                            .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addComponent(jScrollPane2))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(5, 5, 5)
-                                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jScrollPane2))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(5, 5, 5)
+                                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(cbbSize, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(cbbColor, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(cbbChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
-                                .addComponent(cbbSize, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbbColor, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbbChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20))
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(20, 20, 20))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cbbChatLieu, cbbColor, cbbSize});
@@ -760,7 +783,9 @@ public class SellForm extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(30, 30, 30))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbFake)
+                .addGap(8, 8, 8))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -768,6 +793,7 @@ public class SellForm extends javax.swing.JPanel {
         this.totalMoney = 0L;
         txtTienKhachDua.setText("");
         lbTrangThaiTien.setText("Tiền thừa:");
+        lbFake.setText(SystemColor.COPYRIGHT);
         fillTableSlectBill();
         txtSearch.setText("");
         unlockClear();
@@ -776,15 +802,18 @@ public class SellForm extends javax.swing.JPanel {
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         if (tblDanhSachHoaDon.getSelectedRow() < 0) {
             new Notification(this.main, Notification.Type.INFO, Notification.Location.TOP_RIGHT, "Chưa có hóa đơn nào được chọn!").showNotification();
+            lbFake.setText(SystemColor.COPYRIGHT);
             return;
         }
         if (this.totalMoney < 500) {
+            lbFake.setText(SystemColor.COPYRIGHT);
             new Notification(this.main, Notification.Type.INFO, Notification.Location.TOP_RIGHT, "Hóa đơn phải có ít nhất một sản phẩm!").showNotification();
             return;
         }
         try {
             pay();
         } catch (Exception e) {
+            lbFake.setText(SystemColor.COPYRIGHT);
             new Notification(this.main, Notification.Type.INFO, Notification.Location.TOP_RIGHT, "Thanh toán thất bại do số tiền quá lớn hệ thống không thể xử lý!").showNotification();
         }
     }//GEN-LAST:event_btnThanhToanActionPerformed
@@ -795,6 +824,7 @@ public class SellForm extends javax.swing.JPanel {
         } else {
             Message ms = new Message();
             ms.setTitle("Xác minh");
+            lbFake.setText(SystemColor.COPYRIGHT);
             ms.setMessage("Bạn có muốn tiếp tục tạo hóa đơn không?");
             ms.eventOK(new AbstractAction() {
                 @Override
@@ -816,6 +846,7 @@ public class SellForm extends javax.swing.JPanel {
             Message ms = new Message();
             ms.setTitle("Xác minh");
             ms.setMessage("Bạn có muốn hủy hóa đơn này không?");
+            lbFake.setText(SystemColor.COPYRIGHT);
             ms.eventOK(new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -839,6 +870,7 @@ public class SellForm extends javax.swing.JPanel {
         }
         String idHoaDon = String.valueOf(tblDanhSachHoaDon.getValueAt(tblDanhSachHoaDon.getSelectedRow(), 1));
         String soHoaDon = String.valueOf(tblDanhSachHoaDon.getSelectedRow() + 1);
+        lbFake.setText(SystemColor.COPYRIGHT);
         String idSanPham = String.valueOf(tblSanPham.getValueAt(tblSanPham.getSelectedRow(), 0));
         AddToCart addToCard = new AddToCart(this.main, this, idHoaDon, soHoaDon, idSanPham);
         GlassPanePopup.showPopup(addToCard);
@@ -851,8 +883,10 @@ public class SellForm extends javax.swing.JPanel {
         }
         String idHoaDon = String.valueOf(tblDanhSachHoaDon.getValueAt(tblDanhSachHoaDon.getSelectedRow(), 1));
         String soHoaDon = String.valueOf(tblDanhSachHoaDon.getSelectedRow() + 1);
+        lbFake.setText(SystemColor.COPYRIGHT);
         String idSanPham = String.valueOf(tblGioHang.getValueAt(tblGioHang.getSelectedRow(), 0));
         String soLuongHienTai = String.valueOf(tblGioHang.getValueAt(tblGioHang.getSelectedRow(), 5));
+        lbFake.setText(SystemColor.COPYRIGHT);
         UpdateCart cart = new UpdateCart(this.main, this, idHoaDon, soHoaDon, idSanPham, soLuongHienTai);
         GlassPanePopup.showPopup(cart);
     }//GEN-LAST:event_tblGioHangMouseClicked
@@ -897,6 +931,7 @@ public class SellForm extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JLabel lbChange;
+    private javax.swing.JLabel lbFake;
     private javax.swing.JLabel lbHoaDon;
     private javax.swing.JLabel lbTongTienHang;
     private javax.swing.JLabel lbTrangThaiTien;
