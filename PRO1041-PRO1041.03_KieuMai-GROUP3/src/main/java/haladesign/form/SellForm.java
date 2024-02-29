@@ -3,6 +3,7 @@ package haladesign.form;
 import haladesign.Utitlity.FormartData;
 import haladesign.Utitlity.GeneratePdf_Modified;
 import haladesign.component.AddToCart;
+import haladesign.component.TransactionCode;
 import haladesign.component.UpdateCart;
 import haladesign.mainMenu.Main;
 import haladesign.model.JPAHoaDon;
@@ -43,6 +44,7 @@ public class SellForm extends javax.swing.JPanel {
     private Long totalMoney = 0L;
     private Long tienThua = 0L;
     private GoogleMaterialDesignIcon icon;
+    public String code = null;
 
     public SellForm(NhanVien nhanVien, Main main) {
         initComponents();
@@ -322,7 +324,15 @@ public class SellForm extends javax.swing.JPanel {
         }
     }
 
-    private void pay() {
+    public void setTransactionCode(String code) {
+        this.code = code;
+    }
+
+    public String getTransactionCode() {
+        return this.code;
+    }
+
+    public void pay() {
         try {
             lbFake.setText(SystemColor.COPYRIGHT);
             if (txtTienKhachDua.getText().trim().isBlank()) {
@@ -358,11 +368,14 @@ public class SellForm extends javax.swing.JPanel {
                 hd.setTienDua(Long.valueOf(txtTienKhachDua.getText().trim()));
                 hd.setTienThua(this.tienThua);
                 hd.setKhachHang(kh);
+                hd.setMaGiaoDich(this.code);
                 if (this.billService.payBill(hd)) {
                     fillTableHoaDon();
                     new GeneratePdf_Modified().printBill(idHoaDon);
                     clear();
                     lbFake.setText(SystemColor.COPYRIGHT);
+                    this.code = null;
+                    clear();
                     new Notification(this.main, Notification.Type.SUCCESS, Notification.Location.TOP_RIGHT, "Thanh toán thành công").showNotification();
                 }
             }
@@ -811,8 +824,22 @@ public class SellForm extends javax.swing.JPanel {
             return;
         }
         try {
-            pay();
-        } catch (Exception e) {
+            if (cbbTypePay.getSelectedIndex() == 1) {
+                if (txtTienKhachDua.getText().trim().isBlank()) {
+                    txtTienKhachDua.requestFocus();
+                    new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Vui lòng nhập tiền khách đưa!").showNotification();
+                    lbFake.setText(SystemColor.COPYRIGHT);
+                } else if (Long.valueOf(txtTienKhachDua.getText().trim()) < this.totalMoney) {
+                    txtTienKhachDua.requestFocus();
+                    new Notification(this.main, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Tiền khách đưa không đủ!").showNotification();
+                } else {
+                    TransactionCode transactionCode = new TransactionCode(this.main, this);
+                    GlassPanePopup.showPopup(transactionCode);
+                }
+            } else {
+                pay();
+            }
+        } catch (NumberFormatException e) {
             lbFake.setText(SystemColor.COPYRIGHT);
             new Notification(this.main, Notification.Type.INFO, Notification.Location.TOP_RIGHT, "Thanh toán thất bại do số tiền quá lớn hệ thống không thể xử lý!").showNotification();
         }
