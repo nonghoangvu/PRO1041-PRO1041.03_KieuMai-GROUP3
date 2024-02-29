@@ -88,7 +88,7 @@ CREATE TABLE [HoaDon] (
   [id_khach_hang] INT,
   [id_nhan_vien] INT,
   [trang_thai] NVARCHAR(100),
-  [tong_gia_tri_hoa_don] INT,
+  [tong_gia_tri_hoa_don] BIGINT,
   [hinh_thuc_thanh_toan] NVARCHAR(MAX),
   [ma_giao_dich] NVARCHAR(MAX),
   [tien_dua] BIGINT,
