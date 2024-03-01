@@ -116,11 +116,11 @@ public class HoaDonService_manh {
 
     public HoaDonManh getHoaDonIn4(String idInvoice) {//Lấy tt in4 Invoice
         String sql = """
-                    select hd.id , SUM (hdct.so_luong) as tong_so_luong , SUM( hdct.tong_tien) as tong_tien_hang , hd.tien_dua, hd.tien_thua , hd.hinh_thuc_thanh_toan
-                     from HoaDon hd 
-                     inner join HoaDonChiTiet hdct on hdct.id_hoa_don = hd.id
-                     where hd.id = ?
-                     GROUP by hd.id , hd.tien_dua , hd.tien_thua  , hd.hinh_thuc_thanh_toan""";
+                  select hd.id , SUM (hdct.so_luong) as tong_so_luong , SUM( hdct.tong_tien) as tong_tien_hang , hd.tien_dua, hd.tien_thua , hd.hinh_thuc_thanh_toan , hd.ma_giao_dich
+                  from HoaDon hd 
+                  inner join HoaDonChiTiet hdct on hdct.id_hoa_don = hd.id
+                  where hd.id = ?
+                  GROUP by hd.id , hd.tien_dua , hd.tien_thua  , hd.hinh_thuc_thanh_toan , hd.ma_giao_dich""";
         HoaDonManh hd = selectBySQL(sql, idInvoice).get(0);
         return hd;
     }

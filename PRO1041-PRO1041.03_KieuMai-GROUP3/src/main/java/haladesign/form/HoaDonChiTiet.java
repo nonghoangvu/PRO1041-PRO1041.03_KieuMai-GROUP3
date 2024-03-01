@@ -835,9 +835,6 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
                 } else if (hinhThucThanhToan[0].equals("Chuyển khoản") || "Quẹt thẻ".equals(hinhThucThanhToan[0])) {
                     this.txt_tienKhachCK.setText(String.valueOf(new FormartData().moneyFormat(integerValue) + "VND"));
                     this.txt_tienKhachDua.setText("0đ");
-                } else {
-                    System.out.println("kq " + hinhThucThanhToan[0].equals("Chuyển khoản"));
-                    System.out.println("Hình thức thanh toán không hợp lệ" + hinhThucThanhToan[0]);
                 }
             }
         } else if (value != null) {
@@ -867,7 +864,7 @@ btn_arrow.addActionListener(new java.awt.event.ActionListener() {
     public void deleteInvoice(String idInvoice) {
         Message ms = new Message();
         ms.setTitle("Thông báo");
-        ms.setMessage("Bạn có muốn xóa hóa đơn " + idInvoice);
+        ms.setMessage("Bạn có muốn hủy hóa đơn " + idInvoice);
         ms.eventOK(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {//Sự kiện khi nhấn oke
