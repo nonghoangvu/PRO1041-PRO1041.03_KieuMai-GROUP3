@@ -132,9 +132,9 @@ public class SuaTaiKhoan extends javax.swing.JPanel {
     }
 
     public void fillDataToForm(NhanVien nvien) {
-        txtFullname.setText((nvien.getFullName() == null) ? "" : nvien.getFullName());
-        txtPhonenum.setText((nvien.getPhoneNum()) == null ? "" : nvien.getPhoneNum());
-        txtEmail.setText((nvien.getEmail()) == null ? "" : nvien.getEmail());
+        txtFullname.setText((nvien.getFullName() == null) ? "" : nvien.getFullName().trim());
+        txtPhonenum.setText((nvien.getPhoneNum()) == null ? "" : nvien.getPhoneNum().trim());
+        txtEmail.setText((nvien.getEmail()) == null ? "" : nvien.getEmail().trim());
         if (nvien.getGender() == null) {
             cboGender.setSelectedIndex(2);
         } else if (nvien.getGender()) {
