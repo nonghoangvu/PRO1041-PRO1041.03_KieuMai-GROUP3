@@ -116,13 +116,13 @@ public class SuaTaiKhoan extends javax.swing.JPanel {
                         newNhanVien.getFullName(),
                         newNhanVien.getPhoneNum(),
                         newNhanVien.getEmail(),
-                        newNhanVien.getGender(), 
+                        newNhanVien.getGender(),
                         newNhanVien.getBirthdate(),
-                        newNhanVien.getAddress(), 
-                        newNhanVien.getPassword(), 
-                        newNhanVien.getCreatedDate(), 
-                        newNhanVien.getUserState(), 
-                        newNhanVien.getNote(), 
+                        newNhanVien.getAddress(),
+                        newNhanVien.getPassword(),
+                        newNhanVien.getCreatedDate(),
+                        newNhanVien.getUserState(),
+                        newNhanVien.getNote(),
                         newNhanVien.getRole()
                 );
                 JOptionPane.showMessageDialog(this, "Sửa thành công, vui lòng đăng nhập lại để kiểm tra thông tin");
@@ -132,9 +132,9 @@ public class SuaTaiKhoan extends javax.swing.JPanel {
     }
 
     public void fillDataToForm(NhanVien nvien) {
-        txtFullname.setText(nvien.getFullName().trim());
-        txtPhonenum.setText(nvien.getPhoneNum().trim());
-        txtEmail.setText(nvien.getEmail().trim());
+        txtFullname.setText((nvien.getFullName() == null) ? "" : nvien.getFullName());
+        txtPhonenum.setText((nvien.getPhoneNum()) == null ? "" : nvien.getPhoneNum());
+        txtEmail.setText((nvien.getEmail()) == null ? "" : nvien.getEmail());
         if (nvien.getGender() == null) {
             cboGender.setSelectedIndex(2);
         } else if (nvien.getGender()) {
@@ -142,7 +142,7 @@ public class SuaTaiKhoan extends javax.swing.JPanel {
         } else if (!nvien.getGender()) {
             cboGender.setSelectedIndex(1);
         }
-        txtAddress.setText(nvien.getAddress());
+        txtAddress.setText((nvien.getAddress() == null) ? "" : nvien.getAddress());
         if (nvien.getBirthdate() != null) {
             txtBirthdate.setText(nvien.getBirthdate().trim().substring(0, 10));
         } else {
