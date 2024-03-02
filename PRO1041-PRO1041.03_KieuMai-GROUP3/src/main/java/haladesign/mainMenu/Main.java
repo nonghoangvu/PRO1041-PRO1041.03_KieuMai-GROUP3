@@ -63,30 +63,54 @@ public class Main extends javax.swing.JFrame {
                 case 1 -> {
                     switch (indexSubMenu) {
                         case 1 ->
-//                            showForm(new BanHang());
                             showForm(new SellForm(this.nhanVien, this));
-                        case 2 ->
-                            showForm(new JPHoaDon(this));
+                        case 2 -> {
+                            if (Main.this.nhanVien.getRole().isCanChangeBillState()) {
+                                showForm(new JPHoaDon(this));
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Bạn không thể truy cập tính năng này, hãy liên hệ chủ cửa hàng để được cấp quyền truy cập");
+                            }
+                        }
                         default ->
                             showForm(new Form_Empty(index + " " + indexSubMenu));
                     }
                 }
                 case 2 -> {
                     switch (indexSubMenu) {
-                        case 1 ->
-                            showForm(new DanhSachSanPham(Main.this, this.nhanVien));
-                        case 2 ->
-                            showForm(new ThuocTinhSanPham(Main.this));
-                        case 3 ->
-                            showForm(new DanhSachChiTietSanPham(Main.this));
+                        case 1 -> {
+                            if (Main.this.nhanVien.getRole().isCanAddProduct()) {
+                                showForm(new DanhSachSanPham(Main.this, this.nhanVien));
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Bạn không thể truy cập tính năng này, hãy liên hệ chủ cửa hàng để được cấp quyền truy cập");
+                            }
+                        }
+                        case 2 -> {
+                            if (Main.this.nhanVien.getRole().isCanAddProduct()) {
+                                showForm(new ThuocTinhSanPham(Main.this));
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Bạn không thể truy cập tính năng này, hãy liên hệ chủ cửa hàng để được cấp quyền truy cập");
+                            }
+                        }
+                        case 3 -> {
+                            if (Main.this.nhanVien.getRole().isCanAddProduct()) {
+                                showForm(new DanhSachChiTietSanPham(Main.this));
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Bạn không thể truy cập tính năng này, hãy liên hệ chủ cửa hàng để được cấp quyền truy cập");
+                            }
+                        }
                         default ->
                             showForm(new Form_Empty(index + " " + indexSubMenu));
                     }
                 }
                 case 3 -> {
                     switch (indexSubMenu) {
-                        case 1 ->
-                            showForm(new FormQlyNhanVien(Main.this));
+                        case 1 -> {
+                            if (Main.this.nhanVien.getRole().isCanChangeRole()) {
+                                showForm(new FormQlyNhanVien(Main.this));
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Bạn không thể truy cập tính năng này, hãy liên hệ chủ cửa hàng để được cấp quyền truy cập");
+                            }
+                        }
                         case 2 ->
                             showForm(new KhachHang_form(Main.this));
                         case 3 -> {

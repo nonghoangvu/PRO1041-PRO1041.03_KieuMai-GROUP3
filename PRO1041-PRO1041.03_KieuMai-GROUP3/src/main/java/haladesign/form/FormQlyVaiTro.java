@@ -132,10 +132,7 @@ public class FormQlyVaiTro extends javax.swing.JPanel {
         chkCanHandleBills = new javax.swing.JCheckBox();
         canHandleCustomer = new javax.swing.JCheckBox();
         canHandleDoanhSo = new javax.swing.JCheckBox();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         canHandleQuyenHan = new javax.swing.JCheckBox();
-        jButton4 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -212,26 +209,10 @@ public class FormQlyVaiTro extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setText("Sửa");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setText("Xóa");
-
         canHandleQuyenHan.setText("Được sửa quyền hạn");
         canHandleQuyenHan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 canHandleQuyenHanActionPerformed(evt);
-            }
-        });
-
-        jButton4.setText("Thêm");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
             }
         });
 
@@ -255,17 +236,9 @@ public class FormQlyVaiTro extends javax.swing.JPanel {
                                     .addComponent(canHandleDoanhSo))))
                         .addGap(31, 31, 31))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(chkCanHandleBills)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(canHandleQuyenHan))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButton4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2)
-                                .addGap(31, 31, 31)
-                                .addComponent(jButton3)))
+                        .addComponent(chkCanHandleBills)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(canHandleQuyenHan)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -285,12 +258,7 @@ public class FormQlyVaiTro extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chkCanHandleBills)
                     .addComponent(canHandleQuyenHan))
-                .addGap(75, 75, 75)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addContainerGap(262, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -355,17 +323,6 @@ public class FormQlyVaiTro extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tblRoleMouseClicked
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        System.out.println(validating());
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        ThemQuyenHan themQuyenHan = new ThemQuyenHan(this.main);
-        this.main.showForm(themQuyenHan);
-    }//GEN-LAST:event_jButton4ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox canHandleCustomer;
@@ -374,9 +331,6 @@ public class FormQlyVaiTro extends javax.swing.JPanel {
     private javax.swing.JCheckBox chkCanHandleBills;
     private javax.swing.JCheckBox chkCanHandleStorge;
     private javax.swing.JCheckBox chkCanViewOriginalPrice;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Administrator
  */
 public class FormQlyNhanVien extends javax.swing.JPanel {
-    
+
     private final Main main;
     DefaultTableModel tblModel = new DefaultTableModel();
     DefaultComboBoxModel<QuyenHan> cbbModel = new DefaultComboBoxModel<>();
@@ -40,13 +40,13 @@ public class FormQlyNhanVien extends javax.swing.JPanel {
         loadDataToTable();
         loadRoleToCbo();
     }
-    
+
     public void initTable() {
         tblEmployee.setModel(tblModel);
         String[] title = new String[]{"Tên nhân viên", "Số điện thoại", "Email", "Vai trò", "Trạng thái"};
         tblModel.setColumnIdentifiers(title);
     }
-    
+
     public void loadDataToTable() {
         tblModel.setRowCount(0);
         this.tempList.clear();
@@ -60,7 +60,7 @@ public class FormQlyNhanVien extends javax.swing.JPanel {
             fillDataToLabel(tempList.get(0));
         }
     }
-    
+
     public void loadRoleToCbo() {
         cboRole.removeAll();
         cboRole.setModel((DefaultComboBoxModel) cbbModel);
@@ -68,7 +68,7 @@ public class FormQlyNhanVien extends javax.swing.JPanel {
             cbbModel.addElement(role);
         }
     }
-    
+
     public void fillDataToLabel(NhanVien empl) {
         lblFullname.setText(empl.getFullName());
         lblPhone.setText(empl.getPhoneNum());
@@ -78,11 +78,11 @@ public class FormQlyNhanVien extends javax.swing.JPanel {
         lblBirthdate.setText((empl.getBirthdate() == null) ? "..." : String.valueOf(empl.getBirthdate()));
         cbbModel.setSelectedItem(empl.getRole());
     }
-    
+
     public void handleOnClickTable(int index) {
         fillDataToLabel(tempList.get(index));
     }
-    
+
     public void handleChangeStatus(NhanVien nhanVien) {
         if (nhanVien.getRole().getRoleName().equalsIgnoreCase("chủ cửa hàng")) {
             JOptionPane.showMessageDialog(this, "Không thể thao tác chức năng này với chủ cửa hàng");
@@ -98,7 +98,7 @@ public class FormQlyNhanVien extends javax.swing.JPanel {
                 nhanVienService.addNewNhanVien(nhanVien);
                 loadDataToTable();
             }
-            
+
         } else if (returnValue == 1) {
             if (JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn chuyển nhân viên này về trạng thái nghri việc?", "WARNING",
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -106,7 +106,7 @@ public class FormQlyNhanVien extends javax.swing.JPanel {
                 nhanVienService.addNewNhanVien(nhanVien);
                 loadDataToTable();
             }
-            
+
         } else if (returnValue == 2) {
             if (JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa thông tin nhân viên này? Sau khi xóa sẽ không thể khôi phục dữ liệu thông tin của nhân viên", "WARNING",
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -116,7 +116,7 @@ public class FormQlyNhanVien extends javax.swing.JPanel {
             }
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -145,10 +145,7 @@ public class FormQlyNhanVien extends javax.swing.JPanel {
         lblCreatedDate = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        txtQuery = new haladesign.swingStyle.TextField();
-        combobox1 = new haladesign.swingStyle.Combobox();
-        combobox2 = new haladesign.swingStyle.Combobox();
-        btnSearch = new haladesign.swingStyle.Button();
+        jTextField2 = new javax.swing.JTextField();
         btnAdd = new haladesign.swingStyle.Button();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -346,29 +343,12 @@ public class FormQlyNhanVien extends javax.swing.JPanel {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        txtQuery.setLabelText("Tìm kiếm theo họ tên, SDT, Email của nhân viên");
-        txtQuery.addActionListener(new java.awt.event.ActionListener() {
+        jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jTextField2.setText("Danh sách nhân viên");
+        jTextField2.setBorder(null);
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtQueryActionPerformed(evt);
-            }
-        });
-
-        combobox1.setLabeText("Vai trò");
-        combobox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                combobox1ActionPerformed(evt);
-            }
-        });
-
-        combobox2.setLabeText("Trạng thái");
-
-        btnSearch.setBackground(new java.awt.Color(0, 123, 255));
-        btnSearch.setForeground(new java.awt.Color(255, 255, 255));
-        btnSearch.setText("Tìm kiếm");
-        btnSearch.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
+                jTextField2ActionPerformed(evt);
             }
         });
 
@@ -376,30 +356,17 @@ public class FormQlyNhanVien extends javax.swing.JPanel {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(txtQuery, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
-                .addComponent(combobox1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(combobox2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtQuery, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(combobox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(combobox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         btnAdd.setBackground(new java.awt.Color(0, 123, 255));
@@ -422,7 +389,7 @@ public class FormQlyNhanVien extends javax.swing.JPanel {
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 895, Short.MAX_VALUE)))
                 .addGap(32, 32, 32)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32))
@@ -457,8 +424,9 @@ public class FormQlyNhanVien extends javax.swing.JPanel {
 
     private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
         // TODO add your handling code here:
-
-        handleChangeStatus(tempList.get(tblEmployee.getSelectedRow()));
+        if (tblEmployee.getSelectedRow() >= 0) {
+            handleChangeStatus(tempList.get(tblEmployee.getSelectedRow()));
+        }
     }//GEN-LAST:event_button3ActionPerformed
 
     private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
@@ -474,27 +442,16 @@ public class FormQlyNhanVien extends javax.swing.JPanel {
         handleOnClickTable(tblEmployee.getSelectedRow());
     }//GEN-LAST:event_tblEmployeeMouseClicked
 
-    private void txtQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQueryActionPerformed
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtQueryActionPerformed
-
-    private void combobox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_combobox1ActionPerformed
-
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSearchActionPerformed
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private haladesign.swingStyle.Button btnAdd;
-    private haladesign.swingStyle.Button btnSearch;
     private haladesign.swingStyle.Button button3;
     private haladesign.swingStyle.Button button4;
     private haladesign.swingStyle.Combobox cboRole;
-    private haladesign.swingStyle.Combobox combobox1;
-    private haladesign.swingStyle.Combobox combobox2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -507,6 +464,7 @@ public class FormQlyNhanVien extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblBirthdate;
     private javax.swing.JLabel lblCreatedDate;
@@ -516,6 +474,5 @@ public class FormQlyNhanVien extends javax.swing.JPanel {
     private javax.swing.JLabel lblState;
     private haladesign.swing.table.Table tblEmployee;
     private haladesign.swingStyle.TextField txtNote;
-    private haladesign.swingStyle.TextField txtQuery;
     // End of variables declaration//GEN-END:variables
 }

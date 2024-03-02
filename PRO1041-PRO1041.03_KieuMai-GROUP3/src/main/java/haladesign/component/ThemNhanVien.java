@@ -9,6 +9,7 @@ import haladesign.model.NhanVien;
 import haladesign.model.QuyenHan;
 import haladesign.service.NhanVienService;
 import haladesign.service.PhanQuyenService;
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -66,6 +67,7 @@ public class ThemNhanVien extends javax.swing.JPanel {
             empl.setPhoneNum(txtPhonenum.getText());
             empl.setNote(txtNote.getText());
             empl.setRole((QuyenHan) cboRole.getSelectedItem());
+            empl.setCreatedDate(new Date());
             return empl;
         } else {
             return null;
@@ -106,7 +108,6 @@ public class ThemNhanVien extends javax.swing.JPanel {
         jTextField3 = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         cboRole = new haladesign.swingStyle.Combobox();
-        btnSearch1 = new haladesign.swingStyle.Button();
         btnSearch = new haladesign.swingStyle.Button();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -231,16 +232,6 @@ public class ThemNhanVien extends javax.swing.JPanel {
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
 
-        btnSearch1.setBackground(new java.awt.Color(0, 123, 255));
-        btnSearch1.setForeground(new java.awt.Color(255, 255, 255));
-        btnSearch1.setText("Thêm mới vai trò");
-        btnSearch1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnSearch1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearch1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -248,18 +239,14 @@ public class ThemNhanVien extends javax.swing.JPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(cboRole, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
-                .addComponent(btnSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addComponent(cboRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         btnSearch.setBackground(new java.awt.Color(0, 123, 255));
@@ -323,14 +310,9 @@ public class ThemNhanVien extends javax.swing.JPanel {
         handleSubmit();
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void btnSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSearch1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private haladesign.swingStyle.Button btnSearch;
-    private haladesign.swingStyle.Button btnSearch1;
     private haladesign.swingStyle.Combobox cboRole;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
