@@ -1,26 +1,19 @@
 package haladesign.mainMenu;
 
 import haladesign.Utitlity.BcryptHash;
-import haladesign.form.FormQlyNhanVien;
-import haladesign.form.BanHang;
 import haladesign.form.DanhSachChiTietSanPham;
-import haladesign.form.FormQlyVaiTro;
 import haladesign.form.ThongKe;
 import java.awt.Component;
 import haladesign.form.Form_Empty;
-import haladesign.form.JPHoaDon;
-import haladesign.form.KhachHang_form;
 import haladesign.form.DanhSachSanPham;
 import haladesign.form.SellForm;
-import haladesign.form.SuaTaiKhoan;
 import haladesign.form.ThuocTinhSanPham;
 import haladesign.loginFeature.LoginForm;
-import haladesign.model.NhanVien;
+import haladesign.model.Account;
 import haladesign.system.GlassPanePopup;
 import haladesign.system.Message;
 import haladesign.system.Setting;
 import java.awt.event.ActionEvent;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,11 +22,11 @@ import javax.swing.JOptionPane;
 public class Main extends javax.swing.JFrame {
 
     private static Main main;
-    private final NhanVien nhanVien;
+    private final Account account;
     private final BcryptHash bcryptHash = new BcryptHash();
 
-    public Main(NhanVien nhanVien) {
-        this.nhanVien = nhanVien;
+    public Main(Account account) {
+        this.account = account;
         initComponents();
         init();
         GlassPanePopup.install(this);
@@ -63,10 +56,7 @@ public class Main extends javax.swing.JFrame {
                 case 1 -> {
                     switch (indexSubMenu) {
                         case 1 ->
-//                            showForm(new BanHang());
-                            showForm(new SellForm(this.nhanVien, this));
-                        case 2 ->
-                            showForm(new JPHoaDon(this));
+                            showForm(new SellForm(this.account, this));
                         default ->
                             showForm(new Form_Empty(index + " " + indexSubMenu));
                     }
@@ -74,7 +64,7 @@ public class Main extends javax.swing.JFrame {
                 case 2 -> {
                     switch (indexSubMenu) {
                         case 1 ->
-                            showForm(new DanhSachSanPham(Main.this, this.nhanVien));
+                            showForm(new DanhSachSanPham(Main.this, this.account));
                         case 2 ->
                             showForm(new ThuocTinhSanPham(Main.this));
                         case 3 ->
@@ -83,35 +73,10 @@ public class Main extends javax.swing.JFrame {
                             showForm(new Form_Empty(index + " " + indexSubMenu));
                     }
                 }
-                case 3 -> {
-                    switch (indexSubMenu) {
-                        case 1 ->
-                            showForm(new FormQlyNhanVien(Main.this));
-                        case 2 ->
-                            showForm(new KhachHang_form(Main.this));
-                        case 3 -> {
-                            if (Main.this.nhanVien.getRole().isCanChangeRole()) {
-                                showForm(new FormQlyVaiTro(Main.this));
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Bạn không thể truy cập tính năng này, hãy liên hệ chủ cửa hàng để được cấp quyền truy cập");
-                            }
-                        }
-                        default ->
-                            showForm(new Form_Empty(index + " " + indexSubMenu));
-                    }
-                }
                 case 4 ->
                     showForm(new Setting());
                 default ->
                     showForm(new Form_Empty(index + " " + indexSubMenu));
-                case 5 -> {
-                    switch (indexSubMenu) {
-                        case 0 ->
-                            showForm(new SuaTaiKhoan(Main.this.nhanVien));
-                        default ->
-                            showForm(new Form_Empty(index + " " + indexSubMenu));
-                    }
-                }
                 case 6 -> {
                     Message message = new Message();
                     message.setTitle(this.bcryptHash.decodeBase64("Q+G6o25oIGLDoW8="));

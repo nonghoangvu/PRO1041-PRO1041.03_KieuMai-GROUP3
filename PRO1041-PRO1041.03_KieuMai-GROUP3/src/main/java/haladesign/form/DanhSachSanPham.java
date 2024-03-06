@@ -4,7 +4,7 @@ import haladesign.Utitlity.BcryptHash;
 import haladesign.component.NewProduct;
 import haladesign.component.NewProductDetails;
 import haladesign.mainMenu.Main;
-import haladesign.model.NhanVien;
+import haladesign.model.Account;
 import haladesign.model.SanPham;
 import haladesign.model.SanPhamChiTiet;
 import haladesign.service.SanPhamService;
@@ -34,13 +34,13 @@ public class DanhSachSanPham extends javax.swing.JPanel {
     private final BcryptHash bcryptHash = new BcryptHash();
     private final Main main;
     private GoogleMaterialDesignIcon icon;
-    private final NhanVien nhanVien;
+    private final Account account;
 
-    public DanhSachSanPham(Main main, NhanVien nhanVien) {
+    public DanhSachSanPham(Main main, Account account) {
         initComponents();
         this.list = new SanPhamService();
         this.main = main;
-        this.nhanVien = nhanVien;
+        this.account = account;
         fillTable();
         listenSearch();
         btnAdd.setColor1(Color.BLACK);
@@ -59,7 +59,7 @@ public class DanhSachSanPham extends javax.swing.JPanel {
                     .filter(spbt -> sp.getId().startsWith(spbt.getId_san_pham().getId()))
                     .mapToInt(SanPhamChiTiet::getSoLuong)
                     .sum();
-            Object[] row = {++count[0], sp.getId(), sp.getTen_san_pham(), sp.getMo_ta(), totalQuantity, sp.getNhanVien().getFullName(), sp.getNgay_tao(),
+            Object[] row = {++count[0], sp.getId(), sp.getTen_san_pham(), sp.getMo_ta(), totalQuantity, sp.getAccount().getFullName(), sp.getNgay_tao(),
                 sp.getTrang_thai() ? bcryptHash.decodeBase64("xJBhbmcgYsOhbg==")
                 : bcryptHash.decodeBase64("Tmfhu6tuZyBiw6Fu")};
             this.tblModel.addRow(row);
@@ -68,7 +68,7 @@ public class DanhSachSanPham extends javax.swing.JPanel {
                     tblProduct.getCellEditor().stopCellEditing();
                 }
                 String selectedProductId = String.valueOf(tblProduct.getValueAt(data, 1));
-                NewProductDetails newProductDetails = new NewProductDetails(this.main, selectedProductId, this.nhanVien);
+                NewProductDetails newProductDetails = new NewProductDetails(this.main, selectedProductId, this.account);
                 this.main.showForm(newProductDetails);
             };
             tblProduct.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRender());
@@ -232,7 +232,7 @@ public class DanhSachSanPham extends javax.swing.JPanel {
         fillTable();
     }//GEN-LAST:event_cbbStatusItemStateChanged
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAddActionPerformed
-        NewProduct newProduct = new NewProduct("HLD-" + generateRandomNumber(10000, 10000000), this.nhanVien, this.main, this);
+        NewProduct newProduct = new NewProduct("HLD-" + generateRandomNumber(10000, 10000000), this.account, this.main, this);
         GlassPanePopup.showPopup(newProduct);
     }// GEN-LAST:event_btnAddActionPerformed
 

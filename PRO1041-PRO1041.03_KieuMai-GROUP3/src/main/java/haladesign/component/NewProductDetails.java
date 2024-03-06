@@ -3,7 +3,7 @@ package haladesign.component;
 import haladesign.Utitlity.FormartData;
 import haladesign.Utitlity.ValidateNumber;
 import haladesign.mainMenu.Main;
-import haladesign.model.NhanVien;
+import haladesign.model.Account;
 import haladesign.model.SanPham;
 import haladesign.model.SanPhamChiTiet;
 import haladesign.model.Size;
@@ -32,12 +32,12 @@ public class NewProductDetails extends javax.swing.JPanel {
     private List<SanPhamChiTiet> bienTheList;
     private DefaultTableModel tblModel;
     private final String idProduct;
-    private final NhanVien nhanVien;
+    private final Account account;
 
-    public NewProductDetails(Main main, String id, NhanVien nhanVien) {
+    public NewProductDetails(Main main, String id, Account account) {
         initComponents();
         this.main = main;
-        this.nhanVien = nhanVien;
+        this.account = account;
         this.list = new SanPhamService();
         this.bienTheList = this.list.getByIdSanPhamBienThe(id);
         this.idProduct = id;

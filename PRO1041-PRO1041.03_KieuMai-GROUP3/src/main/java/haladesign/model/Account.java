@@ -3,17 +3,15 @@ package haladesign.model;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.util.ArrayList;
+
 import java.util.Date;
-import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,15 +19,15 @@ import lombok.Setter;
 
 /**
  *
- * @author BinhQuoc
+ * @author Nong Hoang Vu
  */
 @Entity
-@Table(name = "NhanVien")
+@Table(name = "Account")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class NhanVien {
+public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,9 +49,6 @@ public class NhanVien {
     @Column(name = "ngay_sinh")
     private String birthdate;
 
-    @Column(name = "dia_chi")
-    private String address;
-
     @Column(name = "mat_khau")
     private String password;
 
@@ -65,14 +60,4 @@ public class NhanVien {
 
     @Column(name = "ghi_chu")
     private String note;
-
-    @OneToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "id_quyen_han")
-    private QuyenHan role;
-
-    @Override
-    public String toString() {
-        return "NhanVien{" + "id=" + id + ", fullName=" + fullName + ", phoneNum=" + phoneNum + ", email=" + email + ", gender=" + gender + ", birthdate=" + birthdate + ", address=" + address + ", password=" + password + ", createdDate=" + createdDate + ", userState=" + userState + ", note=" + note + ", role=" + role + '}' + "\n";
-    }
-
 }

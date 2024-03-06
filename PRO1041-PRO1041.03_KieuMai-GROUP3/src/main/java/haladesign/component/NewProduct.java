@@ -3,7 +3,7 @@ package haladesign.component;
 import haladesign.Utitlity.BcryptHash;
 import haladesign.form.DanhSachSanPham;
 import haladesign.mainMenu.Main;
-import haladesign.model.NhanVien;
+import haladesign.model.Account;
 import haladesign.model.SanPham;
 import haladesign.service.SanPhamService;
 import haladesign.system.GlassPanePopup;
@@ -16,19 +16,19 @@ import java.util.Date;
  */
 public class NewProduct extends javax.swing.JPanel {
 
-    private final NhanVien nhanVien;
+    private final Account account;
     private final Main main;
     private final SanPhamService list;
     private final BcryptHash bcryptHash = new BcryptHash();
     private final DanhSachSanPham listProductForm;
 
-    public NewProduct(String id, NhanVien nhanVien, Main main, DanhSachSanPham listProductForm) {
+    public NewProduct(String id, Account account, Main main, DanhSachSanPham listProductForm) {
         initComponents();
-        this.nhanVien = nhanVien;
+        this.account = account;
         this.main = main;
         this.list = new SanPhamService();
         this.listProductForm = listProductForm;
-        lbNhanVien.setText(this.nhanVien.getFullName());
+        lbNhanVien.setText(this.account.getFullName());
         lbID.setText(id);
     }
 
@@ -39,7 +39,7 @@ public class NewProduct extends javax.swing.JPanel {
         sp.setMo_ta(txtMoTa.getText());
         sp.setTrang_thai(chkTrangThai.isSelected());
         sp.setNgay_tao(new Date());
-        sp.setNhanVien(this.nhanVien);
+        sp.setAccount(this.account);
         return sp;
     }
 

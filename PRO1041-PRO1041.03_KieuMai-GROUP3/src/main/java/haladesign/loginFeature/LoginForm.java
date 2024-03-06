@@ -3,9 +3,6 @@ package haladesign.loginFeature;
 import haladesign.Utitlity.BcryptHash;
 import haladesign.Utitlity.LoginInfo;
 import haladesign.Utitlity.LoginInfoSerializationUtil;
-import haladesign.mainMenu.Main;
-import haladesign.model.NhanVien;
-import haladesign.service.NhanVienService;
 import haladesign.system.Notification;
 import java.awt.event.KeyEvent;
 import java.net.InetAddress;
@@ -17,7 +14,7 @@ import java.net.UnknownHostException;
  */
 public class LoginForm extends javax.swing.JFrame {
 
-    private final NhanVienService nhanVienService = new NhanVienService();
+//    private final NhanVienService nhanVienService = new NhanVienService();
     private final BcryptHash bcryptHash = new BcryptHash();
 
     public LoginForm() {
@@ -26,31 +23,31 @@ public class LoginForm extends javax.swing.JFrame {
         isRemember();
     }
 
-    public void handleSubmit() {
-        lblErrPhone.setText("");
-        lblErrPassw.setText("");
-
-        String phonenum = txtPhonenum.getText();
-        String password = String.valueOf(txtPassw.getPassword());
-
-        NhanVien nhanVien = nhanVienService.getEmplLogin(phonenum);
-        if (phonenum.isBlank()) {
-            lblErrPhone.setText("Vui lòng nhập SDT");
-        } else if (nhanVien == null) {
-            lblErrPhone.setText("SĐT không tồn tại trong hệ thống");
-        } else if (nhanVien != null && nhanVien.getPassword() == null) {
-            lblErrPassw.setText("SĐT này chưa được đăng ký, vui lòng chọn đăng ký");
-        } else if (nhanVien != null && password.isBlank()) {
-            lblErrPassw.setText("Vui lòng nhập mật khẩu");
-        } else if (nhanVien != null && !nhanVien.getPassword().trim().equals(password)) {
-            lblErrPassw.setText("Sai mật khẩu");
-        } else if (nhanVien.getPhoneNum().trim().equals(phonenum) && nhanVien.getPassword().trim().equals(password)) {
-            System.out.println(nhanVien);
-            rememberPassword(ckbRemember.isSelected());
-            new Main(nhanVien).setVisible(true);
-            this.dispose();
-        }
-    }
+//    public void handleSubmit() {
+//        lblErrPhone.setText("");
+//        lblErrPassw.setText("");
+//
+//        String phonenum = txtPhonenum.getText();
+//        String password = String.valueOf(txtPassw.getPassword());
+//
+//        NhanVien nhanVien = nhanVienService.getEmplLogin(phonenum);
+//        if (phonenum.isBlank()) {
+//            lblErrPhone.setText("Vui lòng nhập SDT");
+//        } else if (nhanVien == null) {
+//            lblErrPhone.setText("SĐT không tồn tại trong hệ thống");
+//        } else if (nhanVien != null && nhanVien.getPassword() == null) {
+//            lblErrPassw.setText("SĐT này chưa được đăng ký, vui lòng chọn đăng ký");
+//        } else if (nhanVien != null && password.isBlank()) {
+//            lblErrPassw.setText("Vui lòng nhập mật khẩu");
+//        } else if (nhanVien != null && !nhanVien.getPassword().trim().equals(password)) {
+//            lblErrPassw.setText("Sai mật khẩu");
+//        } else if (nhanVien.getPhoneNum().trim().equals(phonenum) && nhanVien.getPassword().trim().equals(password)) {
+//            System.out.println(nhanVien);
+//            rememberPassword(ckbRemember.isSelected());
+//            new Main(nhanVien).setVisible(true);
+//            this.dispose();
+//        }
+//    }
 
     public String getIPAddress() {
         try {
@@ -240,7 +237,7 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        handleSubmit();
+//        handleSubmit();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void lbQuenMatKhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbQuenMatKhauMouseClicked
@@ -261,7 +258,7 @@ public class LoginForm extends javax.swing.JFrame {
 
     private void txtPasswKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            handleSubmit();
+//            handleSubmit();
         } else if (evt.getKeyCode() == KeyEvent.VK_UP) {
             txtPhonenum.requestFocus();
         }
