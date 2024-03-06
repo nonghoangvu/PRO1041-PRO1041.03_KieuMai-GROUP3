@@ -46,7 +46,7 @@ public class SanPham {
 
     @ManyToOne
     @JoinColumn(name = "id_nhan_vien", referencedColumnName = "id")
-    private NhanVien nhanVien;
+    private Account account;
 
     @OneToMany(mappedBy = "id_san_pham", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<SanPhamChiTiet> bienTheList = new ArrayList<>();

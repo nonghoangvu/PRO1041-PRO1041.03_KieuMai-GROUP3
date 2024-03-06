@@ -9,7 +9,7 @@ import haladesign.mainMenu.Main;
 import haladesign.model.JPAHoaDon;
 import haladesign.model.JPAHoaDonChiTiet;
 import haladesign.model.KhachHang;
-import haladesign.model.NhanVien;
+import haladesign.model.Account;
 import haladesign.model.SanPham;
 import haladesign.model.Size;
 import haladesign.service.BillService;
@@ -39,18 +39,18 @@ public class SellForm extends javax.swing.JPanel {
     private final SanPhamService sanPhamService;
     private final BillService billService;
     private DefaultTableModel tblModel;
-    private final NhanVien nhanVien;
+    private final Account account;
     private final Main main;
     private Long totalMoney = 0L;
     private Long tienThua = 0L;
     private GoogleMaterialDesignIcon icon;
     public String code = null;
 
-    public SellForm(NhanVien nhanVien, Main main) {
+    public SellForm(Account account, Main main) {
         initComponents();
         this.sanPhamService = new SanPhamService();
         this.billService = new BillService();
-        this.nhanVien = nhanVien;
+        this.account = account;
         this.main = main;
         init();
     }
@@ -229,7 +229,7 @@ public class SellForm extends javax.swing.JPanel {
             Object[] row = {
                 ++count[0],
                 bill.getId(),
-                bill.getNhanVien().getFullName(),
+                bill.getAccount().getFullName(),
                 bill.getTrangThai()
             };
             tblDanhSachHoaDon.addRow(row);
@@ -297,7 +297,7 @@ public class SellForm extends javax.swing.JPanel {
 
     private void createHoaDon() {
         JPAHoaDon hd = new JPAHoaDon();
-        hd.setNhanVien(this.nhanVien);
+        hd.setAccount(this.account);
         hd.setTrangThai("Chờ thanh toán");
         hd.setNgayTao(new Date());
         if (this.billService.createBill(hd)) {

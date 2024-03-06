@@ -6,7 +6,7 @@ public class ConstantUtil {
     }
     public static final String EMPTY = "";
     //Header
-    public static final String LOGO_TITLE = "Haladesign Shop";
+    public static final String LOGO_TITLE = "CODER-NVH";
     public static final String INVOICE_CODE = "CODE:";
     public static final String INVOICE_DATE_TEXT = "DATE:";
     //Customer

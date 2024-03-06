@@ -37,7 +37,7 @@ public class JPAHoaDon {
 
     @ManyToOne
     @JoinColumn(name = "id_nhan_vien")
-    private NhanVien nhanVien;
+    private Account account;
 
     @Column(name = "trang_thai")
     private String trangThai;

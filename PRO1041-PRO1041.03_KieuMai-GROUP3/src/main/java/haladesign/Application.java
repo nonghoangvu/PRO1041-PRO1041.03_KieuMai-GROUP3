@@ -1,14 +1,16 @@
 package haladesign;
 
-import haladesign.loginFeature.Login;
-import haladesign.loginFeature.LoginForm;
+import haladesign.mainMenu.Main;
+import haladesign.model.Account;
+
+import java.util.Date;
+
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
- *
  * @author NONG HOANG VU
  */
 @SpringBootApplication
@@ -19,7 +21,7 @@ public class Application {
     public static ApplicationContext getContext() {
         return context;
     }
-    
+
     public static <T extends Object> T getBean(Class<T> requiredType) {
         return context.getBean(requiredType);
     }
@@ -32,6 +34,7 @@ public class Application {
 
     public static void main(String[] args) {
         context = createApplicationContext(args);
-        new LoginForm().setVisible(true);
+        // new LoginForm().setVisible(true);
+        new Main(new Account()).setVisible(true);
     }
 }

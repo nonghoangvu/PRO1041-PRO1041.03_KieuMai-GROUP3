@@ -4,8 +4,6 @@ import haladesign.Utitlity.BcryptHash;
 import haladesign.Utitlity.LoginInfo;
 import haladesign.Utitlity.LoginInfoSerializationUtil;
 import haladesign.mainMenu.Main;
-import haladesign.model.NhanVien;
-import haladesign.service.NhanVienService;
 import haladesign.system.Notification;
 import java.awt.event.KeyEvent;
 import java.net.InetAddress;
@@ -18,40 +16,41 @@ import javax.swing.JOptionPane;
  */
 public class ConfirmPassw extends javax.swing.JFrame {
 
-    private final NhanVienService nhanVienService = new NhanVienService();
-    private NhanVien nhanVien;
+    // public ConfirmPassw(NhanVien nhanVien) {
+    // this.nhanVien = nhanVien;
+    // initComponents();
+    // titleBar.initJFram(this);
+    // }
 
-    public ConfirmPassw(NhanVien nhanVien) {
-        this.nhanVien = nhanVien;
-        initComponents();
-        titleBar.initJFram(this);
-    }
+    // public void handleSubmit() {
 
-    public void handleSubmit() {
-        
-        
-        String firstPass = String.valueOf(txtFirstPass.getPassword());
-        String secondPass = String.valueOf(txtSecondPass.getPassword());
-        
-        System.out.println();
-        if (firstPass.isEmpty() || firstPass.length() < 6) {
-            new Notification(this, Notification.Type.INFO, Notification.Location.TOP_RIGHT, "Mật khẩu phải có tối thiểu 6 ký tự").showNotification();
-            return;
-        } else if (!secondPass.equals(firstPass)) {
-            new Notification(this, Notification.Type.INFO, Notification.Location.TOP_RIGHT, "Mật khẩu nhập lại không khớp với mật khẩu đã nhập ở trên").showNotification();
-            return;
-        } else {
-            this.nhanVien.setPassword(firstPass);
-            this.nhanVien.setUserState("Đang làm việc");
-            this.nhanVienService.addNewNhanVien(this.nhanVien);
-            System.out.println(this.nhanVien);
-            new Main(nhanVien).setVisible(true);
-            this.dispose();
-        }
-    }
+    // String firstPass = String.valueOf(txtFirstPass.getPassword());
+    // String secondPass = String.valueOf(txtSecondPass.getPassword());
+
+    // System.out.println();
+    // if (firstPass.isEmpty() || firstPass.length() < 6) {
+    // new Notification(this, Notification.Type.INFO,
+    // Notification.Location.TOP_RIGHT, "Mật khẩu phải có tối thiểu 6 ký
+    // tự").showNotification();
+    // return;
+    // } else if (!secondPass.equals(firstPass)) {
+    // new Notification(this, Notification.Type.INFO,
+    // Notification.Location.TOP_RIGHT, "Mật khẩu nhập lại không khớp với mật khẩu
+    // đã nhập ở trên").showNotification();
+    // return;
+    // } else {
+    // this.nhanVien.setPassword(firstPass);
+    // this.nhanVien.setUserState("Đang làm việc");
+    // this.nhanVienService.addNewNhanVien(this.nhanVien);
+    // System.out.println(this.nhanVien);
+    // new Main(nhanVien).setVisible(true);
+    // this.dispose();
+    // }
+    // }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         roundPanel1 = new haladesign.swing.RoundPanel();
@@ -118,94 +117,135 @@ public class ConfirmPassw extends javax.swing.JFrame {
         javax.swing.GroupLayout roundPanel1Layout = new javax.swing.GroupLayout(roundPanel1);
         roundPanel1.setLayout(roundPanel1Layout);
         roundPanel1Layout.setHorizontalGroup(
-            roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel1Layout.createSequentialGroup()
-                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(roundPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(titleBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(roundPanel1Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(roundPanel1Layout.createSequentialGroup()
-                                .addGap(68, 68, 68)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                                .addGap(84, 84, 84))
-                            .addComponent(lbSignup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(roundPanel1Layout.createSequentialGroup()
-                                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtFirstPass, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblErrPhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(roundPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtSecondPass, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblErrPassw, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(roundPanel1Layout.createSequentialGroup()
-                                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(22, 22, 22))
-        );
+                roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(roundPanel1Layout.createSequentialGroup()
+                                .addGroup(roundPanel1Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(roundPanel1Layout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(titleBar, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(roundPanel1Layout.createSequentialGroup()
+                                                .addGap(30, 30, 30)
+                                                .addGroup(roundPanel1Layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(roundPanel1Layout.createSequentialGroup()
+                                                                .addGap(68, 68, 68)
+                                                                .addComponent(jLabel1,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE, 131,
+                                                                        Short.MAX_VALUE)
+                                                                .addGap(84, 84, 84))
+                                                        .addComponent(lbSignup, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addGroup(roundPanel1Layout.createSequentialGroup()
+                                                                .addGroup(roundPanel1Layout.createParallelGroup(
+                                                                        javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(btnLogin,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)
+                                                                        .addGroup(
+                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                                roundPanel1Layout
+                                                                                        .createSequentialGroup()
+                                                                                        .addComponent(txtFirstPass,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                246,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                        .addPreferredGap(
+                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                        .addComponent(lblErrPhone,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                Short.MAX_VALUE))
+                                                                        .addGroup(roundPanel1Layout
+                                                                                .createSequentialGroup()
+                                                                                .addComponent(txtSecondPass,
+                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                        246,
+                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addGap(0, 0, Short.MAX_VALUE)))
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(lblErrPassw,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        Short.MAX_VALUE))
+                                                        .addGroup(roundPanel1Layout.createSequentialGroup()
+                                                                .addGroup(roundPanel1Layout.createParallelGroup(
+                                                                        javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(jLabel2)
+                                                                        .addComponent(jLabel3,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                126,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(22, 22, 22)));
         roundPanel1Layout.setVerticalGroup(
-            roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel1Layout.createSequentialGroup()
-                .addComponent(titleBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(9, 9, 9)
-                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblErrPhone)
-                    .addComponent(txtFirstPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblErrPassw)
-                    .addComponent(txtSecondPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lbSignup)
-                .addGap(35, 35, 35))
-        );
+                roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(roundPanel1Layout.createSequentialGroup()
+                                .addComponent(titleBar, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(25, 25, 25)
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel2)
+                                .addGap(9, 9, 9)
+                                .addGroup(roundPanel1Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblErrPhone)
+                                        .addComponent(txtFirstPass, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(31, 31, 31)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(
+                                        roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(lblErrPassw)
+                                                .addComponent(txtSecondPass, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25,
+                                        Short.MAX_VALUE)
+                                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 35,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lbSignup)
+                                .addGap(35, 35, 35)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(roundPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(roundPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(0, 0, 0)));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(roundPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(roundPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(0, 0, 0)));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        handleSubmit();
-    }//GEN-LAST:event_btnLoginActionPerformed
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnLoginActionPerformed
+        // handleSubmit();
+    }// GEN-LAST:event_btnLoginActionPerformed
 
-    private void lbSignupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbSignupMouseClicked
-//        new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Đang bảo trì!").showNotification();
+    private void lbSignupMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lbSignupMouseClicked
+        // new Notification(this, Notification.Type.WARNING,
+        // Notification.Location.TOP_RIGHT, "Đang bảo trì!").showNotification();
         new LoginForm().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_lbSignupMouseClicked
+    }// GEN-LAST:event_lbSignupMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private haladesign.swingStyle.Button btnLogin;
