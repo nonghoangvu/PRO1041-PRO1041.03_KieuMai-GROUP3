@@ -7,9 +7,9 @@ import org.springframework.data.repository.query.Param;
 
 /**
  *
- * @author BinhQuoc
+ * @author Nong Hoang Vu
  */
 public interface INhanVien extends JpaRepository<Account, Integer>{
-    @Query("SELECT nv FROM Account nv WHERE nv.phoneNum = :sdt AND nv.userState NOT LIKE 'deleted'")
-    Account findBySdtAndNotDeleted(@Param("sdt") String sdt);
+    @Query("SELECT ac FROM Account ac WHERE ac.phoneNum = :phoneNum AND ac.password = :password")
+    NhanVien checkLoginWithNumberPhone(@Param("phoneNum") String phoneNum, @Param("password") String password);
 }
