@@ -1,5 +1,6 @@
 package haladesign;
 
+import haladesign.loginFeature.LoginForm;
 import haladesign.mainMenu.Main;
 import haladesign.model.Account;
 
@@ -34,7 +35,7 @@ public class Application {
 
     public static void main(String[] args) {
         context = createApplicationContext(args);
-        // new LoginForm().setVisible(true);
-        new Main(new Account()).setVisible(true);
+         new LoginForm().setVisible(true);
+//        new Main(new Account()).setVisible(true);
     }
 }
