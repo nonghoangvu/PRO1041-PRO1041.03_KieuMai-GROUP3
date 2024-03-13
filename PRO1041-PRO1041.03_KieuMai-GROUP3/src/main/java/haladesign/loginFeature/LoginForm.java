@@ -245,10 +245,7 @@ public class LoginForm extends javax.swing.JFrame {
     }//GEN-LAST:event_lbQuenMatKhauMouseClicked
 
     private void lbSignupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbSignupMouseClicked
-//        new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Đang bảo trì!").showNotification();
-//        new SignUp().setVisible(true);
-//        this.dispose();
-
+        new Notification(this, Notification.Type.WARNING, Notification.Location.TOP_RIGHT, "Đang bảo trì!").showNotification();
     }//GEN-LAST:event_lbSignupMouseClicked
 
     private void txtPhonenumKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhonenumKeyPressed
@@ -261,7 +258,7 @@ public class LoginForm extends javax.swing.JFrame {
 
     private void txtPasswKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-//            handleSubmit();
+            loginToUser();
         } else if (evt.getKeyCode() == KeyEvent.VK_UP) {
             txtPhonenum.requestFocus();
         }

@@ -19,10 +19,6 @@ public class Application {
 
     private static ApplicationContext context = null;
 
-    public static ApplicationContext getContext() {
-        return context;
-    }
-
     public static <T extends Object> T getBean(Class<T> requiredType) {
         return context.getBean(requiredType);
     }
@@ -36,6 +32,5 @@ public class Application {
     public static void main(String[] args) {
         context = createApplicationContext(args);
          new LoginForm().setVisible(true);
-//        new Main(new Account()).setVisible(true);
     }
 }
